@@ -10,6 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///lms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 app.config['SESSION_TYPE']='sqlalchemy'
 app.config['SESSION_SQLALCHEMY']=db
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 Session(app)
 
