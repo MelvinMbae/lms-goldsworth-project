@@ -117,3 +117,14 @@ class Course(db.Model, SerializerMixin):
     
     teachers=db.relationship('Teacher', secondary=course_participant,backref='courses')
     students=db.relationship('Student', secondary=course_participant,backref='courses')
+    
+class Content(db.Model, SerializerMixin):
+    __tablename__='contents'
+    
+    id=db.Column(db.Integer, primary_key=True)
+    content_name=db.Column(db.String, unique=True)
+    description=db.Column(db.String, unique=True)
+    content_type=db.Column(db.String, unique=True)
+    created_at=db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
+    course_id=db.Column(db.Integer, db.ForeignKey('courses.id'))
