@@ -105,3 +105,15 @@ class Student(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
+        
+class Course(db.Model, SerializerMixin):
+    __tablename__='courses'
+    
+    id=db.Column(db.Integer, primary_key=True)
+    course_name=db.Column(db.String, unique=True)
+    description=db.Column(db.String, unique=True)
+    created_at=db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
+    
+    teachers=db.relationship('Teacher', secondary=course_participant,backref='courses')
+    students=db.relationship('Student', secondary=course_participant,backref='courses')
