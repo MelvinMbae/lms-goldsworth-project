@@ -4,11 +4,10 @@ from flask_bcrypt import Bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
-
+# from app import app
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
-
 
 class Parent(db.Model, SerializerMixin):
     __tablename__='parents'
