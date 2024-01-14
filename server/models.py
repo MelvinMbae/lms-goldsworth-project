@@ -13,9 +13,9 @@ class Parent(db.Model, SerializerMixin):
     __tablename__='parents'
     
     id=db.Column(db.Integer, primary_key=True)
-    first_name=db.Column(db.String)
-    last_name=db.Column(db.String)
-    email=db.Column(db.String, unique=True)
+    first_name=db.Column(db.String, nullable=False)
+    last_name=db.Column(db.String, nullable=False)
+    email=db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
@@ -49,14 +49,13 @@ course_participant = db.Table(
 class Teacher(db.Model, SerializerMixin):
     __tablename__='teachers'
     
-    id=db.Column(db.Integer, primary_key=True)
-    first_name=db.Column(db.String)
-    last_name=db.Column(db.String)
-    email=db.Column(db.String, unique=True)
+    id=db.Column(db.Integer, primary_key=True, nullable=False)
+    first_name=db.Column(db.String, nullable=False)
+    last_name=db.Column(db.String, nullable=False)
+    email=db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
-
-    expertise=db.Column(db.String)
-    department=db.Column(db.String)
+    expertise=db.Column(db.String, nullable=False)
+    department=db.Column(db.String, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     
@@ -81,9 +80,9 @@ class Student(db.Model, SerializerMixin):
     __tablename__='students'
     
     id=db.Column(db.Integer, primary_key=True)
-    first_name=db.Column(db.String)
-    last_name=db.Column(db.String)
-    email=db.Column(db.String, unique=True)
+    first_name=db.Column(db.String, nullable=False)
+    last_name=db.Column(db.String, nullable=False)
+    email=db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
@@ -109,8 +108,8 @@ class Course(db.Model, SerializerMixin):
     __tablename__='courses'
     
     id=db.Column(db.Integer, primary_key=True)
-    course_name=db.Column(db.String, unique=True)
-    description=db.Column(db.String, unique=True)
+    course_name=db.Column(db.String, unique=True, nullable=False)
+    description=db.Column(db.String, unique=True, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     
@@ -121,9 +120,9 @@ class Content(db.Model, SerializerMixin):
     __tablename__='contents'
     
     id=db.Column(db.Integer, primary_key=True)
-    content_name=db.Column(db.String, unique=True)
-    description=db.Column(db.String, unique=True)
-    content_type=db.Column(db.String, unique=True)
+    content_name=db.Column(db.String, unique=True, nullable=False)
+    description=db.Column(db.String, unique=True, nullable=False)
+    content_type=db.Column(db.String, unique=True, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     course_id=db.Column(db.Integer, db.ForeignKey('courses.id'))
