@@ -17,6 +17,7 @@ class Parent(db.Model, SerializerMixin):
     last_name=db.Column(db.String, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
+    imageUrl= db.Column(db.NVARCHAR)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     
@@ -58,6 +59,7 @@ class Teacher(db.Model, SerializerMixin):
     last_name=db.Column(db.String, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
+    imageUrl= db.Column(db.NVARCHAR)
     expertise=db.Column(db.String, nullable=False)
     department=db.Column(db.String, nullable=False)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
@@ -91,6 +93,7 @@ class Student(db.Model, SerializerMixin):
     last_name=db.Column(db.String, nullable=False)
     email=db.Column(db.String, unique=True, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
+    imageUrl= db.Column(db.NVARCHAR)
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     parent_id=db.Column(db.Integer, db.ForeignKey('parents.id'))
