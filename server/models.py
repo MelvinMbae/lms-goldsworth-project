@@ -37,6 +37,10 @@ class Parent(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
         
+    def __repr__(self):
+        return f"{self.first_name}{self.last_name} is a parent signed up on our app"
+        
+        
 #join table
 course_participant = db.Table(
     'course_participant',
@@ -75,6 +79,9 @@ class Teacher(db.Model, SerializerMixin):
     def authenticate(self, password):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
+        
+    def __repr__(self):
+        return f"{self.first_name}{self.last_name} is a teacher signed up on our app"
 
 class Student(db.Model, SerializerMixin):
     __tablename__='students'
@@ -104,6 +111,9 @@ class Student(db.Model, SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8'))
         
+    def __repr__(self):
+        return f"{self.first_name}{self.last_name} is a student signed up on our app"
+        
 class Course(db.Model, SerializerMixin):
     __tablename__='courses'
     
@@ -116,6 +126,9 @@ class Course(db.Model, SerializerMixin):
     teachers=db.relationship('Teacher', secondary=course_participant,backref='courses')
     students=db.relationship('Student', secondary=course_participant,backref='courses')
     
+    def __repr__(self):
+        return f"{self.course_name}is a course offered in our platform"
+    
 class Content(db.Model, SerializerMixin):
     __tablename__='contents'
     
@@ -126,3 +139,6 @@ class Content(db.Model, SerializerMixin):
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     course_id=db.Column(db.Integer, db.ForeignKey('courses.id'))
+    
+    def __repr__(self):
+        return f"{self.content_name}"
