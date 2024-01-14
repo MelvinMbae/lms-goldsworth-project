@@ -1,7 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from sqlalchemy.orm import validates
+from sqlalchemy.ext.hybrid import hybrid_property
 
 db = SQLAlchemy()
+bcrypt = Bcrypt()
 
 class Student(db.Model):
     __tablename__ = 'students'
@@ -21,7 +24,33 @@ class Student(db.Model):
 
     def __repr__(self):
         return f'Student(id={self.id}, name={self.firstname + self.lastname}, email={self.email})'
+    
+    @validates("firstname","lastname")
+    def validates_name(self,key,name):
+        if not name:
+            raise ValueError("Value is required !")
+        return name
+    
+    @validates("email")
+    def validates_email(self,key,value):
+        if not value:
+            raise ValueError("Email Address is a required field!")
+        if "@" and ".com" not in value:
+            raise ValueError("Email address is not valid!")
+        return value
 
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,pwd):
+        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
+    
+    def authenticate(self,pwd):
+        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
+        return pwd_check
 
 
 class Teacher(db.Model):
@@ -43,7 +72,32 @@ class Teacher(db.Model):
     def __repr__(self):
         return f'Teacher(id={self.id}, name={self.firstname + self.lastname}, email={self.email}, expertise={self.expertise}, department={self.department})'
     
+    @validates("firstname","lastname")
+    def validates_name(self,key,name):
+        if not name:
+            raise ValueError("Value is required !")
+        return name
+    
+    @validates("email")
+    def validates_email(self,key,value):
+        if not value:
+            raise ValueError("Email Address is a required field!")
+        if "@" and ".com" not in value:
+            raise ValueError("Email address is not valid!")
+        return value
 
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,pwd):
+        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
+    
+    def authenticate(self,pwd):
+        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
+        return pwd_check
 
 class Parent(db.Model):
     __tablename__ = 'parents'
@@ -60,7 +114,34 @@ class Parent(db.Model):
 
     def __repr__(self):
         return f'Parent(id={self.id}, name={self.firstname + self.lastname}, email={self.email})'
+    
+    @validates("firstname","lastname")
+    def validates_name(self,key,name):
+        if not name:
+            raise ValueError("Value is required !")
+        return name
+    
+    @validates("email")
+    def validates_email(self,key,value):
+        if not value:
+            raise ValueError("Email Address is a required field!")
+        if "@" and ".com" not in value:
+            raise ValueError("Email address is not valid!")
+        return value
 
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,pwd):
+        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
+    
+    def authenticate(self,pwd):
+        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
+        return pwd_check
+    
 class Course(db.Model):
     __tablename__ = 'courses'
 
