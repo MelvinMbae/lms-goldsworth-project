@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-migrate = Migrate(app)
+migrate = Migrate(app, db)
 CORS(app)
 db.init_app(app)
 
@@ -24,7 +24,7 @@ class Index(Resource):
         )
 
 
-api.add_resource('Index', '/')
+api.add_resource(Index, '/')
 
 class StudentSchema(mash.SQLAlchemySchema):
 
@@ -50,6 +50,24 @@ class StudentSchema(mash.SQLAlchemySchema):
 
 student_schema = StudentSchema()
 students_schema = StudentSchema(many=True)
+
+class Students(Resource):
+    def get(self):
+        students = Student.query.all()
+
+        return make_response(
+            students_schema.dump(students), 200
+        )
+class StudentbyId(Resource):
+    def get(self,id):
+        student = Student.query.filter_by(id=id).first()
+
+        return make_response(
+            student_schema.dump(student), 200
+        )
+
+api.add_resource(StudentbyId, '/students/<int:id>')
+api.add_resource(Students, '/students')
 
 class TeacherSchema(mash.SQLAlchemySchema):
 

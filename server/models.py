@@ -23,7 +23,7 @@ class Student(db.Model):
     docs = db.relationship('Document')
 
     def __repr__(self):
-        return f'Student(id={self.id}, name={self.firstname + self.lastname}, email={self.email})'
+        return f'Student(id={self.id}, name={self.firstname + " " + self.lastname}, email={self.email})'
     
     @validates("firstname","lastname")
     def validates_name(self,key,name):
@@ -35,7 +35,8 @@ class Student(db.Model):
     def validates_email(self,key,value):
         if not value:
             raise ValueError("Email Address is a required field!")
-        if "@" and ".com" not in value:
+        if "@" not in value:
+        # if "@" and ".com" not in value:
             raise ValueError("Email address is not valid!")
         return value
 
@@ -82,7 +83,8 @@ class Teacher(db.Model):
     def validates_email(self,key,value):
         if not value:
             raise ValueError("Email Address is a required field!")
-        if "@" and ".com" not in value:
+        if "@" not in value:
+        # if "@" and ".com" not in value:
             raise ValueError("Email address is not valid!")
         return value
 
@@ -125,7 +127,8 @@ class Parent(db.Model):
     def validates_email(self,key,value):
         if not value:
             raise ValueError("Email Address is a required field!")
-        if "@" and ".com" not in value:
+        if "@" not in value:
+        # if "@" and ".com" not in value:
             raise ValueError("Email address is not valid!")
         return value
 
