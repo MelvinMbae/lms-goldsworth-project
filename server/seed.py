@@ -4,7 +4,7 @@ from sqlalchemy.orm.session import make_transient
 
 from faker import Faker
 from app import app
-from models import db,bcrypt, Parent, Teacher, Student,Course,Content
+from models import db,bcrypt, Parent, Teacher, Student,Course,Content,course_student,course_teacher
 
 fake = Faker()
 
@@ -18,6 +18,8 @@ with app.app_context():
     Parent.query.delete()
     Teacher.query.delete()
     Student.query.delete()
+    db.session.query(course_student).delete()
+    db.session.query(course_teacher).delete()
     
     Course.query.delete()
     
@@ -94,13 +96,14 @@ with app.app_context():
     for teacher in teachers:
         courses_for_teacher = [choice(courses) for _ in range(randint(1, 3))]
         for course in courses_for_teacher:
-            teacher.courses.append(course)
+            if course not in teacher.courses:
+                teacher.courses.append(course)
 
     # Associate students with courses and parents
     for student in students:
         courses_for_student = [choice(courses) for _ in range(randint(1, 3))]
         for course in courses_for_student:
-            student.courses.append(course)
+            if course not in student.courses:
+                student.courses.append(course)
 
     db.session.commit()
-    
