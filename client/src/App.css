@@ -180,14 +180,60 @@
   color: #004B5B;
   float: left;
 }
+.wrapper{
+  height: 100vh;
+  width: auto;
+  background: linear-gradient(to right,
+                #00A8A2,#45A5A1,#F1FAFE,#FF9F37);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .login-container{
+  position: relative;
+}
+.circle-1{
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  background: #FF9F37;
+  border-radius: 50%;
+  bottom: -60px;
+  left: -60px;
+}
+.circle-2{
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  background: #00A8A2;
+  border-radius: 50%;
+  right: -60px;
+  top: -60px;
+}
+.form{
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: #F1FAFE;
+  border: 1px solid #F1FAFE;
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 26px 42px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
 }
 #login-header{
-  display: flex;
-  font-size: 44px;
+  color: #004B5B;
+}
+.login-form{
+  width: 100%;
+  font-size: 16px;
+  display: block;
+  box-sizing: border-box;
+  margin: 20px auto;
+  padding: 12px 20px;
+  border: none;
+  background: #F1FAFE;
 }

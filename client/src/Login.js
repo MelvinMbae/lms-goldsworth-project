@@ -2,15 +2,22 @@ import React from 'react'
 
 function Login() {
   return (
-    <div className='login-container'>
-      <h1 id='login-header'>Welcome to Goldworth</h1>
-      <form className='login'>
-        <label>Email Adress<input type='email' /></label>
-        <label>Password<input type='password' /></label>
-      </form>
-      <button className='login-btn'>Login</button>
+    <div className='wrapper'>
+      <div className='login-container'>
+        <div className='circle-1'></div> 
+        <div className='circle-2'></div>
+        <div className='form'>
+           <h1 id='login-header'>Goldworth</h1>
+         <form className='login-form'>
+          <input type='text' placeholder='Email Adress' />
+          <input type='password' placeholder='Password' />
+       </form>
+       <button type='submit'>Login</button>
 
+        </div>
+      </div>
     </div>
+    
   )
 }
 
