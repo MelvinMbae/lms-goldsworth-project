@@ -1,21 +1,7 @@
-from flask import Flask, jsonify, request, make_response
-from flask_marshmallow import Marshmallow
-from models import db, Teacher, Student, Parent, Course, Document
-from flask_migrate import Migrate
-from flask_cors import CORS
-from flask_restful import Api, Resource
-
-app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lms.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-migrate = Migrate(app, db)
-CORS(app)
-db.init_app(app)
-
-mash = Marshmallow(app)
-api = Api(app)
+from flask import request, make_response, session
+from models import Teacher, Student, Parent, Course, Document, User
+from flask_restful import Resource
+from config import mash, db, api, app
 
 class Index(Resource):
     def get(self):
@@ -25,6 +11,89 @@ class Index(Resource):
 
 
 api.add_resource(Index, '/')
+
+class Login(Resource):
+    def post(self):
+        user_logins = request.get_json()
+        password = user_logins['password']
+        user = User.query.filter_by(email=user_logins['email']).first()
+
+        if user.authenticate(password):
+            session['user'] = user.email
+            return make_response(
+                f"Welcome {user.email}", 200
+            )
+        return "Please login to continue" , 404
+
+
+api.add_resource(Login, '/login')
+
+class CheckSession(Resource):
+    def get(self):
+        user = session.get('user')
+        user_data = User.query.filter_by(email=user).first()
+
+        if user:
+            return make_response(f"Welcome {user_data.email}", 200)
+        return make_response("please login to continue", 401)
+
+api.add_resource(CheckSession, '/checksession')
+
+class Logout(Resource):
+    def delete(self):
+        user = session.get('user_id')
+
+        if user:
+            session['user_id'] = None
+
+            return make_response(
+                "You have been logged out successfully", 200
+            )
+        return make_response("You are not allowed to access this method", 401)
+
+api.add_resource(Logout, '/logout')
+
+
+class UserSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = User
+    
+    id = mash.auto_field()
+
+    email = mash.auto_field()
+    student_id = mash.auto_field()
+
+    url = mash.Hyperlinks(
+        {
+            "self":mash.URLFor(
+                "studentbyid",
+                values=dict(id="<student_id>")),
+            "collection":mash.URLFor("students")
+
+        }
+    )
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
+
+class Users(Resource):
+    def get(self):
+        users = User.query.all()
+
+        return make_response(
+            users_schema.dump(users), 200
+        )
+
+class UserbyId(Resource):
+    def get(self,id):
+        user = User.query.filter_by(id=id).first()
+
+        return make_response(
+            user_schema.dump(user), 200
+        )
+api.add_resource(UserbyId, '/users/<int:id>')
+api.add_resource(Users, '/users')
 
 class StudentSchema(mash.SQLAlchemySchema):
 
@@ -36,7 +105,7 @@ class StudentSchema(mash.SQLAlchemySchema):
     lastname = mash.auto_field()
     email = mash.auto_field()
     parent_id = mash.auto_field()
-    course = mash.auto_field()
+    courses = mash.auto_field()
     docs = mash.auto_field()
 
     url = mash.Hyperlinks(
@@ -52,6 +121,7 @@ class StudentSchema(mash.SQLAlchemySchema):
 student_schema = StudentSchema()
 students_schema = StudentSchema(many=True)
 
+
 class Students(Resource):
     def get(self):
         students = Student.query.all()
@@ -65,12 +135,14 @@ class Students(Resource):
         new_student = Student(
             firstname = student_data['firstname'],
             lastname = student_data['lastname'],
-            _password = student_data['password'],
+            password = student_data['password'],
             email = student_data['email'],
             parent_id = student_data['parent_id']
         )
         db.session.add(new_student)
         db.session.commit()
+
+        new_student.add_user()
 
         return make_response(
             student_schema.dump(new_student), 201
@@ -121,7 +193,7 @@ class TeacherSchema(mash.SQLAlchemySchema):
     email = mash.auto_field()
     expertise = mash.auto_field()
     department = mash.auto_field()
-    course = mash.auto_field()
+    courses= mash.auto_field()
     docs = mash.auto_field()
 
     url = mash.Hyperlinks(
@@ -147,10 +219,10 @@ class Teachers(Resource):
     
     def post(self):
         teacher_data = request.get_json()
-        new_teacher = Student(
+        new_teacher = Teacher(
             firstname = teacher_data['firstname'],
             lastname = teacher_data['lastname'],
-            _password = teacher_data['password'],
+            password = teacher_data['password'],
             email = teacher_data['email'],
             expertise = teacher_data['expertise'],
             department = teacher_data['department']
@@ -230,10 +302,10 @@ class Parents(Resource):
     
     def post(self):
         parent_data = request.get_json()
-        new_parent = Student(
+        new_parent = Parent(
             firstname = parent_data['firstname'],
             lastname = parent_data['lastname'],
-            _password = parent_data['password'],
+            password = parent_data['password'],
             email = parent_data['email']
         )
         db.session.add(new_parent)

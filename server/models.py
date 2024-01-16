@@ -1,10 +1,45 @@
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+# from flask_sqlalchemy import SQLAlchemy
+from config import db, bcrypt
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 
-db = SQLAlchemy()
-bcrypt = Bcrypt()
+course_teacher = db.Table(
+    'course_teacher',
+    db.metadata,
+    db.Column('teacher_id', db.ForeignKey('teachers.id'), primary_key=True),
+    db.Column('course_id', db.ForeignKey('courses.id'), primary_key=True),
+    extend_existing =True
+)
+
+course_student = db.Table(
+    'course_student',
+    db.metadata,
+    db.Column('student_id', db.ForeignKey('students.id'), primary_key=True),
+    db.Column('course_id', db.ForeignKey('courses.id'), primary_key=True),
+    extend_existing =True
+)
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer , primary_key = True)
+    email = db.Column(db.String, nullable = False , unique = True)
+    _password = db.Column(db.String, nullable = False , unique = True)
+    # parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    # teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+
+    
+    def __repr__(self):
+        return f'User(id={self.id}, email={self.email}, student={self.student_id})'
+    
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    def authenticate(self,pwd):
+        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
+        return pwd_check
 
 class Student(db.Model):
     __tablename__ = 'students'
@@ -19,11 +54,21 @@ class Student(db.Model):
 
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
-    course = db.relationship('Course')
+    # current_user = db.relationship('User', backref='user')
+    courses = db.relationship('Course', secondary=course_student, back_populates='students')
     docs = db.relationship('Document')
 
     def __repr__(self):
         return f'Student(id={self.id}, name={self.firstname + " " + self.lastname}, email={self.email})'
+    
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,pwd):
+        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
     
     @validates("firstname","lastname")
     def validates_name(self,key,name):
@@ -40,20 +85,16 @@ class Student(db.Model):
             raise ValueError("Email address is not valid!")
         return value
 
-    @hybrid_property
-    def password(self):
-        return self._password
+    def add_user(self):
+        user = User(
+            email = self.email,
+            _password = self._password,
+            student_id = self.id
+        )
+        db.session.add(user)
+        db.session.commit()
+        return user
     
-    @password.setter
-    def password(self,pwd):
-        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
-        self._password = password_hash.decode('utf-8')
-    
-    def authenticate(self,pwd):
-        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
-        return pwd_check
-
-
 class Teacher(db.Model):
     __tablename__ = 'teachers'
 
@@ -68,10 +109,19 @@ class Teacher(db.Model):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     docs = db.relationship('Document')
-    course = db.relationship('Course')
+    courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers')
 
     def __repr__(self):
         return f'Teacher(id={self.id}, name={self.firstname + self.lastname}, email={self.email}, expertise={self.expertise}, department={self.department})'
+    
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,pwd):
+        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
     
     @validates("firstname","lastname")
     def validates_name(self,key,name):
@@ -88,18 +138,6 @@ class Teacher(db.Model):
             raise ValueError("Email address is not valid!")
         return value
 
-    @hybrid_property
-    def password(self):
-        return self._password
-    
-    @password.setter
-    def password(self,pwd):
-        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
-        self._password = password_hash.decode('utf-8')
-    
-    def authenticate(self,pwd):
-        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
-        return pwd_check
 
 class Parent(db.Model):
     __tablename__ = 'parents'
@@ -117,6 +155,15 @@ class Parent(db.Model):
     def __repr__(self):
         return f'Parent(id={self.id}, name={self.firstname + self.lastname}, email={self.email})'
     
+    @hybrid_property
+    def password(self):
+        return self._password
+    
+    @password.setter
+    def password(self,pwd):
+        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
+        self._password = password_hash.decode('utf-8')
+    
     @validates("firstname","lastname")
     def validates_name(self,key,name):
         if not name:
@@ -132,18 +179,6 @@ class Parent(db.Model):
             raise ValueError("Email address is not valid!")
         return value
 
-    @hybrid_property
-    def password(self):
-        return self._password
-    
-    @password.setter
-    def password(self,pwd):
-        password_hash = bcrypt.generate_password_hash(pwd.encode('utf-8'))
-        self._password = password_hash.decode('utf-8')
-    
-    def authenticate(self,pwd):
-        pwd_check = bcrypt.check_password_hash(self._password, pwd.encode('utf-8'))
-        return pwd_check
     
 class Course(db.Model):
     __tablename__ = 'courses'
@@ -154,10 +189,10 @@ class Course(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
-
     docs = db.relationship('Document')
+    students = db.relationship('Student', secondary=course_student, back_populates='courses')
+    teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses')
+
 
     def __repr__(self):
         return f'Course(id={self.id}, course__name={self.course_name}, description={self.description})'
