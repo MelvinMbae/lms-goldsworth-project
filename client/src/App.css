@@ -97,7 +97,7 @@
 }
 .course-card {
   width: 240px;
-  color: #ff9f37;
+  color: black;
   position: relative;
   background-color: white;
   border-radius: 8px;
@@ -179,4 +179,15 @@
 .content-2-text{
   color: #004B5B;
   float: left;
+}
+.login-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+#login-header{
+  display: flex;
+  font-size: 44px;
 }
