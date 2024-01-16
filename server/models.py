@@ -1,12 +1,11 @@
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
-from flask_bcrypt import Bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
 from datetime import datetime
+from config import bcrypt,db
 
-db = SQLAlchemy()
-bcrypt = Bcrypt()
+
+# bcrypt = Bcrypt()
 
 class Parent(db.Model, SerializerMixin):
     __tablename__='parents'
@@ -20,7 +19,6 @@ class Parent(db.Model, SerializerMixin):
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     
-    students=db.relationship('Student',backref='parent')
     
     # password authentication
     @hybrid_property
@@ -102,6 +100,8 @@ class Student(db.Model, SerializerMixin):
     created_at=db.Column(db.DateTime, default=datetime.utcnow)
     updated_at=db.Column(db.DateTime, onupdate=datetime.utcnow)
     parent_id=db.Column(db.Integer, db.ForeignKey('parents.id'))
+    
+    parents=db.relationship('Parent')
     
     courses = db.relationship('Course', secondary=course_student, backref="students")
     

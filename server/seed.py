@@ -3,8 +3,8 @@ import json
 from sqlalchemy.orm.session import make_transient
 
 from faker import Faker
-from app import app
-from models import db,bcrypt, Parent, Teacher, Student,Course,Content,course_student,course_teacher
+from app import app, bcrypt
+from models import db,Parent, Teacher, Student,Course,Content,course_student,course_teacher
 
 fake = Faker()
 

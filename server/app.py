@@ -1,26 +1,10 @@
-from flask import Flask, jsonify, request, make_response, session
-from flask_migrate import Migrate
-from flask_restful import Api, Resource
+from flask import jsonify, request, make_response
+from flask_restful import Resource
+from models import Parent,Teacher,Student,Course,Content
+from config import bcrypt,db,api,app
 from flask_session import Session
-from models import db, Parent,Teacher,Student,Course,Content
-from flask_cors import CORS
-
-app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///lms.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-app.config['SESSION_TYPE']='sqlalchemy'
-app.config['SESSION_SQLALCHEMY']=db
 
 Session(app)
-
-app.json.compact=False
-app.secret_key='no_key'
-
-migrate=Migrate(app,db)
-CORS(app)
-db.init_app(app)
-
-api=Api(app)
 
 class Index(Resource):
 
@@ -38,5 +22,38 @@ class Index(Resource):
 
 api.add_resource(Index, '/')
 
+class Parents(Resource):
+    def get(self):
+        response_dict_list = [n.to_dict() for n in Parent.query.all()]
+
+        response = make_response(
+            jsonify(response_dict_list),
+            200,
+        )
+        return response
+    
+    def post(self):
+        data = request.get_json()
+        new_record = Parent(
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            email=data['email'],
+            password=data['password'],
+            imageUrl=data['imageUrl'],
+        )
+
+        db.session.add(new_record)
+        db.session.commit()
+
+        response_dict = new_record.to_dict()
+
+        response = make_response(
+            jsonify(response_dict),
+            201,
+        )
+        return response
+
+api.add_resource(Parents, '/parents')
+
 if __name__ == '__main__':
-    app.run(port=5555)
+    app.run(port=5555, debug=True)
