@@ -1,4 +1,3 @@
-# from flask_sqlalchemy import SQLAlchemy
 from config import db, bcrypt
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -22,16 +21,12 @@ course_student = db.Table(
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer , primary_key = True)
-    email = db.Column(db.String, nullable = False , unique = True)
+    email = db.Column(db.String, nullable = False , unique = True, primary_key = True)
     _password = db.Column(db.String, nullable = False , unique = True)
-    # parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-    # teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
-
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     
-    def __repr__(self):
-        return f'User(id={self.id}, email={self.email}, student={self.student_id})'
     
     @hybrid_property
     def password(self):
@@ -49,17 +44,16 @@ class Student(db.Model):
     lastname = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False , unique = True)
     _password = db.Column(db.String, nullable = False , unique = True)
+    image_url= db.Column(db.NVARCHAR)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
-    # current_user = db.relationship('User', backref='user')
+    user = db.relationship('User', backref='student')
     courses = db.relationship('Course', secondary=course_student, back_populates='students')
-    docs = db.relationship('Document')
+    docs = db.relationship('Content')
 
-    def __repr__(self):
-        return f'Student(id={self.id}, name={self.firstname + " " + self.lastname}, email={self.email})'
     
     @hybrid_property
     def password(self):
@@ -103,16 +97,15 @@ class Teacher(db.Model):
     lastname = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False , unique = True)
     _password = db.Column(db.String, nullable = False , unique = True)
+    image_url= db.Column(db.NVARCHAR)
     expertise = db.Column(db.String)
     department = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    docs = db.relationship('Document')
+    docs = db.relationship('Content')
+    user = db.relationship('User', backref='teacher')
     courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers')
-
-    def __repr__(self):
-        return f'Teacher(id={self.id}, name={self.firstname + self.lastname}, email={self.email}, expertise={self.expertise}, department={self.department})'
     
     @hybrid_property
     def password(self):
@@ -137,7 +130,16 @@ class Teacher(db.Model):
         # if "@" and ".com" not in value:
             raise ValueError("Email address is not valid!")
         return value
-
+    
+    def add_user(self):
+        user = User(
+            email = self.email,
+            _password = self._password,
+            teacher_id = self.id
+        )
+        db.session.add(user)
+        db.session.commit()
+        return user
 
 class Parent(db.Model):
     __tablename__ = 'parents'
@@ -147,13 +149,12 @@ class Parent(db.Model):
     lastname = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False , unique = True)
     _password = db.Column(db.String, nullable = False , unique = True)
+    image_url= db.Column(db.NVARCHAR)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     child = db.relationship('Student', backref='parent')
-
-    def __repr__(self):
-        return f'Parent(id={self.id}, name={self.firstname + self.lastname}, email={self.email})'
+    user = db.relationship('User', backref='parent')
     
     @hybrid_property
     def password(self):
@@ -178,6 +179,16 @@ class Parent(db.Model):
         # if "@" and ".com" not in value:
             raise ValueError("Email address is not valid!")
         return value
+    
+    def add_user(self):
+        user = User(
+            email = self.email,
+            _password = self._password,
+            parent_id = self.id
+        )
+        db.session.add(user)
+        db.session.commit()
+        return user
 
     
 class Course(db.Model):
@@ -189,28 +200,21 @@ class Course(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    docs = db.relationship('Document')
+    content = db.relationship('Content')
     students = db.relationship('Student', secondary=course_student, back_populates='courses')
     teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses')
 
 
-    def __repr__(self):
-        return f'Course(id={self.id}, course__name={self.course_name}, description={self.description})'
-
-
-class Document(db.Model):
-    __tablename__ = 'documents'
+class Content(db.Model):
+    __tablename__ = 'contents'
 
     id = db.Column(db.Integer , primary_key = True)
-    doc_name = db.Column(db.String, nullable = False)
+    content_name = db.Column(db.String, nullable = False)
     description = db.Column(db.String, nullable = False)
-    doc_type = db.Column(db.String, nullable = False , unique = True)
+    content_type = db.Column(db.String, nullable = False , unique = True)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
-
-    def __repr__(self):
-        return f'Document(id={self.id}, doc_name={self.doc_name}, doc_type={self.doc_type})'

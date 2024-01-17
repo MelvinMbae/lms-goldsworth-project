@@ -1,5 +1,5 @@
 from flask import request, make_response, session
-from models import Teacher, Student, Parent, Course, Document, User
+from models import Teacher, Student, Parent, Course, Content, User
 from flask_restful import Resource
 from config import mash, db, api, app
 
@@ -58,18 +58,16 @@ class UserSchema(mash.SQLAlchemySchema):
 
     class Meta:
         model = User
-    
-    id = mash.auto_field()
 
     email = mash.auto_field()
     student_id = mash.auto_field()
 
     url = mash.Hyperlinks(
         {
-            "self":mash.URLFor(
+            "student":mash.URLFor(
                 "studentbyid",
                 values=dict(id="<student_id>")),
-            "collection":mash.URLFor("students")
+            "student_list":mash.URLFor("students")
 
         }
     )
@@ -81,18 +79,21 @@ class Users(Resource):
     def get(self):
         users = User.query.all()
 
+        print(users[41].student.firstname)
         return make_response(
             users_schema.dump(users), 200
         )
 
-class UserbyId(Resource):
-    def get(self,id):
-        user = User.query.filter_by(id=id).first()
+# class UserbyId(Resource):
+#     def get(self,id):
+#         user = User.query.filter_by(id=id).first()
 
-        return make_response(
-            user_schema.dump(user), 200
-        )
-api.add_resource(UserbyId, '/users/<int:id>')
+#         print(user.student)
+
+#         return make_response(
+#             user_schema.dump(user), 200
+#         )
+# api.add_resource(UserbyId, '/users/<int:id>')
 api.add_resource(Users, '/users')
 
 class StudentSchema(mash.SQLAlchemySchema):
@@ -153,6 +154,7 @@ class StudentbyId(Resource):
     def get(self,id):
         student = Student.query.filter_by(id=id).first()
 
+        # print(student.user)
         return make_response(
             student_schema.dump(student), 200
         )
@@ -428,84 +430,84 @@ class CoursebyId(Resource):
 api.add_resource(CoursebyId, '/courses/<int:id>')
 api.add_resource(Courses, '/courses')
 
-class DocumentSchema(mash.SQLAlchemySchema):
+class ContentSchema(mash.SQLAlchemySchema):
 
     class Meta:
-        model = Document
+        model = Content
     
     id = mash.auto_field()
-    doc_name = mash.auto_field()
-    doc_type = mash.auto_field()
+    content_name = mash.auto_field()
+    content_type = mash.auto_field()
     description = mash.auto_field()
 
     url = mash.Hyperlinks(
         {
             "self":mash.URLFor(
-                "documentbyid",
+                "contentbyid",
                 values=dict(id="<id>")),
-            "collection":mash.URLFor("documents")
+            "collection":mash.URLFor("contents")
 
         }
     )
 
-document_schema = DocumentSchema()
-documents_schema = DocumentSchema(many=True)
+content_schema = ContentSchema()
+contents_schema = ContentSchema(many=True)
 
-class Documents(Resource):
+class Contents(Resource):
     def get(self):
-        documents = Document.query.all()
+        contents = Content.query.all()
 
         return make_response(
-            documents_schema.dump(documents), 200
+            contents_schema.dump(contents), 200
         )
     
     def post(self):
-        document_data = request.get_json()
-        new_document = Document(
-            doc_name = document_data['doc_name'],
-            description = document_data['description'],
-            doc_type = document_data['doc_type'],
+        content_data = request.get_json()
+        new_content = Content(
+            doc_name = content_data['doc_name'],
+            description = content_data['description'],
+            doc_type = content_data['doc_type'],
         )
-        db.session.add(new_document)
+        db.session.add(new_content)
         db.session.commit()
 
         return make_response(
-            document_schema.dump(new_document), 200
+            content_schema.dump(new_content), 200
         )
 
     
-class DocumentbyId(Resource):
+class ContentbyId(Resource):
     def get(self,id):
-        document = Document.query.filter_by(id=id).first()
+        content = Content.query.filter_by(id=id).first()
 
         return make_response(
-            document_schema.dump(document), 200
+            content_schema.dump(content), 200
         )
         
     def patch(self,id):
-        document_data = request.get_json()
-        document = Document.query.filter_by(id=id).first()
+        content_data = request.get_json()
+        content = Content.query.filter_by(id=id).first()
 
-        for attr in document_data:
-            setattr(document, attr, document_data[attr])
+        for attr in content_data:
+            setattr(content, attr, content_data[attr])
         
-        db.session.add(document)
+        db.session.add(content)
         db.session.commit()
 
         return make_response(
-            document_schema.dump(document), 200
+            content_schema.dump(content), 200
         )
 
     def delete(self,id):
-        document = Document.query.filter_by(id=id).first()
+        content = Content.query.filter_by(id=id).first()
 
-        db.session.delete(document)
+        db.session.delete(content)
         db.session.commit()
 
-        return make_response({"message": "record successfully deleted"} , 200)
+        return make_response("record successfully deleted" , 200)
 
-api.add_resource(DocumentbyId, '/documents/<int:id>')
-api.add_resource(Documents, '/documents')
+api.add_resource(ContentbyId, '/contents/<int:id>')
+api.add_resource(Contents, '/contents')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)    

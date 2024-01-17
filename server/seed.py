@@ -1,4 +1,4 @@
-from models import Student, Teacher, Parent, Course, Document, User
+from models import Student, Teacher, Parent, Course, Content, User
 from random import choice
 from faker import Faker
 from config import app, db
@@ -42,13 +42,16 @@ with app.app_context():
             expertise = choice(expertise),
             department = choice(departments)
         )
-        # user = User(
-        #     email = teacher.email,
-        #     password = teacher._password
-        # )
-
-        # db.session.add(user)
         db.session.add(teacher)
+        db.session.commit()
+
+        user = User(
+            email = teacher.email,
+            _password = teacher._password,
+            teacher_id = teacher.id
+        )
+
+        db.session.add(user)
         db.session.commit()
 
         teachers.append(teacher)
@@ -61,13 +64,16 @@ with app.app_context():
             email = fake.email(),
             password = fake.password()
         )
-        # user = User(
-        #     email = parent.email,
-        #     password = parent._password
-        # )
-
-        # db.session.add(user)
         db.session.add(parent)
+        db.session.commit()
+
+        user = User(
+            email = parent.email,
+            _password = parent._password,
+            parent_id = parent.id
+        )
+
+        db.session.add(user)
         db.session.commit()
 
         parents.append(parent)
@@ -80,15 +86,19 @@ with app.app_context():
             password = fake.password(),
             parent_id = choice(parents).id
         )
+        db.session.add(student)
+        db.session.commit()
+
         user = User(
             email = student.email,
-            _password = student._password
+            _password = student._password,
+            student_id = student.id
         )
 
+        print(user.student)
+
         db.session.add(user)
-        db.session.add(student)
         db.session.commit()
 
         students.append(student)
     
-    print(students)
