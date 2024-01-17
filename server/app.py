@@ -1,7 +1,7 @@
 from flask import jsonify, request, make_response
 from flask_restful import Resource
 from models import Parent,Teacher,Student,Course,Content
-from config import bcrypt,db,api,app
+from config import db,api,app
 from flask_session import Session
 
 Session(app)

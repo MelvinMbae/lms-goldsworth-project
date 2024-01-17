@@ -1,9 +1,8 @@
 from random import choice, randint, random
 import json 
-from sqlalchemy.orm.session import make_transient
 
 from faker import Faker
-from app import app, bcrypt
+from app import app
 from models import db,Parent, Teacher, Student,Course,Content,course_student,course_teacher
 
 fake = Faker()
@@ -29,7 +28,7 @@ with app.app_context():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             email=fake.email(),
-            password=bcrypt.generate_password_hash(fake.password()).decode('utf-8')
+            password=fake.password()
         )
         
         parents.append(parent)
@@ -43,8 +42,8 @@ with app.app_context():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             email=fake.email(),
-            password=bcrypt.generate_password_hash(fake.password()).decode('utf-8'),
-            expertise=fake.word(),
+            password=fake.password(),
+            exp8ertise=fake.word(),
             department=fake.word()
         )
         teachers.append(teacher)
@@ -58,7 +57,7 @@ with app.app_context():
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             email=fake.email(),
-            password=bcrypt.generate_password_hash(fake.password()).decode('utf-8'),
+            password=fake.password(),
             parent_id=choice(parents).id
         )
         students.append(student)
