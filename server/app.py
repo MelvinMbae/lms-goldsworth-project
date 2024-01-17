@@ -12,6 +12,36 @@ class Index(Resource):
 
 api.add_resource(Index, '/')
 
+def User_details(user):
+    if 'lecturer' in user.email:
+        return make_response(
+            {
+                "teacher_id": user.teacher_id,
+                "name" : f'{user.teacher.firstname} {user.teacher.lastname}',
+                "email" : user.email,
+                "image_url": user.teacher.image_url,
+                "expertise": user.teacher.expertise,
+                "department": user.teacher.department,
+            }, 200
+        )
+    elif 'student' in user.email:
+        return make_response(
+            {
+                "student_id": user.student_id,
+                "name" : f'{user.student.firstname} {user.student.lastname}',
+                "email" : user.email,
+                "image_url": user.student.image_url,
+            }, 200
+        )
+    return make_response(
+        {
+            "parent_id": user.parent_id,
+            "name" : f'{user.parent.firstname} {user.parent.lastname}',
+            "email" : user.email,
+            "image_url": user.parent.image_url,
+        }, 200
+    )
+
 class Login(Resource):
     def post(self):
         user_logins = request.get_json()
@@ -20,10 +50,9 @@ class Login(Resource):
 
         if user.authenticate(password):
             session['user'] = user.email
-            return make_response(
-                f"Welcome {user.student.firstname}", 200
-            )
-        return "Please login to continue" , 404
+            return User_details(user)
+
+        return "Invalid email or password" , 404
 
 
 
@@ -35,17 +64,18 @@ class CheckSession(Resource):
         user_data = User.query.filter_by(email=user).first()
 
         if user:
-            return make_response(f"Welcome {user_data.email}", 200)
+            return User_details(user_data)
+
         return make_response("please login to continue", 401)
 
 api.add_resource(CheckSession, '/checksession')
 
 class Logout(Resource):
     def delete(self):
-        user = session.get('user_id')
+        user = session.get('user')
 
         if user:
-            session['user_id'] = None
+            session['user'] = None
 
             return make_response(
                 "You have been logged out successfully", 200
@@ -241,6 +271,8 @@ class Teachers(Resource):
         db.session.add(new_teacher)
         db.session.commit()
 
+        new_teacher.add_user()
+
         return make_response(
             teacher_schema.dump(new_teacher), 201
         )
@@ -321,6 +353,8 @@ class Parents(Resource):
         )
         db.session.add(new_parent)
         db.session.commit()
+
+        new_parent.add_user()
 
         return make_response(
             parent_schema.dump(new_parent), 201
