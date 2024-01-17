@@ -37,7 +37,7 @@ with app.app_context():
         teacher = Teacher(
             firstname = fake.first_name(),
             lastname = fake.last_name(),
-            email = fake.email(),
+            email = f'{fake.last_name()}.{fake.first_name()}@lecturer.goldworth.com',
             password = fake.password(),
             expertise = choice(expertise),
             department = choice(departments)
@@ -82,7 +82,7 @@ with app.app_context():
         student = Student(
             firstname = fake.first_name(),
             lastname = fake.last_name(),
-            email = fake.email(),
+            email = f'{fake.last_name()}.{fake.first_name()}@student.goldworth.com',
             password = fake.password(),
             parent_id = choice(parents).id
         )

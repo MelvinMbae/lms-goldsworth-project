@@ -21,9 +21,10 @@ class Login(Resource):
         if user.authenticate(password):
             session['user'] = user.email
             return make_response(
-                f"Welcome {user.email}", 200
+                f"Welcome {user.student.firstname}", 200
             )
         return "Please login to continue" , 404
+
 
 
 api.add_resource(Login, '/login')
@@ -61,13 +62,33 @@ class UserSchema(mash.SQLAlchemySchema):
 
     email = mash.auto_field()
     student_id = mash.auto_field()
+    teacher_id = mash.auto_field()
+    parent_id = mash.auto_field()
 
-    url = mash.Hyperlinks(
+    student_url = mash.Hyperlinks(
         {
             "student":mash.URLFor(
                 "studentbyid",
                 values=dict(id="<student_id>")),
-            "student_list":mash.URLFor("students")
+            "students_list":mash.URLFor("students")
+
+        }
+    )
+    parent_url = mash.Hyperlinks(
+        {
+            "parent":mash.URLFor(
+                "parentbyid",
+                values=dict(id="<parent_id>")),
+            "parents_list":mash.URLFor("parents")
+
+        }
+    )
+    teacher_url = mash.Hyperlinks(
+        {
+            "teacher":mash.URLFor(
+                "teacherbyid",
+                values=dict(id="<teacher_id>")),
+            "teachers_list":mash.URLFor("teachers")
 
         }
     )
@@ -78,22 +99,11 @@ users_schema = UserSchema(many=True)
 class Users(Resource):
     def get(self):
         users = User.query.all()
-
-        print(users[41].student.firstname)
+        
         return make_response(
             users_schema.dump(users), 200
         )
 
-# class UserbyId(Resource):
-#     def get(self,id):
-#         user = User.query.filter_by(id=id).first()
-
-#         print(user.student)
-
-#         return make_response(
-#             user_schema.dump(user), 200
-#         )
-# api.add_resource(UserbyId, '/users/<int:id>')
 api.add_resource(Users, '/users')
 
 class StudentSchema(mash.SQLAlchemySchema):
@@ -154,7 +164,6 @@ class StudentbyId(Resource):
     def get(self,id):
         student = Student.query.filter_by(id=id).first()
 
-        # print(student.user)
         return make_response(
             student_schema.dump(student), 200
         )
@@ -179,7 +188,7 @@ class StudentbyId(Resource):
         db.session.delete(student)
         db.session.commit()
 
-        return make_response({"message": "record successfully deleted"} , 200)
+        return make_response("record successfully deleted" , 200)
 
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
