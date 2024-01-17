@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
+import './App.css'
 
 
 function StudentDash(){

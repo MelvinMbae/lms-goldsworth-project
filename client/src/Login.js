@@ -17,7 +17,7 @@ function Login() {
            <input className='input-text' type='password' placeholder='Password' required/>
            <FaLock id='icon-2' />
            </div>
-           <Link to="/courses" className="btn">Login</Link>
+           <Link to="/dashboard" className="btn">Login</Link>
            <div style={{ position: 'absolute', bottom: '10px' }}>
             <Link to="/">Back to home</Link>
           </div>
