@@ -1,4 +1,4 @@
-// import './App.css';
+import './Dashboard.css';
 import StudentDash from './StudentDash';
 import TeacherDash from './TeacherDash';
 import ParentDash from './ParentDash';
