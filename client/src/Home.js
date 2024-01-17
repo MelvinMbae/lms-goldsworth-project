@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar';
+
 function Home() {
   const courses = [
     { title: 'Machine Learning', content: 'Machine learning is a subfield of artificial intelligence, which is broadly defined as the capability of a machine to imitate intelligent human behavior.' },
@@ -20,11 +21,12 @@ And if you’re an aspiring coder or an educator seeking to empower tech wizards
         <img  id='image-1' src='https://s3-alpha-sig.figma.com/img/2af5/49b4/e6575df3893f1191eb5bb518194d41af?Expires=1706486400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=fOVRdt6Mrd8sxL~r2v9Pg7Pm4~8S2TGxDVL20EqxozNi1VIrDgaVJSRMHkOdzR2bSMgaHMCYbUQ8mlYALn8yQtPlg7ibNqA4MSTremXYYYdhTyYnEK4CCmtwcpu4sOVKfOrYz6SvDcJQl8rITIEUe08f29zH86hjRjoHjpcWuUndR1jX-EpWrzNnfIueL7HCxfEvKJIDrUr6HudCe33PA0MqdVT5M4ggJjdCAAqaz39RnrrjunnbFY9Nth~VCeztmGKvg9UmWkQi6OrM4c3e7BJFv9ULVRuSQeBP8sIfHCH~2AMAh9guDaf62GtCSrczECh2HhvDBTaBRTvhd1YC-g__' alt='home image' />
       </div>
       <div className='banner'>
-          <p className='banner-text'>"A programming language is for thinking about programs, not for expressing programs you’ve already thought of. It should be a pencil, not a pen"<br/><br/>Paul Graham.</p>
+          <p className='banner-text'><q>A programming language is for thinking about programs, not for expressing programs you’ve already thought of. 
+            It should be a pencil, not a pen</q><br/><br/>Paul Graham.</p>
         </div>
       <div className='course-cards'>
         {courses.map((course, index)=>(<div key={index} className='course-card'>
-          <h3 id='course-header'>{course.title}</h3>
+          <h3 id='course-header'>{course.title} </h3>
           <p>{course.content}</p>
           </div>
           ))}
