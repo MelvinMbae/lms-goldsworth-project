@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
 
 
-function StudentDash(){
+function ParentDash(){
     const [state, setState] = useState({
         options: {
           chart: {
@@ -58,13 +58,21 @@ function StudentDash(){
                                 <span>Number of courses</span>
                             </div>
                         </div>
+                        <div className='graphs'>
+                        <Chart
+                            options={state.options}
+                            series={state.series}
+                            type="line"
+                            width="650"
+                        />              
+                        </div>
+
                     </div>
                 </div>
                 <div className='footer'>
-                    
                 </div>    
             </div>
         </>
     )
 }
-export default StudentDash
+export default ParentDash

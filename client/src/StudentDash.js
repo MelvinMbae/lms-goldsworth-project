@@ -70,7 +70,6 @@ function StudentDash(){
                     </div>
                 </div>
                 <div className='footer'>
-                    Data
                 </div>    
             </div>
         </>

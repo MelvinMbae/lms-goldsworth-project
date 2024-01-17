@@ -1,6 +1,6 @@
-.App {
+/* .App {
   text-align: center;
-}
+} */
 
 .navbar{
   display: flex;
@@ -44,6 +44,10 @@
   margin-left: 24px;
 }
 
+.sidebar link{
+  text-decoration: none;
+}
+
 .sides{
   display: flex;
   flex-direction: column;
@@ -76,8 +80,26 @@
   /* background: #00A8A2; */
 }
 
+.teacherContents{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  background: #bdd6e0; 
+  width: 1145px;
+  height: 425px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  /* justify-content: space-around; */
+}
+
 .top{
   display: flex;
+  justify-content: space-around;
+}
+
+.teachersTop{
+  display: flex;
+  /* flex-direction: column; */
   justify-content: space-around;
 }
 
@@ -96,9 +118,13 @@
 }
 
 .footer{
-  width: 1114px;
-  height: 248px;
+  width: 100%;
+  height: 148px;
   flex-shrink: 0;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   background: #45A5A1;
+}
+
+.navbar{
+  
 }
