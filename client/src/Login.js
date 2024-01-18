@@ -3,7 +3,7 @@ import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 
-function Login() {
+function Login({ setUser }) {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -29,15 +29,8 @@ function Login() {
     })
       .then((r) => {
         if (r.ok){
-          r.json().then((resp) => {
-          // onLogIn(resp);
-          // Swal.fire({
-          //   title: "Success!",
-          //   text: `Welcome  ${resp.username}`,
-          //   icon: "success",
-          //   confirmButtonText: "Okay",
-          // });
-          console.log(resp)
+          r.json().then((user) => {
+          setUser(user.name)
           navigate("/dashboard", { replace: true });
         });
         }

@@ -77,9 +77,7 @@ class Logout(Resource):
         if user:
             session['user'] = None
 
-            return make_response(
-                "You have been logged out successfully", 200
-            )
+            return "You have been logged out successfully", 200
         return make_response("You are not allowed to access this method", 401)
 
 api.add_resource(Logout, '/logout')

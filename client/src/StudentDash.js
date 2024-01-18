@@ -5,19 +5,28 @@ import './App.css'
 
 
 function StudentDash(){
-    const [state, setState] = useState({
+    let studentReport = {
+        "name":"Michael Njogu",
+        "courses-pursuing":3,
+        "active-course":"software engineering",
+        "course-hours":40,
+        "phases":["Phase 0", "Phase 1", "Phase 2", "Phase 3", "Phase 4","Phase 5"],
+        "grades":[40,60,75,60,80]
+    }
+
+    const [performanceGraph, setPerformanceGraph] = useState({
         options: {
           chart: {
             id: "basic-bar"
           },
           xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+            categories: studentReport.phases
           }
         },
         series: [
           {
-            name: "series-1",
-            data: [30, 40, 45, 50, 49, 60, 70, 91]
+            name: "grades",
+            data: studentReport.grades
           }
         ]
       })
@@ -50,21 +59,21 @@ function StudentDash(){
                     <div className='contents'>
                         <div className='top'>
                             <div className='data'>
-                                <span>Courses selection</span>
+                                <span>{studentReport['active-course']}</span>
                             </div>
                             <div className='data'>
-                                <span>Required man hours</span>
+                                <span>{studentReport['course-hours']} hrs</span>
                             </div>
                             <div className='data'>
-                                <span>Number of courses</span>
+                                <span>{studentReport['courses-pursuing']} Courses</span>
                             </div>
                         </div>
                         <div className='graphs'>
                         <Chart
-                            options={state.options}
-                            series={state.series}
+                            options={performanceGraph.options}
+                            series={performanceGraph.series}
                             type="line"
-                            width="650"
+                            width="400"
                         />              
                         </div>
 
