@@ -6,6 +6,7 @@ import './App.css'
 import './Dashboard.css'
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
+import SideBar from './SideBar';
 
 
 function App() {
@@ -40,7 +41,9 @@ function App() {
         <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
           <Route index element={<Home courses={courses}/>} />
           <Route path='/' element={<Home courses={courses}/>} />
-          <Route path='/dashboard' element={<StudentDash />} />
+          <Route path='/dashboard' element={<SideBar />}>
+            <Route path='/dashboard' element={<StudentDash />} />
+          </Route>
         </Route>
         <Route path='/login' element={<Login setUser={setUser}/>} />
       </Routes>
