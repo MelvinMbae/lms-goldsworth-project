@@ -31,32 +31,26 @@ function StudentDash(){
       })
 
     return(
-        <>
-            <div className='uno'>
-                    <div className='contents'>
-                        <div className='top'>
-                                <span className='data'><h2>{studentReport['active-course']}</h2></span>
-                                <span className='data'><h1>{studentReport['course-hours']}</h1> <h2>  hrs</h2></span>
-                                <span className='data'><h1>{studentReport['courses-pursuing']}</h1> <h2>  Courses</h2></span>
-                        </div>
-                        <div className='graphs'>
-                            <Chart
-                                options={performanceGraph.options}
-                                series={performanceGraph.series}
-                                type="line"
-                                width="400"
-                            />
-                            <div className='dash-message'>
-                                <em><q>
-                                Any fool can write code that a computer can understand. Good programmers write code that humans can understand.</q></em>
-                                <p>~ Martin Fowler</p>
-                            </div>              
-                        </div>
-                    </div>
-                <div className='footer'>
-                </div>    
-            </div>
-        </>
+            <div className='contents'>
+                <div className='top'>
+                        <span className='data'><h2>{studentReport['active-course']}</h2></span>
+                        <span className='data'><h1>{studentReport['course-hours']}</h1> <h2>  hrs</h2></span>
+                        <span className='data'><h1>{studentReport['courses-pursuing']}</h1> <h2>  Courses</h2></span>
+                </div>
+                <div className='graphs'>
+                    <Chart
+                        options={performanceGraph.options}
+                        series={performanceGraph.series}
+                        type="line"
+                        width="400"
+                    />
+                    <div className='dash-message'>
+                        <em><q>
+                        Any fool can write code that a computer can understand. Good programmers write code that humans can understand.</q></em>
+                        <p>~ Martin Fowler</p>
+                    </div>              
+                </div>
+            </div> 
     )
 }
 export default StudentDash
