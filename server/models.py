@@ -74,8 +74,8 @@ class Student(db.Model):
     def validates_email(self,key,value):
         if not value:
             raise ValueError("Email Address is a required field!")
-        if "@" not in value:
-        # if "@" and ".com" not in value:
+        # if "@" not in value:
+        if "@" and "student.goldworth" and ".com" not in value:
             raise ValueError("Email address is not valid!")
         return value
 

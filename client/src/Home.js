@@ -1,33 +1,34 @@
 import React from 'react'
 import Navbar from './Navbar';
 
-function Home() {
-  const courses = [
-    { title: 'Machine Learning', content: 'Machine learning is a subfield of artificial intelligence, which is broadly defined as the capability of a machine to imitate intelligent human behavior.' },
-    { title: 'Web Development', content: 'Web development involves building and maintaining websites. It includes various aspects such as database management, front-end and back-end development.' },
-    { title: 'Artificial Intelligence', content: 'Artificial Intelligence (AI) is the simulation of human intelligence in machines. It involves the creation of algorithms that can perform tasks that typically require human intelligence.' },
-    { title: 'Game Development', content: 'Game development is the process of creating video games. It involves design, programming, testing, and production of games for various platforms.' },
-  ];
+function Home({ courses}) {
+
+  // console.log(courses[0:3])
   return (
     <div className='home-container'>
-      <Navbar />
       <div className='home-info'>
         <p className='home-text'>
-          <h1>Welcome to Goldworth.<br/>
-Your Education is our Responsibility.</h1>
-          <h3 className='home-text'>In this age of digital revolution, coding isn’t just a skill—it’s a superpower!<br/>
-And if you’re an aspiring coder or an educator seeking to empower tech wizards, then you’re at the right place.</h3>
+          <h1>Welcome to Goldworth.
+            <br/>
+            Your Education is our Responsibility.</h1>
+          <h3 className='home-text'>
+            In this age of digital revolution, coding isn’t just a skill—it’s a superpower!
+            <br/>
+            And if you’re an aspiring coder or an educator seeking to empower tech wizards, then you’re at the right place.</h3>
         </p>
         <img id='image-1' src='/images/home-1.jpeg' alt='man studying' />
       </div>
       <div className='banner'>
-          <p className='banner-text'><q>A programming language is for thinking about programs, not for expressing programs you’ve already thought of. 
-            It should be a pencil, not a pen</q><br/><br/>Paul Graham.</p>
+          <p className='banner-text'>
+            <q>A programming language is for thinking about programs, not for expressing programs you’ve already thought of. 
+            It should be a pencil, not a pen
+            </q>
+            <br/><br/>Paul Graham.</p>
         </div>
       <div className='course-cards'>
-        {courses.map((course, index)=>(<div key={index} className='course-card'>
-          <h3 id='course-header'>{course.title} </h3>
-          <p>{course.content}</p>
+        {courses.slice(1,5).map((course)=>(<div key={course.id} className='course-card'>
+          <h3 id='course-header'>{course.course_name} </h3>
+          <p>{course.description}</p>
           </div>
           ))}
       </div>

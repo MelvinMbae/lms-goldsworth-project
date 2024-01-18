@@ -1,79 +1,56 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
 import './App.css'
 
 
 function StudentDash(){
-    const [state, setState] = useState({
+    let studentReport = {
+        "name":"Michael Njogu",
+        "courses-pursuing":3,
+        "active-course":"software engineering",
+        "course-hours":40,
+        "phases":["Phase 0", "Phase 1", "Phase 2", "Phase 3", "Phase 4","Phase 5"],
+        "grades":[40,60,75,60,80]
+    }
+
+    const [performanceGraph, setPerformanceGraph] = useState({
         options: {
           chart: {
             id: "basic-bar"
           },
           xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+            categories: studentReport.phases
           }
         },
         series: [
           {
-            name: "series-1",
-            data: [30, 40, 45, 50, 49, 60, 70, 91]
+            name: "grades",
+            data: studentReport.grades
           }
         ]
       })
-    return(
-        <>
-            <div className='navbar'>
-                <div className='logo'>
-                    <Link to={'/main'}>GoldWorth</Link>
-                </div>
-                <div className='links'>
-                    <Link to={'home'}>Home</Link>
-                    <Link to={'/about'}>About</Link>
-                    <Link to={'/courses'}>Courses</Link>
-                    <Link to={'/contact'}>Contacts</Link>
-                    <Link to={'/discussion'}>Discussion</Link>
-                    <Link to={'/user'}>user</Link>
-                </div>
-                
-            </div>
-            <div className='uno'>
-                <div className='sidebar'>
-                    <div className='sides'>
-                        <Link to={'/StudentDash'}>Dashboard</Link>
-                        <Link to={'/courses'}>Courses</Link>
-                        <Link to={'/discussion'}>Discussion</Link>
-                        <Link to={'/calender'}>Calender</Link>
-                        <Link to={'/reportCard'}>Report Card</Link>
-                        <Link to={'/assignments'}>Assignments</Link>
-                    </div>
-                    <div className='contents'>
-                        <div className='top'>
-                            <div className='data'>
-                                <span>Courses selection</span>
-                            </div>
-                            <div className='data'>
-                                <span>Required man hours</span>
-                            </div>
-                            <div className='data'>
-                                <span>Number of courses</span>
-                            </div>
-                        </div>
-                        <div className='graphs'>
-                        <Chart
-                            options={state.options}
-                            series={state.series}
-                            type="line"
-                            width="650"
-                        />              
-                        </div>
 
-                    </div>
+    return(
+            <div className='contents'>
+                <div className='top'>
+                        <span className='data'><h2>{studentReport['active-course']}</h2></span>
+                        <span className='data'><h1>{studentReport['course-hours']}</h1> <h2>  hrs</h2></span>
+                        <span className='data'><h1>{studentReport['courses-pursuing']}</h1> <h2>  Courses</h2></span>
                 </div>
-                <div className='footer'>
-                </div>    
-            </div>
-        </>
+                <div className='graphs'>
+                    <Chart
+                        options={performanceGraph.options}
+                        series={performanceGraph.series}
+                        type="line"
+                        width="400"
+                    />
+                    <div className='dash-message'>
+                        <em><q>
+                        Any fool can write code that a computer can understand. Good programmers write code that humans can understand.</q></em>
+                        <p>~ Martin Fowler</p>
+                    </div>              
+                </div>
+            </div> 
     )
 }
 export default StudentDash
