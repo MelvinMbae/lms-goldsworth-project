@@ -5,7 +5,7 @@ import Login from './Login';
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
 import ReportCard from './ReportCard';
-import Courses from './Courses';
+import Courses from './courses';
 import Dashboard from './Dashboard';
 
 
