@@ -17,7 +17,6 @@ function Navbar({user , setUser}) {
         response.json()
         .then((response) => {
           setUser("")
-          console.log(response)
           navigate("/", {replace:true})
         })
       }
@@ -32,7 +31,7 @@ function Navbar({user , setUser}) {
               <li>About</li>
               <li>Courses</li>
           </ul>
-          {user ? <span>{user} <button className="button" onClick={handleLogout}>Logout</button></span> : <Link to="/login" className="button">Login</Link>}
+          {user ? <span>{user.name} <button className="button" onClick={handleLogout}>Logout</button></span> : <Link to="/login" className="button">Login</Link>}
       </div>
       <Outlet />
     </>

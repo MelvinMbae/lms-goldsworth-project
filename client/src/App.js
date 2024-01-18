@@ -7,6 +7,8 @@ import './Dashboard.css'
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
 import SideBar from './SideBar';
+import ReportCard from './ReportCard';
+import Courses from './Courses';
 
 
 function App() {
@@ -30,7 +32,7 @@ function App() {
       if(response.ok){
         response.json()
         .then((sessionMember)=>{
-          setUser(sessionMember.name)
+          setUser(sessionMember)
         })
       }
     })
@@ -41,8 +43,10 @@ function App() {
         <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
           <Route index element={<Home courses={courses}/>} />
           <Route path='/' element={<Home courses={courses}/>} />
-          <Route path='/dashboard' element={<SideBar />}>
+          <Route  element={<SideBar user={user}/>}>
             <Route path='/dashboard' element={<StudentDash />} />
+            <Route path='/reportcard' element={<ReportCard />} />
+            <Route path='/courses' element={<Courses />} />
           </Route>
         </Route>
         <Route path='/login' element={<Login setUser={setUser}/>} />
