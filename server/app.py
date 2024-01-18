@@ -66,7 +66,7 @@ class CheckSession(Resource):
         if user:
             return User_details(user_data)
 
-        return make_response("please login to continue", 401)
+        return "Please login to continue", 401
 
 api.add_resource(CheckSession, '/checksession')
 
@@ -216,7 +216,7 @@ class StudentbyId(Resource):
         db.session.delete(student)
         db.session.commit()
 
-        return make_response("record successfully deleted" , 200)
+        return "Record successfully deleted" , 200
 
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
@@ -304,7 +304,7 @@ class TeacherbyId(Resource):
         db.session.delete(teacher)
         db.session.commit()
 
-        return make_response({"message": "record successfully deleted"} , 200)
+        return "record successfully deleted" , 200
 
 api.add_resource(TeacherbyId, '/teachers/<int:id>')
 api.add_resource(Teachers, '/teachers')
@@ -387,7 +387,7 @@ class ParentbyId(Resource):
         db.session.delete(parent)
         db.session.commit()
 
-        return make_response({"message": "record successfully deleted"} , 200)
+        return "record successfully deleted" , 200
 
 api.add_resource(ParentbyId, '/parents/<int:id>')
 api.add_resource(Parents, '/parents')
@@ -466,7 +466,7 @@ class CoursebyId(Resource):
         db.session.delete(course)
         db.session.commit()
 
-        return make_response({"message": "record successfully deleted"} , 200)
+        return "record successfully deleted" , 200
 
 api.add_resource(CoursebyId, '/courses/<int:id>')
 api.add_resource(Courses, '/courses')
@@ -545,7 +545,7 @@ class ContentbyId(Resource):
         db.session.delete(content)
         db.session.commit()
 
-        return make_response("record successfully deleted" , 200)
+        return "record successfully deleted" , 200
 
 api.add_resource(ContentbyId, '/contents/<int:id>')
 api.add_resource(Contents, '/contents')
