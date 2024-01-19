@@ -8,7 +8,7 @@ function SideBar() {
     function Sidebar(props){
         return (
             <div className='sides'>
-                <Link to={'/StudentDash'}>Dashboard</Link>
+                <Link to={'/dashboard'}>Dashboard</Link>
                 <Link to={'/courses'}>Active Courses</Link>
                 <Link to={'/classes'}>Classes</Link>
                 {props.children}

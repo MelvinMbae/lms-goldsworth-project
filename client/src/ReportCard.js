@@ -41,42 +41,16 @@ const ReportCard = () => {
   };
 
   return (
-    <div>
-      {/* Student Report Card Header */}
+    <div className='contents'>
       <div className="header">
         <h1>Student Report Card</h1>
       </div>
-
-      {/* Academic Year Top Bar */}
       <div className="top-bar">
         <h3>Academic Year: 2024-2025</h3>
-      </div>
-
-      {/* Term One Top Bar */}
-      <div className="top-bar">
         <h3>Term: One</h3>
       </div>
-
       {/* Student Information Section */}
       <div className="student-info">
-        <div>
-          <label>Student ID:</label>
-          <br />
-          <input
-            type="text"
-            value={studentInfo.studentID}
-            onChange={(e) => setStudentInfo({ ...studentInfo, studentID: e.target.value })}
-          />
-        </div>
-        <div>
-          <label>Student Name:</label>
-          <br />
-          <input
-            type="text"
-            value={studentInfo.studentName}
-            onChange={(e) => setStudentInfo({ ...studentInfo, studentName: e.target.value })}
-          />
-        </div>
         <div>
           <label>Attendance:</label>
           <br />
