@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './Reportcard.css'; // Import the CSS file
 
 const ReportCard = () => {
   const [grades, setGrades] = useState({

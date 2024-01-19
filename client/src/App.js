@@ -8,8 +8,8 @@ import ReportCard from './ReportCard';
 import Courses from './Courses';
 import Dashboard from './Dashboard';
 import ActiveCourse from './ActiveCourses';
-import { Assignment } from '@mui/icons-material';
 import Classes from './Classes';
+import Assignments from './Assignments';
 
 
 function App() {
@@ -49,7 +49,7 @@ function App() {
             <Route path='/reportcard' element={<ReportCard />} />
             <Route path='/courses' element={<ActiveCourse />} />
             <Route path='/classes' element={<Classes />} />
-            <Route path='/assignments' element={<Assignment />} />
+            <Route path='/assignments' element={<Assignments />} />
           </Route>
         </Route>
         <Route path='/login' element={<Login setUser={setUser}/>} />

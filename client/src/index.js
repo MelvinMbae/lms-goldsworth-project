@@ -5,6 +5,7 @@ import './index.css';
 import './Profile.css'
 import './App.css'
 import './Dashboard.css'
+import './Reportcard.css'; 
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
