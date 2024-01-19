@@ -10,35 +10,11 @@ import Dashboard from './Dashboard';
 import ActiveCourse from './ActiveCourses';
 import Classes from './Classes';
 import Assignments from './Assignments';
-
+import './Chat.css';
+import Chat from './pages/Chat';
+import Registration from './pages/Registration';
 
 function App() {
-  const [courses, setCourse] = useState([])
-  const [user, setUser] = useState("")
-
-
-  useEffect(()=>{
-    fetch("/courses").then((response)=>{
-      if(response.ok){
-        response.json()
-        .then((courses)=>{
-          setCourse(courses)
-        })
-      }
-    })
-  },[])
-
-  useEffect(()=>{
-    fetch("/checksession").then((response)=>{
-      if(response.ok){
-        response.json()
-        .then((sessionMember)=>{
-          setUser(sessionMember)
-        })
-      }
-    })
-  },[])
-
   return (
       <Routes>
         <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
@@ -50,6 +26,7 @@ function App() {
             <Route path='/courses' element={<ActiveCourse />} />
             <Route path='/classes' element={<Classes />} />
             <Route path='/assignments' element={<Assignments />} />
+            <Route path='/assignments' element={<Chat />} />
           </Route>
         </Route>
         <Route path='/login' element={<Login setUser={setUser}/>} />
@@ -59,5 +36,3 @@ function App() {
 }
 
 export default App;
-
-
