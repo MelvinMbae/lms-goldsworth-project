@@ -9,7 +9,7 @@ function SideBar() {
         return (
             <div className='sides'>
                 <Link to={'/dashboard'}>Dashboard</Link>
-                <Link to={'/courses'}>Active Courses</Link>
+                <Link to={'/active-courses'}>Active Courses</Link>
                 <Link to={'/classes'}>Classes</Link>
                 {props.children}
             </div>

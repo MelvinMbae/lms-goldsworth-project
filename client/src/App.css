@@ -326,3 +326,31 @@
     font-size: 20px;
     right: 30px;
   }
+  .cards-container{
+    margin-top: 3rem;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    column-gap: 10px;
+    border-inline: 4px solid #00A8A2;
+    padding: 2rem;
+
+    .course-cards{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 350px;
+      height: 250px;
+      border-radius: 6px;
+
+      img{
+        width: 350px;
+        height: 250px;
+      }
+    }
+
+  }

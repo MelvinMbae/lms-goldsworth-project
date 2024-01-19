@@ -65,8 +65,7 @@ function ChatBox() {
   };
 
   return (
-    <div>
-      <section className="chat-box">
+      <section className="app chat-box">
         <header className="py-1 chat-header navbar nav sticky-top">
           <div className="chat-header-user d-flex justify-content-start gap-3 px-4 align-items-center flex-nowrap">
             <div className="profile">
@@ -81,30 +80,24 @@ function ChatBox() {
             </div>
           </div>
         </header>
-        <section className="messages-container px-2 position-relative w-100 mb-5" ref={messagesContainerRef}>
-          <div className="messages-inner d-flex flex-column justify-content-end align-items-center w-100 h-auto">
-          {allMessages &&
-              allMessages.map((msg, index) => (
-                <div key={index} className={msg.sender === "You" ? "sent-message" : "received-message px-2 py-3 my-3 ml-4"}>
-                  <p className="p-0 m-0">{msg.message}</p>
-                  <span className="message-time">{msg.timestamp}</span>
-                </div>
-              ))}
-          </div>
-          <form
-            className="chat-input position-relative mx-4 w-100 py-2"
-            onSubmit={handleSendMessage}
-          >
-            <div className="inner-input  d-flex flex-row justify-content-end gap-2 m-0 ">
-              <textarea
-                value={message}
-                onChange={handleMessageChange}
-                className="form-control px-4"
-                id="messageinput"
-                placeholder="Type your message"
-                autoComplete="off"
-              />
-              <label htmlFor="fileInput" className="upload-btn">
+        <div className="">
+          <SideBar />
+          <section className="messages-container px-2 position-relative w-100 mb-5" ref={messagesContainerRef}>
+            <div className="messages-inner d-flex flex-column justify-content-end align-items-center w-100 h-auto">
+            {allMessages &&
+                allMessages.map((msg, index) => (
+                  <div key={index} className={msg.sender === "You" ? "sent-message" : "received-message px-2 py-3 my-3 ml-4"}>
+                    <p className="p-0 m-0">{msg.message}</p>
+                    <span className="message-time">{msg.timestamp}</span>
+                  </div>
+                ))}
+            </div>
+            <form
+              className="chat-input position-relative mx-4 w-100 py-2"
+              onSubmit={handleSendMessage}
+            >
+              <div className="inner-input  d-flex flex-row justify-content-end gap-2 m-0 ">
+                <label htmlFor="fileInput" className="upload-btn">
                 <input
                   type="file"
                   id="fileInput"
@@ -112,18 +105,26 @@ function ChatBox() {
                   onChange={(e) => handleFileUpload(e.target.files)}
                 />
                 📎
-              </label>
-              <button type="button" className="camera-btn" onClick={openCamera}>
-                📷
-              </button>
-              <button type="submit" className="send-btn">
-                <img src={send} alt="send message" height={40} width={40} />
-              </button>
-            </div>
-          </form>
-        </section>
+                </label>
+                <textarea
+                  value={message}
+                  onChange={handleMessageChange}
+                  className="form-control px-4"
+                  id="messageinput"
+                  placeholder="Type your message"
+                  autoComplete="off"
+                />
+                <button type="button" className="camera-btn" onClick={openCamera}>
+                  📷
+                </button>
+                <button type="submit" className="send-btn">
+                  <img src={send} alt="send message" height={40} width={40} />
+                </button>
+              </div>
+            </form>
+          </section>
+        </div>
       </section>
-    </div>
   );
 }
 
