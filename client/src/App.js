@@ -12,6 +12,7 @@ import Classes from './Classes';
 import Assignments from './Assignments';
 import ChatBox from './components/chatBox';
 import Registration from './pages/Registration';
+import Registrations from './RegPage';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path='/assignments' element={<Assignments />} />
             <Route path='/forums' element={<ChatBox />} />
             <Route path='/courses' element={<Courses />} />
+            <Route path='/registrations' element={<Registrations />} />
           </Route>
         </Route>
         <Route path='/login' element={<Login setUser={setUser}/>} />
