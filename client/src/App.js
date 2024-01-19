@@ -42,8 +42,8 @@ function App() {
   return (
       <Routes>
         <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
-          <Route index element={<Home courses={courses}/>} />
-          <Route path='/' element={<Home courses={courses}/>} />
+          <Route path='/home' index element={<Home courses={courses}/>} />
+          {/*<Route path='/' element={<Home courses={courses}/>} />*/}
           <Route  element={<Dashboard user={user}/>}>
             <Route path='/dashboard' element={<StudentDash />} />
             <Route path='/reportcard' element={<ReportCard />} />
