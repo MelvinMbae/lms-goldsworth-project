@@ -2,7 +2,7 @@
   .report-card{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     width: 60%;
     height: 60vh;
@@ -26,9 +26,11 @@
     flex-direction: row-reverse;
     align-items: center;
     position: relative;
-    top: 40%;
+    top: 30%;
     
     span{
+      position: relative;
+      top: 140%;
       background-color: #45A5A1;
       text-align: right;
       color: #fff;
