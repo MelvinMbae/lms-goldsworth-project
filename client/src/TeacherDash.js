@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
 import Navbar from './Navbar';
-
+import Footer from './Footer';
 
 function TeacherDash(){
     
@@ -35,10 +35,9 @@ function TeacherDash(){
                         </div>
                     </div>
                 </div>
-                <div className='footer'>
-                    
-                </div>    
             </div>
+            <Footer /> 
+
         </>
     )
 }

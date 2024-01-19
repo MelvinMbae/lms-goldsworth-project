@@ -6,7 +6,6 @@ import './App.css'
 import './Dashboard.css'
 import StudentDash from './StudentDash';
 
-
 function App() {
   return (
     <BrowserRouter>

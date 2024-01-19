@@ -2,7 +2,6 @@ import React from 'react';
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link } from 'react-router-dom';
-
 function Login() {
   return (
     <div className='wrapper'>
@@ -23,6 +22,7 @@ function Login() {
           </div>
         </div>
       </div>
+
     </div>
     
   )

@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
 import Navbar from './Navbar';
+import './Dashboard.css';
+import Footer from './Footer';
 
 function StudentDash(){
-    const [expand, setExpandState] = useState(false);
-  
     const [state, setState] = useState({
         options: {
           chart: {
@@ -26,22 +26,6 @@ function StudentDash(){
         <>
             <Navbar />
             <Link to="/" className="button">Logout</Link>
-        <div className='sidebar-container'>
-            <div className='nav-upper'>
-                <div className='nav-heading'>
-                    <div className='nav-brand'></div>
-                    <h2>Student Profile</h2>
-                </div>
-                <button className=
-            {expand?'hamburger hamburger-in': 'hamburger hamburger-out'}
-                onClick={()=>setExpandState(!expand)}>  
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-               
-            </div>
-        </div>
        
                 <div className='student-dash'>
                     <div className='contents'>
@@ -64,11 +48,10 @@ function StudentDash(){
                             width="650"
                         />              
                         </div>
-
                     </div>
                 </div>
-                <div className='footer'>
-                </div>    
+                <Footer />
+
         </>
     )
 }

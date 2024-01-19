@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
-
+import Footer from './Footer';
 function Home() {
   const courses = [
     { title: 'Machine Learning', content: 'Machine learning is a subfield of artificial intelligence, which is broadly defined as the capability of a machine to imitate intelligent human behavior.' },
@@ -70,7 +70,8 @@ And if you’re an aspiring coder or an educator seeking to empower tech wizards
           </ol>
         </p>
       </div>
-    </div>
+      <Footer />
+     </div>
   )
 }
 

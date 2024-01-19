@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
 import Navbar from './Navbar';
 import './Dashboard.css';
+import Footer from './Footer';
 
 function ParentDash(){
     const [state, setState] = useState({
@@ -58,9 +59,9 @@ function ParentDash(){
 
                     </div>
                 </div>
-                <div className='footer'>
-                </div>    
             </div>
+            <Footer />
+
         </div>
         
     )
