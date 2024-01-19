@@ -14,7 +14,7 @@ function Login() {
            <div className='input'>
            <input className='input-text' type='text' placeholder='Email Address' required /> 
            <MdEmail id='icon-1'/> 
-           <input className='input-text' type='password' placeholder='Password' required/>
+           <input className='input-text' type='password' placeholder='Password' required />
            <FaLock id='icon-2' />
            </div>
            <Link to="/dashboard" className="btn">Login</Link>

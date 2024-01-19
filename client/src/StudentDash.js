@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
-import './App.css'
-
+import Navbar from './Navbar';
 
 function StudentDash(){
+    const [expand, setExpandState] = useState(false);
+  
     const [state, setState] = useState({
         options: {
           chart: {
@@ -23,30 +24,26 @@ function StudentDash(){
       })
     return(
         <>
-            <div className='navbar'>
-                <div className='logo'>
-                    <Link to={'/main'}>GoldWorth</Link>
+            <Navbar />
+            <Link to="/" className="button">Logout</Link>
+        <div className='sidebar-container'>
+            <div className='nav-upper'>
+                <div className='nav-heading'>
+                    <div className='nav-brand'></div>
+                    <h2>Student Profile</h2>
                 </div>
-                <div className='links'>
-                    <Link to={'home'}>Home</Link>
-                    <Link to={'/about'}>About</Link>
-                    <Link to={'/courses'}>Courses</Link>
-                    <Link to={'/contact'}>Contacts</Link>
-                    <Link to={'/discussion'}>Discussion</Link>
-                    <Link to={'/user'}>user</Link>
-                </div>
-                
+                <button className=
+            {expand?'hamburger hamburger-in': 'hamburger hamburger-out'}
+                onClick={()=>setExpandState(!expand)}>  
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+               
             </div>
-            <div className='uno'>
-                <div className='sidebar'>
-                    <div className='sides'>
-                        <Link to={'/StudentDash'}>Dashboard</Link>
-                        <Link to={'/courses'}>Courses</Link>
-                        <Link to={'/discussion'}>Discussion</Link>
-                        <Link to={'/calender'}>Calender</Link>
-                        <Link to={'/reportCard'}>Report Card</Link>
-                        <Link to={'/assignments'}>Assignments</Link>
-                    </div>
+        </div>
+       
+                <div className='student-dash'>
                     <div className='contents'>
                         <div className='top'>
                             <div className='data'>
@@ -72,7 +69,6 @@ function StudentDash(){
                 </div>
                 <div className='footer'>
                 </div>    
-            </div>
         </>
     )
 }

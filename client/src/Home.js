@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const courses = [
@@ -11,6 +12,8 @@ function Home() {
   return (
     <div className='home-container'>
       <Navbar />
+      <Link to="/login" className="button">Login</Link>
+
       <div className='home-info'>
         <p className='home-text'>
           <h1>Welcome to Goldworth.<br/>

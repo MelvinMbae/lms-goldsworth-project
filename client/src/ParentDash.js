@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Chart from "react-apexcharts";
-
+import Navbar from './Navbar';
+import './Dashboard.css';
 
 function ParentDash(){
     const [state, setState] = useState({
@@ -21,21 +22,9 @@ function ParentDash(){
         ]
       })
     return(
-        <>
-            <div className='navbar'>
-                <div className='logo'>
-                    <Link to={'/main'}>GoldWorth</Link>
-                </div>
-                <div className='links'>
-                    <Link to={'home'}>Home</Link>
-                    <Link to={'/about'}>About</Link>
-                    <Link to={'/courses'}>Courses</Link>
-                    <Link to={'/contact'}>Contacts</Link>
-                    <Link to={'/discussion'}>Discussion</Link>
-                    <Link to={'/user'}>user</Link>
-                </div>
-                
-            </div>
+        <div>
+             <Navbar />
+            
             <div className='uno'>
                 <div className='sidebar'>
                     <div className='sides'>
@@ -72,7 +61,8 @@ function ParentDash(){
                 <div className='footer'>
                 </div>    
             </div>
-        </>
+        </div>
+        
     )
 }
 export default ParentDash
