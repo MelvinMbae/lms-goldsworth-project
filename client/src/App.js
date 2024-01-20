@@ -1,57 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Login from './Login';
-import StudentDash from './StudentDash';
-import Navbar from './Navbar';
-import ReportCard from './ReportCard';
-import Courses from './courses';
-import Dashboard from './Dashboard';
+import React from 'react';
 
-
-function App() {
-  const [courses, setCourse] = useState([])
-  const [user, setUser] = useState("")
-
-
-  useEffect(()=>{
-    fetch("/courses").then((response)=>{
-      if(response.ok){
-        response.json()
-        .then((courses)=>{
-          setCourse(courses)
-        })
-      }
-    })
-  },[])
-
-  useEffect(()=>{
-    fetch("/checksession").then((response)=>{
-      if(response.ok){
-        response.json()
-        .then((sessionMember)=>{
-          setUser(sessionMember)
-        })
-      }
-    })
-  },[])
+const DocumentDownload = () => {
+  const downloadDocument = () => {
+    
+    const documentUrl = 'your_document_url';
+    
+    
+    const link = document.createElement('a');
+    
+    
+    link.href = documentUrl;
+    
+    
+    link.download = 'downloaded_document.pdf';
+    
+    
+    document.body.appendChild(link);
+    
+    
+    link.click();
+    
+    
+    document.body.removeChild(link);
+  };
 
   return (
-      <Routes>
-        <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
-          <Route index element={<Home courses={courses}/>} />
-          <Route path='/' element={<Home courses={courses}/>} />
-          <Route  element={<Dashboard user={user}/>}>
-            <Route path='/dashboard' element={<StudentDash />} />
-            <Route path='/reportcard' element={<ReportCard />} />
-            <Route path='/courses' element={<Courses />} />
-          </Route>
-        </Route>
-        <Route path='/login' element={<Login setUser={setUser}/>} />
-      </Routes>
+    <div>
+      <h1>Document Download</h1>
+      <button onClick={downloadDocument}>Download Document</button>
+    </div>
   );
-}
+};
 
-export default App;
-
-
+export default DocumentDownload;
