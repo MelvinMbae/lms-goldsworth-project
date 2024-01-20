@@ -1,9 +1,8 @@
 import { useLocation, Outlet } from 'react-router-dom';
-import './App.css'
-import Profile from './Profile';
-import SideBar from './SideBar';
+import Profile from '../components/Profile';
+import SideBar from '../components/SideBar';
 import { Fragment } from 'react';
-import Courses from './Courses';
+import Courses from '../Courses';
 
 function Dashboard({ user }) {
     

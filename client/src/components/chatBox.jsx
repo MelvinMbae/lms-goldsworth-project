@@ -5,7 +5,6 @@ import user3 from "../assets/images/img3.jpg";
 import user4 from "../assets/images/img4.jpg";
 import user5 from "../assets/images/img5.jpg";
 import send from "../assets/images/send.png";
-import SideBar from "./sideBar";
 
 const users = [
   { id: 1, name: "John Doe", profileImage: user1 },
@@ -81,7 +80,6 @@ function ChatBox() {
           </div>
         </header>
         <div className="">
-          <SideBar />
           <section className="messages-container px-2 position-relative w-100 mb-5" ref={messagesContainerRef}>
             <div className="messages-inner d-flex flex-column justify-content-end align-items-center w-100 h-auto">
             {allMessages &&

@@ -15,7 +15,7 @@ const users = [
 ];
 
 
-function SideBar() {
+function ChatBar() {
   const [isTyping, setIsTyping] = useState(false);
   const [lastMessage, setLastMessage] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
@@ -87,4 +87,4 @@ function SideBar() {
   );
 }
 
-export default SideBar;
+export default ChatBar;

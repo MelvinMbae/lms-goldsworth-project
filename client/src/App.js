@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Login from './Login';
+import Home from './pages/Home';
+import Login from './pages/Login';
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
 import ReportCard from './ReportCard';
 import Courses from './Courses';
-import Dashboard from './Dashboard';
+import Dashboard from './pages/Dashboard';
 import ActiveCourse from './ActiveCourses';
 import Classes from './Classes';
 import Assignments from './Assignments';
 import ChatBox from './components/chatBox';
 import Registration from './pages/Registration';
-import Registrations from './RegPage';
+import Registrations from './components/RegPage';
 
 
 function App() {
