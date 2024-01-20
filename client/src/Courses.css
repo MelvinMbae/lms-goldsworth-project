@@ -4,12 +4,13 @@
   padding: 8vh 0;
   width: 100%;
   margin: auto;
+  background-color: #F1FAFE;
 }
 
 .courses {
   display: flex;
   flex-direction: column;
-  row-gap: 30px;
+  /* row-gap: 30px; */
   align-items: center;
   margin: auto;
   flex-wrap: wrap;
@@ -25,7 +26,7 @@
 .course-collection {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   justify-content: center;
 }
 
@@ -39,8 +40,13 @@
   flex-direction: column;
   padding: 15px;
   width: 300px;
+  height: 300px;
   align-items: center;
   justify-content: space-between;
+  background-image: url(https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .courselist-cards>.course-image {
@@ -60,14 +66,13 @@
 .courselist-cards h4,
 h3 {
   font-size: small;
-  color: #004b49;
+  color: white;
   padding: 2px;
   /* border: none; */
 }
 
 .courselist-cards p {
-  background-color: white;
-  color: maroon;
+  color: white;
   font-size: smaller;
   border: none;
 }
@@ -78,12 +83,23 @@ h3 {
   column-gap: 20px;
   width: 100%;
   justify-content: space-between;
+ 
 }
 
 .courseButton {
-  border-radius: 4px;
-  border: solid 1px;
-  padding: 4px;
-  font-size: small;
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-size: 14px;
   cursor: pointer;
+  border: 2px;
+  color: white;
+  background-color: #6092a5;
+  border-radius: 10px;
+  font-family: 'Arial', sans-serif;
+}
+
+.courseButton:hover {
+  background-color:white;
+  color:#6092a5;
 }

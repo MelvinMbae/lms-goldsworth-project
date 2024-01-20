@@ -5,17 +5,15 @@ function CoursesCard({ course, addToEnrolledCourses }) {
   return (
     <div className="courselist-cards">
       <div className="course-image">
-        <img
+        {/* <img
           src={course.imageUrl}
           alt="course-cover"
-        />
+        /> */}
         <h3>{course.course_name}</h3>
         <p>{course.description}</p>
       </div>
       <div className="view-course-btns">
-        <button className="courseButton">
-          <Link to={`/courses/${course.id}`}>View</Link>
-        </button>
+        <Link to={`/courses/${course.id}`} className="courseButton">View</Link>
         <button className="courseButton" onClick={addToEnrolledCourses}>Enroll
         </button>
       </div>
