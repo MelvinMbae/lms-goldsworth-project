@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function CoursesCard({ course, addToEnrolledCourses }) {
   return (
-    <div className="course-cards">
+    <div className="courselist-cards">
       <div className="course-image">
         <img
           src={course.imageUrl}
@@ -12,11 +12,12 @@ function CoursesCard({ course, addToEnrolledCourses }) {
         <h3>{course.course_name}</h3>
         <p>{course.description}</p>
       </div>
-      <div className="view-add-btns">
+      <div className="view-course-btns">
         <button className="courseButton">
           <Link to={`/courses/${course.id}`}>View</Link>
         </button>
-        <Like onClick={addToEnrolledCourses} className="iconButton"/>
+        <button className="courseButton" onClick={addToEnrolledCourses}>Enroll
+        </button>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@
 			"id": 1,
 			"course_name": "Introduction to Web Development",
 			"description": "Explore the fundamentals of web development, covering HTML, CSS, and basic JavaScriptand breathe life into visually appealing web pages from scratch.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			"students": [
 				{
 					"student_id": 1
@@ -17,6 +18,7 @@
 			"id": 2,
 			"course_name": "Python Fundamentals",
 			"description": "Learn the fundamental concepts of Python programming, including variables, data types, control structures, and functions.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			"students": [
 				{
 					"student_id": 1
@@ -30,6 +32,7 @@
 			"id": 3,
 			"course_name": "Data Structures and Algorithms",
 			"description": "We start this course by looking in detail at the fundamental building blocks: arrays and linked lists. From there, we build up two important data structures: stacks and queues. Next, we look at trees: examples of how they are used in Computer Science, how they are implemented, and the various ways they can be traversed. Once you have completed this course, you will be able to implement any of these data structures, as well as have a solid understanding of the costs of the operations, as well as the tradeoffs involved in using each data structure.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 			"students": [
 				{
 					"student_id": 4
@@ -42,57 +45,68 @@
 		{
 			"id": 4,
 			"course_name": "Full-Stack Web Development",
-			"description": "Comprehensive course covering both front-end (HTML, CSS, JavaScript) and back-end (Node.js, Express, MongoDB) development."
+			"description": "Comprehensive course covering both front-end (HTML, CSS, JavaScript) and back-end (Node.js, Express, MongoDB) development.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 5,
 			"course_name": "Mobile App Development with React Native",
-			"description": "Build cross-platform mobile applications using React Native, combining the power of React with native capabilities."
+			"description": "Build cross-platform mobile applications using React Native, combining the power of React with native capabilities.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 6,
 			"course_name": "Database Design and SQL",
-			"description": "Learn the principles of relational database design and master SQL for effective database management."
+			"description": "Learn the principles of relational database design and master SQL for effective database management.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 7,
 			"course_name": "Machine Learning Essentials",
-			"description": "An introduction to machine learning concepts and algorithms, including supervised and unsupervised learning."
+			"description": "An introduction to machine learning concepts and algorithms, including supervised and unsupervised learning.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 8,
 			"course_name": "Game Development",
-			"description": "This holistic, project-based course teaches intermediate and advanced game development concepts and industry-established software design practices."
+			"description": "This holistic, project-based course teaches intermediate and advanced game development concepts and industry-established software design practices.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 9,
 			"course_name": "Front-end Frameworks: React and Angular",
-			"description": "Learn to build modern web applications using popular front-end frameworks like React and Angular."
+			"description": "Learn to build modern web applications using popular front-end frameworks like React and Angular.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 10,
 			"course_name": "RESTful API Development",
-			"description": "Understand the principles of RESTful API design and develop APIs for web applications."
+			"description": "Understand the principles of RESTful API design and develop APIs for web applications.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 11,
 			"course_name": "Cybersecurity Fundamentals",
-			"description": "Understand the basics of cybersecurity, including threat detection, encryption, and best practices for securing systems."
+			"description": "Understand the basics of cybersecurity, including threat detection, encryption, and best practices for securing systems.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 12,
 			"course_name": "Data Science with Python",
-			"description": "Learn data science fundamentals using Python, covering data manipulation, analysis, and visualization."
+			"description": "Learn data science fundamentals using Python, covering data manipulation, analysis, and visualization.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 13,
 			"course_name": "DevOps and Continuous Integration",
-			"description": "Delve into DevOps practices, including version control, continuous integration, and automated deployment."
+			"description": "Delve into DevOps practices, including version control, continuous integration, and automated deployment.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		},
 		{
 			"id": 14,
 			"course_name": "JavaScript for Beginners",
-			"description": "Get started with JavaScript, focusing on the basics of the language and its role in web development."
+			"description": "Get started with JavaScript, focusing on the basics of the language and its role in web development.",
+			"image_url": "https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
 		}
 	],
 	"contents": [

@@ -5,9 +5,10 @@ import Login from './Login';
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
 import ReportCard from './ReportCard';
-import Courses from './courses';
+import Courses from './Courses';
+import CoursesPage from './CoursesPage'
 import Dashboard from './Dashboard';
-
+import './Courses.css'
 
 function App() {
   const [courses, setCourse] = useState([])
@@ -27,6 +28,7 @@ function App() {
         setCoursesList(data);
         setCourseListDictionary(courseListDictionary);
       });
+
   }
   useEffect(() => fetchCoursesData(), []);
 
@@ -53,9 +55,10 @@ function App() {
   }, [])
 
   return (
-    <Routes>
-      <Route path='/CoursesPage' element={<CoursesPage coursesList={coursesList} setToFavorite={setToFavoriteProducts} />}/>
-      <Route path='/' element={<Navbar user={user} setUser={setUser} />}>
+    <>
+      <Navbar user={user} setUser={setUser} />
+      <Routes>
+        <Route path='/coursespage' element={<CoursesPage coursesList={coursesList} user={user} />} />
         <Route index element={<Home courses={courses} />} />
         <Route path='/' element={<Home courses={courses} />} />
         <Route element={<Dashboard user={user} />}>
@@ -63,9 +66,9 @@ function App() {
           <Route path='/reportcard' element={<ReportCard />} />
           <Route path='/courses' element={<Courses />} />
         </Route>
-      </Route>
-      <Route path='/login' element={<Login setUser={setUser} />} />
-    </Routes>
+        <Route path='/login' element={<Login setUser={setUser} />} />
+      </Routes>
+    </>
   );
 }
 

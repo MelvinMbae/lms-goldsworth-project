@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 function Navbar({ user, setUser }) {
+  console.log('Navbar setUser prop:', setUser);
 
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ function Navbar({ user, setUser }) {
       .then((response) => {
         if (response.ok) {
           response.json()
-            .then((response) => {
+            .then(() => {
               setUser("")
               navigate("/", { replace: true })
             })
@@ -27,9 +28,11 @@ function Navbar({ user, setUser }) {
       <div className='navbar-container'>
         <h1 id='header'>GOLDWORTH</h1>
         <ul className='nav'>
-          <li>Home</li>
+        <li><Link to='/'>Home</Link></li>
           <li>About</li>
-          <Link to={'/CoursesPage'}><li>Courses</li></Link>
+          <li><Link to='/CoursesPage'>Courses</Link></li>
+        <li><Link to='/dashboard'>Dashboard</Link></li>
+
         </ul>
         {user ? <span>{user.name} <button className="button" onClick={handleLogout}>Logout</button></span> : <Link to="/login" className="button">Login</Link>}
       </div>
