@@ -1,57 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Login from './Login';
-import StudentDash from './StudentDash';
-import Navbar from './Navbar';
-import ReportCard from './ReportCard';
-import Courses from './courses';
-import Dashboard from './Dashboard';
+import React, { useState } from 'react';
+import './App.css'; // Import the CSS file
 
+const AssignmentList = () => {
+  const [assignments, setAssignments] = useState([
+    { id: 1, student: 'Student A', grade: '', comments: '' },
+    { id: 2, student: 'Student B', grade: '', comments: '' },
+    { id: 3, student: 'Student C', grade: '', comments: '' },
+  ]);
 
-function App() {
-  const [courses, setCourse] = useState([])
-  const [user, setUser] = useState("")
+  const handleGradeChange = (id, grade) => {
+    setAssignments((prevAssignments) =>
+      prevAssignments.map((assignment) =>
+        assignment.id === id ? { ...assignment, grade } : assignment
+      )
+    );
+  };
 
-
-  useEffect(()=>{
-    fetch("/courses").then((response)=>{
-      if(response.ok){
-        response.json()
-        .then((courses)=>{
-          setCourse(courses)
-        })
-      }
-    })
-  },[])
-
-  useEffect(()=>{
-    fetch("/checksession").then((response)=>{
-      if(response.ok){
-        response.json()
-        .then((sessionMember)=>{
-          setUser(sessionMember)
-        })
-      }
-    })
-  },[])
+  const handleCommentsChange = (id, comments) => {
+    setAssignments((prevAssignments) =>
+      prevAssignments.map((assignment) =>
+        assignment.id === id ? { ...assignment, comments } : assignment
+      )
+    );
+  };
 
   return (
-      <Routes>
-        <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
-          <Route index element={<Home courses={courses}/>} />
-          <Route path='/' element={<Home courses={courses}/>} />
-          <Route  element={<Dashboard user={user}/>}>
-            <Route path='/dashboard' element={<StudentDash />} />
-            <Route path='/reportcard' element={<ReportCard />} />
-            <Route path='/courses' element={<Courses />} />
-          </Route>
-        </Route>
-        <Route path='/login' element={<Login setUser={setUser}/>} />
-      </Routes>
+    <div>
+      <h1>Assignment List</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Grade</th>
+            <th>Comments</th>
+          </tr>
+        </thead>
+        <tbody>
+          {assignments.map((assignment) => (
+            <tr key={assignment.id}>
+              <td>{assignment.student}</td>
+              <td>
+                <input
+                  type="text"
+                  value={assignment.grade}
+                  onChange={(e) => handleGradeChange(assignment.id, e.target.value)}
+                />
+              </td>
+              <td>
+                <textarea
+                  value={assignment.comments}
+                  onChange={(e) => handleCommentsChange(assignment.id, e.target.value)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
-export default App;
-
-
+export default AssignmentList;
