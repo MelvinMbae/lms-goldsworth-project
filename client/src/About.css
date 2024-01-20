@@ -7,7 +7,7 @@
 }
 
 .about-us-cover {
-    height: 405px;
+    height: 205px;
     width: 100%;
 
     position: relative;
@@ -17,7 +17,7 @@
     background-size: cover;
 }
 
-.about-us-cover>.tagline {
+.about-us-cover>.text {
 
 
     width: 50%;
@@ -109,7 +109,7 @@ ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    padding: 20px;
     column-gap: 10px;
 }
 
@@ -147,6 +147,32 @@ ul {
 }
 
 .contact-paragraph{
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.ourstory-heading {
+
+
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, -50%);
+    font-size: xx-large;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.ourstory-paragraph{
     width: 50%;
     position: absolute;
     left: 50%;

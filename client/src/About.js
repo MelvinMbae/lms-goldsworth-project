@@ -4,7 +4,7 @@ const About = () => {
     return (
         <div>
             <div className='about-us-cover'>
-                <div className="tagline">
+                <div className="text">
                     About Us
 
                     {/* Welcome to GOLDWORTH, a leading online learning platform designed to empower individuals through education. At GOLDWORTH, we believe in the transformative power of learning, and our mission is to make high-quality education accessible to everyone, anywhere in the world. */}
@@ -40,14 +40,13 @@ const About = () => {
             </div>
 
             <div className='about-us-story'>
-                <div className="tagline">
-                    At Goldworth, our story is woven with a passion for education and a commitment to empowering learners worldwide. It all began with a vision to create an innovative Learning Management System that transcends traditional boundaries, providing a dynamic and personalized educational experience. Over the years, our dedicated team of educators, technologists, and visionaries have collaborated to build a platform that seamlessly integrates cutting-edge technology with pedagogical expertise.
-
-                </div>
+                    <h3 className='ourstory-heading'>Our Story</h3>
+                    <p className='ourstory-paragraph'>
+                        At Goldworth, our story is woven with a passion for education and a commitment to empowering learners worldwide. It all began with a vision to create an innovative Learning Management System that transcends traditional boundaries, providing a dynamic and personalized educational experience. Over the years, our dedicated team of educators, technologists, and visionaries have collaborated to build a platform that seamlessly integrates cutting-edge technology with pedagogical expertise.
+                    </p>
             </div>
-
+            <h3 className='heading-3'>Meet Our Team</h3>
             <div className='team-images-container'>
-                <div><h3 className='heading-3'>Meet Our Team</h3></div>
                 <div className="team-images">
                     <img src="./images/user1.png" alt="Michael Njogu" />
                     <p>Michael Njogu</p>
