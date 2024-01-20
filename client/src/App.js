@@ -8,7 +8,10 @@ import ReportCard from './ReportCard';
 import Courses from './Courses';
 import CoursesPage from './CoursesPage'
 import Dashboard from './Dashboard';
+import About from './About';
 import './Courses.css'
+import './About.css';
+
 
 function App() {
   const [courses, setCourse] = useState([])
@@ -61,6 +64,8 @@ function App() {
         <Route path='/coursespage' element={<CoursesPage coursesList={coursesList} user={user} />} />
         <Route index element={<Home courses={courses} />} />
         <Route path='/' element={<Home courses={courses} />} />
+        <Route path='/about' element={<About setUser={setUser} />} />
+
         <Route element={<Dashboard user={user} />}>
           <Route path='/dashboard' element={<StudentDash />} />
           <Route path='/reportcard' element={<ReportCard />} />
