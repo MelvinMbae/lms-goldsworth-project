@@ -1,63 +1,16 @@
-import React, { useState } from 'react';
-import './App.css'; // Import the CSS file
+// import logo from './logo.svg';
+import React from 'react';
+import PaymentForm from './PaymentForm';
+import './App.css';
 
-const AssignmentList = () => {
-  const [assignments, setAssignments] = useState([
-    { id: 1, student: 'Student A', grade: '', comments: '' },
-    { id: 2, student: 'Student B', grade: '', comments: '' },
-    { id: 3, student: 'Student C', grade: '', comments: '' },
-  ]);
 
-  const handleGradeChange = (id, grade) => {
-    setAssignments((prevAssignments) =>
-      prevAssignments.map((assignment) =>
-        assignment.id === id ? { ...assignment, grade } : assignment
-      )
-    );
-  };
 
-  const handleCommentsChange = (id, comments) => {
-    setAssignments((prevAssignments) =>
-      prevAssignments.map((assignment) =>
-        assignment.id === id ? { ...assignment, comments } : assignment
-      )
-    );
-  };
-
+function App() {
   return (
     <div>
-      <h1>Assignment List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Grade</th>
-            <th>Comments</th>
-          </tr>
-        </thead>
-        <tbody>
-          {assignments.map((assignment) => (
-            <tr key={assignment.id}>
-              <td>{assignment.student}</td>
-              <td>
-                <input
-                  type="text"
-                  value={assignment.grade}
-                  onChange={(e) => handleGradeChange(assignment.id, e.target.value)}
-                />
-              </td>
-              <td>
-                <textarea
-                  value={assignment.comments}
-                  onChange={(e) => handleCommentsChange(assignment.id, e.target.value)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <PaymentForm />
     </div>
   );
-};
+}
 
-export default AssignmentList;
+export default App;
