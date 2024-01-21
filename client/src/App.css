@@ -354,3 +354,26 @@
     }
 
   }
+  .assignments{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #0abeb867;
+    top: 10%;
+    width: 60%;
+    border-radius: 5px;
+    height: 50vh;
+    padding: 15px 20px;
+    overflow-y: scroll;
+    scrollbar-gutter:unset;
+    scroll-behavior: smooth;
+
+
+    .assignment-card{
+      height: 200px;
+      padding: 15px 20px;
+      /* border-bottom: 1px solid gray; */
+      /* border-width: 90%; */
+
+    }
+  }

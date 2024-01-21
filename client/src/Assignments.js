@@ -19,19 +19,19 @@ function Assignments(){
               "ass_id": 1,
               "ass_name":"Perfectly done",
               "content":"Refer to previous code challenge for guidance",
-              "due_date":"Refer to previous code challenge for guidance",
+              "due_date":"Date",
               "file":null,},
               {
               "ass_id": 1,
               "ass_name":"Perfectly done",
               "content":"Refer to previous code challenge for guidance",
-              "due_date":"Refer to previous code challenge for guidance",
+              "due_date":"Date",
               "file":null,},
               {
                 "ass_id": 1,
                 "ass_name":"Perfectly done",
                 "content":"Refer to previous code challenge for guidance",
-                "due_date":"Refer to previous code challenge for guidance",
+                "due_date":"Date",
                 "file":null,}]
             },
       "course_work":[
@@ -51,19 +51,16 @@ function Assignments(){
     }
 
     return(
-
-      <div className="assignment-container">
           <div className="assignments">  
               {studentReport.teacher_report.assignments.map((assigno) => (
-                  <div class="card" key={assigno.ass_id}>
+                  <div class="assignment-card" key={assigno.ass_id}>
                       <h1>{assigno.ass_name}</h1>
                       <p>{assigno.content}</p>
-                      <p class="snippet">{assigno.due_date}</p>
-                      <a href= {assigno.file} download><DownloadButton /></a>
+                      <div><span class="snippet">{assigno.due_date}</span>
+                      <span download><DownloadButton file={assigno.file}/></span></div>
                   </div>
               ))}                      
           </div>
-      </div>
     )
 }
 
