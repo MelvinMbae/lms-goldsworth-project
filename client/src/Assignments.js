@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import Navbar from "./Navbar";
+import DownloadButton from "./components/DownloadComp";
 
 function Assignments(){
 
@@ -48,45 +49,21 @@ function Assignments(){
                 "remarks":"Well done"}
               ]
     }
-  // }
-
-    function openNav() {
-        document.getElementById("mySide-nav").style.width = "250px";
-        document.getElementById("main").style.display='none';
-     }
-     
-     function closeNav() {
-        document.getElementById("mySide-nav").style.width = "0";
-        document.getElementById("main").style.display = "block";
-     }
 
     return(
-        <>
-            <div>
-                <Navbar/>
-            </div>
-            <div>
-                <div className="assignment-container">
-                    <div className="assignments">  
-                        {studentReport.teacher_report.assignments.map((assigno) => (
-                            <div class="card" key={assigno.ass_id}>
-                                <h1>{assigno.ass_name}</h1>
-                                <p>{assigno.content}</p>
-                                <p class="snippet">{assigno.due_date}</p>
-                                <a href= {assigno.file} download><button>Download</button></a>
-                            </div>
-                        ))}                     
-                        {/* <div class="card">
-                            <h1>Algorithms</h1>
-                            <p class="snippet">Learning the Big O Notation</p>
-                            <p>It's all math</p>
-                            <p><button>Download</button></p>
-                        </div> */}
-                        
-                    </div>
-                </div>
-            </div>
-        </>
+
+      <div className="assignment-container">
+          <div className="assignments">  
+              {studentReport.teacher_report.assignments.map((assigno) => (
+                  <div class="card" key={assigno.ass_id}>
+                      <h1>{assigno.ass_name}</h1>
+                      <p>{assigno.content}</p>
+                      <p class="snippet">{assigno.due_date}</p>
+                      <a href= {assigno.file} download><DownloadButton /></a>
+                  </div>
+              ))}                      
+          </div>
+      </div>
     )
 }
 
