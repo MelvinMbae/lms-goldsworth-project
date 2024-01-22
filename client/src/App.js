@@ -4,7 +4,6 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
-import SideBar from './SideBar';
 import ReportCard from './ReportCard';
 import Dashboard from './pages/Dashboard';
 import ActiveCourse from './ActiveCourses';

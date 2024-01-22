@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import './Profile.css'
+// import './Profile.css'
 import './App.css'
 import './Dashboard.css'
 import './Reportcard.css'; 
