@@ -2,7 +2,7 @@ from flask import request, make_response, session
 from models import Teacher, Student, Parent, Course, Content, User
 from flask_restful import Resource
 from config import mash, db, api, app
-from werkzeug.exceptions import NotFound, NotAcceptable, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
+from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 
 @app.errorhandler(NotFound)
 def resource_missing(e):

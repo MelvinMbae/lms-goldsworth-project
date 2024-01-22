@@ -5,7 +5,7 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_session import Session
 
 app = Flask(__name__)
 
@@ -20,6 +20,7 @@ app.config['SECRET_KEY'] = 'no_key'
 migrate = Migrate(app, db)
 CORS(app)
 
+Session(app)
 bcrypt = Bcrypt(app)
 mash = Marshmallow(app)
 api = Api(app)
