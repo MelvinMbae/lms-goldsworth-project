@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import StudentDash from './StudentDash';
 import Navbar from './Navbar';
 import ReportCard from './ReportCard';
-import Courses from './Courses';
 import Dashboard from './pages/Dashboard';
 import ActiveCourse from './ActiveCourses';
 import Classes from './Classes';
@@ -65,7 +64,6 @@ function App() {
 
   return (
     <>
-      <Navbar user={user} setUser={setUser} />
       <Routes>
         <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
           <Route path='/' index element={<Home courses={courses}/>} />
@@ -77,7 +75,8 @@ function App() {
             <Route path='/classes' element={<Classes />} />
             <Route path='/assignments' element={<Assignments />} />
             <Route path='/forums' element={<ChatBox />} />
-            <Route path='/courses' element={<Courses />} />
+            <Route path='/about' element={<About setUser={setUser} />} />
+            <Route path='/coursespage' element={<CoursesPage coursesList={coursesList} user={user} />} />
             <Route path='/registrations' element={<Registrations />} />
           </Route>
         </Route>

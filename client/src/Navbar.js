@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 
 function Navbar({ user, setUser }) {
-  console.log('Navbar setUser prop:', setUser);
+  // console.log('Navbar setUser prop:', setUser);
 
   const navigate = useNavigate();
   const location = useLocation()
@@ -32,7 +32,7 @@ function Navbar({ user, setUser }) {
           <ul className='nav'>
               <li><Link to={'/home'}>Home</Link></li>
               <li><Link to={'/about'}>About</Link></li>
-              <li><Link to={'/courses'}>Courses</Link></li>
+              <li><Link to={'/coursespage'}>Courses</Link></li>
               {children}
           </ul>
         {user ? <span>{user.name} <button className="button" onClick={handleLogout}>Logout</button></span> : <Link to="/login" className="button">Login</Link>}

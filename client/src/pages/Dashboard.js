@@ -25,7 +25,7 @@ function Dashboard({ user }) {
                                                                                             </div>
                                                                                             <Profile user={user}/>
                                                                                         </DashPage>}
-                <div className='footer'></div>  
+                {/*<div className='footer'></div> */} 
             </Fragment>
         )
     }
