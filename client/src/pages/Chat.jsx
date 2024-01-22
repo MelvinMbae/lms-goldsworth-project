@@ -1,6 +1,6 @@
 import React from "react";
-import SideBar from "../components/sideBar";
 import ChatBox from "../components/chatBox";
+import ChatBar from "../components/ChatBar";
 
 function Chat() {
   let closed = false;
@@ -14,7 +14,7 @@ function Chat() {
   }
   return (
     <section className="container-fluid p-3 d-flex top-container flex-row flex-nowrap">
-      <SideBar />
+      <ChatBar />
       <ChatBox />
     </section>
   );

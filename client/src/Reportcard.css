@@ -1,0 +1,66 @@
+  /* Header Styles */
+  .report-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 60%;
+    height: 60vh;
+  }
+
+  .header {
+    width:60%;
+    background-color: #45A5A1;
+    padding: 10px;
+    text-align: center;
+    color: white;
+    position: fixed;
+  }
+
+  .student-info {
+    width: 100%;
+    font-size: larger;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
+    align-items: center;
+    position: relative;
+    top: 30%;
+    
+    span{
+      position: relative;
+      top: 140%;
+      background-color: #45A5A1;
+      text-align: right;
+      color: #fff;
+      width: 200px;
+      height: 100px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      padding: 24px;
+
+      p{
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+
+    report-card-table {
+      color: black;
+      border-color: black;
+      width: 50%;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .report-card-table th,
+    .report-card-table td {
+      border: 1px solid #45A5A1;
+      padding: 5px 8px;
+    }
+  }
+    
+
+
+

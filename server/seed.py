@@ -1,7 +1,18 @@
-from models import Student, Teacher, Parent, Course, Content, User
+from models import Student, Teacher, Parent, Course, Content, User, Assignments, Report_Card
+import json
 from random import choice
 from faker import Faker
 from config import app, db
+
+
+fake = Faker()
+
+with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
+    data = json.load(course_data)
+
+courses = data['courses']
+course_content = data['contents']
+# print(course_content)
 
 with app.app_context():
 
@@ -10,33 +21,28 @@ with app.app_context():
     Parent.query.delete()
     Course.query.delete()
     User.query.delete()
+    Content.query.delete()
+    Assignments.query.delete()
+    Report_Card.query.delete()
 
 
-    courses = ['SQL', 'Cyber Security', 'Data Science', 'Software Engineering', 'Information Technology', 'Mobile Development', 'Networking']
     departments = ['Networking','IT','CyberSecurity','Help Desk','Admin']
     expertise = ['engineering', 'software', 'networking', 'mobile-dev', 'web-dev']
-
-    fake = Faker()
+    assignment_heads = ['web-Dev','Python','Data_Structures','Front-End','Back-End','Mobile-Dev','Machine_Learning','Cyber_Security','Data_Science']
 
     students = []
     teachers = []
     parents = []
     course_list = []
-
-    for c in courses:
-        course = Course(
-            course_name = c,
-            description = fake.sentence()
-        )
-        db.session.add(course)
-        db.session.commit()
-
-        course_list.append(course)
+    content_list = []
+    assignments = []
+    report_cards = []
 
     for i in range(20):
         teacher = Teacher(
             firstname = fake.first_name(),
             lastname = fake.last_name(),
+            personal_email = fake.email(),
             email = f'{fake.last_name()}.{fake.first_name()}@lecturer.goldworth.com',
             password = fake.password(),
             expertise = choice(expertise),
@@ -56,8 +62,32 @@ with app.app_context():
 
         teachers.append(teacher)
 
+    for c in courses:
+        course = Course(
+            course_name = c['course_name'],
+            description = c['description'],
+            image_url = fake.image_url()
+        )
+        db.session.add(course)
+        db.session.commit()
 
-    for i in range(20):
+        course_list.append(course)
+    
+    for doc in course_content:
+        content = Content(
+            content_name = doc['content_name'],
+            description = doc['description'],
+            content_type = doc['content_type'],
+            course_id = choice(course_list).id,
+            teacher_id = choice(teachers).id
+        )
+        db.session.add(content)
+        db.session.commit()
+
+        content_list.append(course)
+
+
+    for i in range(10):
         parent = Parent(
             firstname = fake.first_name(),
             lastname = fake.last_name(),
@@ -78,11 +108,12 @@ with app.app_context():
 
         parents.append(parent)
     
-    for i in range(20):
+    for i in range(10):
         student = Student(
             firstname = fake.first_name(),
             lastname = fake.last_name(),
-            email = f'{fake.last_name()}.{fake.first_name()}@student.goldworth.com',
+            personal_email = fake.email(),
+            email = f'{fake.last_name()}{fake.first_name()}@student.goldworth.com',
             password = fake.password(),
             parent_id = choice(parents).id
         )
@@ -95,10 +126,36 @@ with app.app_context():
             student_id = student.id
         )
 
-        print(user.student)
-
         db.session.add(user)
         db.session.commit()
 
         students.append(student)
     
+    for i in range(10):
+        assignment = Assignments(
+            assignment_name = f'{choice(assignment_heads)}{fake.text(max_nb_chars=15)}',
+            topic = fake.text(),
+            content = fake.paragraph(),
+            due_date = fake.future_date(),
+            course_id = choice(course_list).id
+        )
+
+        db.session.add(assignment)
+        db.session.commit()
+
+        assignments.append(assignment)
+
+    for stude in students:
+        assigno = choice(assignments)
+        print(assigno.assignment_name)
+        report_card = Report_Card(
+            topic = assigno.assignment_name,
+            grade = fake.random_int(0,100),
+            teacher_remarks = fake.sentence(),
+            student_id = choice(students).id,
+            course_id = assigno.course_id
+        )
+        db.session.add(report_card)
+        db.session.commit()
+
+        assignments.append(report_card)
