@@ -1,27 +1,28 @@
 import React, { Fragment } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 
-function Navbar({user , setUser}) {
+function Navbar({ user, setUser }) {
+  console.log('Navbar setUser prop:', setUser);
 
   const navigate = useNavigate();
   const location = useLocation()
 
-  function handleLogout(){
-    fetch("/logout",{
-      "method":"DELETE",
-      "headers":{
-        "Content-Type":"application/json"
+  function handleLogout() {
+    fetch("/logout", {
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json"
       }
     })
-    .then((response) =>{ 
-      if(response.ok){
-        response.json()
-        .then((response) => {
-          setUser("")
-          navigate("/", {replace:true})
-        })
-      }
-    })
+      .then((response) => {
+        if (response.ok) {
+          response.json()
+            .then(() => {
+              setUser("")
+              navigate("/", { replace: true })
+            })
+        }
+      })
   }
 
   function NavBar({ children }){

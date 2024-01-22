@@ -13,36 +13,59 @@ import Assignments from './Assignments';
 import ChatBox from './components/chatBox';
 import Registration from './pages/Registration';
 import Registrations from './components/RegPage';
+import CoursesPage from './CoursesPage'
+import About from './About';
+import './Courses.css'
+import './About.css';
 
 
 function App() {
   const [courses, setCourse] = useState([])
   const [user, setUser] = useState("")
+  const [coursesList, setCoursesList] = useState([]);
+  const [courseListDictionary, setCourseListDictionary] = useState({});
 
+  function fetchCoursesData() {
+    fetch("/courses")
+      .then((response) => response.json())
+      .then((data) => {
 
-  useEffect(()=>{
-    fetch("/courses").then((response)=>{
-      if(response.ok){
+        data.forEach((course) => {
+          courseListDictionary[course.id] = course;
+        });
+
+        setCoursesList(data);
+        setCourseListDictionary(courseListDictionary);
+      });
+
+  }
+  useEffect(() => fetchCoursesData(), []);
+
+  useEffect(() => {
+    fetch("/courses").then((response) => {
+      if (response.ok) {
         response.json()
-        .then((courses)=>{
-          setCourse(courses)
-        })
+          .then((courses) => {
+            setCourse(courses)
+          })
       }
     })
-  },[])
+  }, [])
 
-  useEffect(()=>{
-    fetch("/checksession").then((response)=>{
-      if(response.ok){
+  useEffect(() => {
+    fetch("/checksession").then((response) => {
+      if (response.ok) {
         response.json()
-        .then((sessionMember)=>{
-          setUser(sessionMember)
-        })
+          .then((sessionMember) => {
+            setUser(sessionMember)
+          })
       }
     })
-  },[])
+  }, [])
 
   return (
+    <>
+      <Navbar user={user} setUser={setUser} />
       <Routes>
         <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
           <Route path='/' index element={<Home courses={courses}/>} />
@@ -61,6 +84,7 @@ function App() {
         <Route path='/login' element={<Login setUser={setUser}/>} />
         <Route path='/course-registration' element={<Registration />} />
       </Routes>
+    </>
   );
 }
 
