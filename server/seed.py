@@ -78,16 +78,17 @@ with app.app_context():
 
         parents.append(parent)
     
-    for i in range(20):
+    for i in range(1):
         student = Student(
             firstname = fake.first_name(),
             lastname = fake.last_name(),
-            email = f'{fake.last_name()}.{fake.first_name()}@student.goldworth.com',
+            email = f'{fake.last_name()}{fake.first_name()}@student.goldworth.com',
             password = fake.password(),
             parent_id = choice(parents).id
         )
         db.session.add(student)
         db.session.commit()
+        print(student)
 
         user = User(
             email = student.email,

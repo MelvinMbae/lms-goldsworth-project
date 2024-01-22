@@ -2,6 +2,27 @@ from flask import request, make_response, session
 from models import Teacher, Student, Parent, Course, Content, User
 from flask_restful import Resource
 from config import mash, db, api, app
+from werkzeug.exceptions import NotFound, NotAcceptable, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
+
+app.errorhandler(NotFound)
+def resource_missing(e):
+    return "Sorry the requested resource doe not exist!"
+
+app.errorhandler(MethodNotAllowed)
+def wrong_method(e):
+    return "The request made is not allowed!"
+
+app.errorhandler(BadRequest)
+def bad_request(e):
+    return "You have made an invalid request, try again with the correct details."
+
+app.errorhandler(ServiceUnavailable)
+def service_error(e):
+    return "Sorry for the inconvenience, the service is not available at the moment! Please try again later. Thankyou for your patience!"
+
+app.errorhandler(InternalServerError)
+def server_error(e):
+    return "Sorry for the inconvenience, we are looking into the problem. Thankyou for your patience!"
 
 class Index(Resource):
     def get(self):
@@ -48,11 +69,14 @@ class Login(Resource):
         password = user_logins['password']
         user = User.query.filter_by(email=user_logins['email']).first()
 
-        if user.authenticate(password):
-            session['user'] = user.email
-            return User_details(user)
+        if user:
+            if user.authenticate(password):
+                session['user'] = user.email
+                return User_details(user)
 
-        return "Invalid email or password" , 404
+            return "Invalid email or password" , 400
+        return "User does not exist" , 404
+        
 
 
 
@@ -207,7 +231,7 @@ class StudentbyId(Resource):
         db.session.commit()
 
         return make_response(
-            student_schema.dump(student), 200
+            student_schema.dump(student), 202
         )
 
     def delete(self,id):
@@ -216,7 +240,7 @@ class StudentbyId(Resource):
         db.session.delete(student)
         db.session.commit()
 
-        return "Record successfully deleted" , 200
+        return "Record successfully deleted" , 202
 
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
@@ -295,7 +319,7 @@ class TeacherbyId(Resource):
         db.session.commit()
 
         return make_response(
-            teacher_schema.dump(teacher), 200
+            teacher_schema.dump(teacher), 202
         )
 
     def delete(self,id):
@@ -304,7 +328,7 @@ class TeacherbyId(Resource):
         db.session.delete(teacher)
         db.session.commit()
 
-        return "record successfully deleted" , 200
+        return "record successfully deleted" , 202
 
 api.add_resource(TeacherbyId, '/teachers/<int:id>')
 api.add_resource(Teachers, '/teachers')
@@ -378,7 +402,7 @@ class ParentbyId(Resource):
         db.session.commit()
 
         return make_response(
-            parent_schema.dump(parent), 200
+            parent_schema.dump(parent), 202
         )
 
     def delete(self,id):
@@ -387,7 +411,7 @@ class ParentbyId(Resource):
         db.session.delete(parent)
         db.session.commit()
 
-        return "record successfully deleted" , 200
+        return "record successfully deleted" , 202
 
 api.add_resource(ParentbyId, '/parents/<int:id>')
 api.add_resource(Parents, '/parents')
@@ -434,7 +458,7 @@ class Courses(Resource):
         db.session.commit()
 
         return make_response(
-            course_schema.dump(new_course), 200
+            course_schema.dump(new_course), 201
         )
 
     
@@ -457,7 +481,7 @@ class CoursebyId(Resource):
         db.session.commit()
 
         return make_response(
-            course_schema.dump(course), 200
+            course_schema.dump(course), 202
         )
 
     def delete(self,id):
@@ -466,7 +490,7 @@ class CoursebyId(Resource):
         db.session.delete(course)
         db.session.commit()
 
-        return "record successfully deleted" , 200
+        return "record successfully deleted" , 202
 
 api.add_resource(CoursebyId, '/courses/<int:id>')
 api.add_resource(Courses, '/courses')
@@ -513,7 +537,7 @@ class Contents(Resource):
         db.session.commit()
 
         return make_response(
-            content_schema.dump(new_content), 200
+            content_schema.dump(new_content), 201
         )
 
     
@@ -536,7 +560,7 @@ class ContentbyId(Resource):
         db.session.commit()
 
         return make_response(
-            content_schema.dump(content), 200
+            content_schema.dump(content), 202
         )
 
     def delete(self,id):
@@ -545,7 +569,7 @@ class ContentbyId(Resource):
         db.session.delete(content)
         db.session.commit()
 
-        return "record successfully deleted" , 200
+        return "record successfully deleted" , 202
 
 api.add_resource(ContentbyId, '/contents/<int:id>')
 api.add_resource(Contents, '/contents')

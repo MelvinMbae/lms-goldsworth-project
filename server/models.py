@@ -1,6 +1,7 @@
 from config import db, bcrypt
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
+import re
 
 course_teacher = db.Table(
     'course_teacher',
@@ -42,6 +43,7 @@ class Student(db.Model):
     id = db.Column(db.Integer , primary_key = True)
     firstname = db.Column(db.String, nullable = False)
     lastname = db.Column(db.String, nullable = False)
+    personal_email = db.Column(db.String, nullable = False , unique = True)
     email = db.Column(db.String, nullable = False , unique = True)
     _password = db.Column(db.String, nullable = False , unique = True)
     image_url= db.Column(db.NVARCHAR)
@@ -51,6 +53,8 @@ class Student(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
     user = db.relationship('User', backref='student')
+    assignments = db.relationship('Assignments', backref='student')
+    report_card = db.relationship('Report_Card', backref='student')
     courses = db.relationship('Course', secondary=course_student, back_populates='students')
     docs = db.relationship('Content')
 
@@ -72,11 +76,11 @@ class Student(db.Model):
     
     @validates("email")
     def validates_email(self,key,value):
+        email_regex = re.compile(r'[a-zA-Z-_\.0-9]+@[a-zA-Z-_]+\.[a-zA-Z]+[a-zA-Z]?')
         if not value:
             raise ValueError("Email Address is a required field!")
-        # if "@" not in value:
-        if "@" and "student.goldworth" and ".com" not in value:
-            raise ValueError("Email address is not valid!")
+        elif not email_regex.match(value):
+            raise ValueError("Please provide a valid email address!")
         return value
 
     def add_user(self):
@@ -124,11 +128,11 @@ class Teacher(db.Model):
     
     @validates("email")
     def validates_email(self,key,value):
+        email_regex = re.compile(r'[a-zA-Z-_\.0-9]+@[a-zA-Z-_]+\.[a-zA-Z]+[a-zA-Z]?')
         if not value:
             raise ValueError("Email Address is a required field!")
-        if "@" not in value:
-        # if "@" and ".com" not in value:
-            raise ValueError("Email address is not valid!")
+        elif not email_regex.match(value):
+            raise ValueError("Please provide a valid email address!")
         return value
     
     def add_user(self):
@@ -173,11 +177,11 @@ class Parent(db.Model):
     
     @validates("email")
     def validates_email(self,key,value):
+        email_regex = re.compile(r'[a-zA-Z-_\.0-9]+@[a-zA-Z-_]+\.[a-zA-Z]+[a-zA-Z]?')
         if not value:
             raise ValueError("Email Address is a required field!")
-        if "@" not in value:
-        # if "@" and ".com" not in value:
-            raise ValueError("Email address is not valid!")
+        elif not email_regex.match(value):
+            raise ValueError("Please provide a valid email address!")
         return value
     
     def add_user(self):
@@ -197,6 +201,7 @@ class Course(db.Model):
     id = db.Column(db.Integer , primary_key = True)
     course_name = db.Column(db.String, nullable = False , unique = True)
     description = db.Column(db.String, nullable = False)
+    image_url= db.Column(db.NVARCHAR)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
@@ -217,4 +222,32 @@ class Content(db.Model):
 
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+class Report_Card(db.Model):
+    __tablename__ = 'report_cards'
+    
+    id = db.Column(db.Integer , primary_key = True)
+    topic = db.Column(db.String, nullable = False)
+    grade = db.Column(db.Integer, nullable = False)
+    teacher_remarks = db.Column(db.String, nullable = False , unique = True)
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+class Assignments(db.Model):
+    __tablename__ = 'assignments'
+    
+    id = db.Column(db.Integer , primary_key = True)
+    assignment_name = db.Column(db.String, nullable = False)
+    topic = db.Column(db.String, nullable = False)
+    content = db.Column(db.String, nullable = False , unique = True)
+    due_date = db.Column(db.DateTime, server_default = db.func.now())
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
