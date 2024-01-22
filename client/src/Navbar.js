@@ -1,11 +1,13 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { userContext } from './utils/UserContext';
 
-function Navbar({ user, setUser }) {
+function Navbar({ setUser }) {
   // console.log('Navbar setUser prop:', setUser);
 
   const navigate = useNavigate();
   const location = useLocation()
+  const user = useContext(userContext)
 
   function handleLogout() {
     fetch("/logout", {

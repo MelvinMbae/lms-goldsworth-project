@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { userContext } from '../utils/UserContext';
 
-function Profile({ user }) {
+function Profile() {
+
+  const user = useContext(userContext)
 
   return (
       <div className="nav-pane">

@@ -53,7 +53,7 @@ class Student(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
     user = db.relationship('User', backref='student')
-    assignments = db.relationship('Assignments', backref='student')
+    assignments = db.relationship('Assignment', backref='student')
     report_card = db.relationship('Report_Card', backref='student')
     courses = db.relationship('Course', secondary=course_student, back_populates='students')
     docs = db.relationship('Content')
@@ -239,7 +239,7 @@ class Report_Card(db.Model):
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
 
-class Assignments(db.Model):
+class Assignment(db.Model):
     __tablename__ = 'assignments'
     
     id = db.Column(db.Integer , primary_key = True)

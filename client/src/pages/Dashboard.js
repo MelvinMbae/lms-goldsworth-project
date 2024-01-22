@@ -4,7 +4,7 @@ import SideBar from '../components/SideBar';
 import { Fragment } from 'react';
 import Courses from '../Courses';
 
-function Dashboard({ user }) {
+function Dashboard() {
     
     const location = useLocation()
 
@@ -23,7 +23,7 @@ function Dashboard({ user }) {
                                                                                             <div className='uno'>
                                                                                                 <Outlet />  
                                                                                             </div>
-                                                                                            <Profile user={user}/>
+                                                                                            <Profile />
                                                                                         </DashPage>}
                 {/*<div className='footer'></div> */} 
             </Fragment>

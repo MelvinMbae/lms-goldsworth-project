@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import './Profile.css'
-import './App.css'
-import './Dashboard.css'
-import './Reportcard.css'; 
-import './Chat.css'
+import './styles/index.css';
+import './styles/Profile.css'
+import './styles/App.css'
+import './styles/Dashboard.css'
+import './styles/Reportcard.css'; 
+import './styles/Chat.css'
+import './styles/Courses.css'
+import './styles/About.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
