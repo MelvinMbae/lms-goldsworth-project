@@ -1,5 +1,5 @@
 from flask import request, make_response, session
-from models import Teacher, Student, Parent, Course, Content, User
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignments
 from flask_restful import Resource
 from config import mash, db, api, app
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
@@ -195,6 +195,7 @@ class Students(Resource):
         new_student = Student(
             firstname = student_data['firstname'],
             lastname = student_data['lastname'],
+            personal_email = student_data['personal_email'],
             password = student_data['password'],
             email = student_data['email'],
             parent_id = student_data['parent_id']
@@ -570,6 +571,171 @@ class ContentbyId(Resource):
 
 api.add_resource(ContentbyId, '/contents/<int:id>')
 api.add_resource(Contents, '/contents')
+
+class ReportCardSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Report_Card
+    
+    id = mash.auto_field()
+    topic = mash.auto_field()
+    teacher_remarks = mash.auto_field()
+    course_id = mash.auto_field()
+
+    url = mash.Hyperlinks(
+        {
+            "course_module":mash.URLFor(
+                "coursebyid",
+                values=dict(id="<course_id>")),
+            "collection":mash.URLFor("report_cards")
+
+        }
+    )
+
+report_card_schema = ReportCardSchema()
+report_cards_schema = ReportCardSchema(many=True)
+
+class Report_Cards(Resource):
+    def get(self):
+        report_card = Report_Card.query.all()
+
+        return make_response(
+            report_cards_schema.dump(report_card), 200
+        )
+    
+    def post(self):
+        reportcard_data = request.get_json()
+        new_report = Report_Card(
+            topic = reportcard_data['topiic'],
+            grade = reportcard_data['grade'],
+            teacher_remarks = reportcard_data['teacher_remarks'],
+            student_id = reportcard_data['student_id'],
+            course_id = reportcard_data['course_id'],
+        )
+        db.session.add(new_report)
+        db.session.commit()
+
+        return make_response(
+            report_card_schema.dump(new_report), 201
+        )
+
+    
+class Report_CardbyId(Resource):
+    def get(self,id):
+        report_card = Report_Card.query.filter_by(id=id).first()
+
+        return make_response(
+            report_card_schema.dump(report_card), 200
+        )
+        
+    def patch(self,id):
+        report_card = request.get_json()
+        content = Report_Card.query.filter_by(id=id).first()
+
+        for attr in report_card:
+            setattr(content, attr, report_card[attr])
+        
+        db.session.add(content)
+        db.session.commit()
+
+        return make_response(
+            content_schema.dump(content), 202
+        )
+
+    def delete(self,id):
+        content = Report_Card.query.filter_by(id=id).first()
+
+        db.session.delete(content)
+        db.session.commit()
+
+        return "record successfully deleted" , 202
+
+api.add_resource(Report_CardbyId, '/report_cards/<int:id>')
+api.add_resource(Report_Cards, '/report_cards')
+
+# class AssignmentSchema(mash.SQLAlchemySchema):
+
+#     class Meta:
+#         model = Assignments
+    
+#     id = mash.auto_field()
+#     assignment_name = mash.auto_field()
+#     topic = mash.auto_field()
+#     content = mash.auto_field()
+#     due_date = mash.auto_field()
+#     course_id = mash.auto_field()
+
+
+#     url = mash.Hyperlinks(
+#         {
+#             "self":mash.URLFor(
+#                 "assignmentsbyid",
+#                 values=dict(id="<id>")),
+#             "collection":mash.URLFor("assignments")
+
+#         }
+#     )
+
+# assignment_schema = AssignmentSchema()
+# assignments_schema = AssignmentSchema(many=True)
+
+# class Assignment(Resource):
+#     def get(self):
+#         assignment = Assignments.query.all()
+
+#         return make_response(
+#             assignments_schema.dump(assignment), 200
+#         )
+    
+#     def post(self):
+#         assignment_data = request.get_json()
+#         new_assignment = Content(
+#             assignment_name = assignment_data['assignment_name'],
+#             topic = assignment_data['topic'],
+#             content = assignment_data['content'],
+#             due_date = assignment_data['due_date'],
+#             course_id = assignment_data['course_id'],
+#         )
+#         db.session.add(new_assignment)
+#         db.session.commit()
+
+#         return make_response(
+#             content_schema.dump(new_assignment), 201
+#         )
+
+    
+# class AssignmentbyId(Resource):
+#     def get(self,id):
+#         assignment = Assignments.query.filter_by(id=id).first()
+
+#         return make_response(
+#             assignment_schema.dump(assignment), 200
+#         )
+        
+#     def patch(self,id):
+#         assignment_data = request.get_json()
+#         assignment = Assignments.query.filter_by(id=id).first()
+
+#         for attr in assignment_data:
+#             setattr(assignment, attr, assignment_data[attr])
+        
+#         db.session.add(assignment)
+#         db.session.commit()
+
+#         return make_response(
+#             assignment_schema.dump(assignment), 202
+#         )
+
+#     def delete(self,id):
+#         assignment = Assignments.query.filter_by(id=id).first()
+
+#         db.session.delete(assignment)
+#         db.session.commit()
+
+#         return "record successfully deleted" , 202
+
+# api.add_resource(AssignmentbyId, '/assignments/<int:id>')
+# api.add_resource(Assignment, '/assignments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)    
