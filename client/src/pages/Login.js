@@ -30,7 +30,7 @@ function Login({ setUser }) {
       .then((r) => {
         if (r.ok){
           r.json().then((user) => {
-          setUser([user])
+          setUser(user)
           navigate("/dashboard", { replace: true });
         });
         }
