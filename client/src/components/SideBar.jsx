@@ -17,19 +17,19 @@ function SideBar() {
 
     function Sidebar(props){
         return (
+           
             <div className="assignment-container">
-            <div id="mySide-nav" class="side-nav"> 
+                <div id="mySide-nav" class="side-nav"> 
                 <a href="javascript:void(0)" class="closebtn" onClick={() => closeNav()}>x</a>
                 <Link to={'/dashboard'}>Dashboard</Link>
-                <Link to={'/courses'}>Courses</Link>
-                <Link to={'/discussion'}>Discussion</Link>
-                <Link to={'/assignments'}>Assignments</Link>
-                <Link to={'/calender'}>Calender</Link>
-                <Link to={'/reportcard'}>ReportCard</Link>
-            </div>
+                <Link to={'/active-courses'}>Active Courses</Link>
+                <Link to={'/classes'}>Classes</Link>
+                {props.children}
+                </div>
             <div id="main">
                 <span style={{fontSize:'30px', cursor:'pointer'}} onClick={() => openNav()}>☰</span>
-            </div></div>
+            </div>
+            </div>
             )
         }
 
@@ -48,3 +48,10 @@ export default SideBar;
 
 
 
+
+                    // <Link to={'/dashboard'}>Dashboard</Link>
+                    // <Link to={'/courses'}>Courses</Link>
+                    // <Link to={'/discussion'}>Discussion</Link>
+                    // <Link to={'/assignments'}>Assignments</Link>
+                    // <Link to={'/calender'}>Calender</Link>
+                    // <Link to={'/reportcard'}>ReportCard</Link>
