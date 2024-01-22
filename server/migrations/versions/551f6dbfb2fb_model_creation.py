@@ -1,8 +1,8 @@
-"""Created new models
+"""Model creation
 
-Revision ID: 7fc39600ae54
+Revision ID: 551f6dbfb2fb
 Revises: 
-Create Date: 2024-01-22 16:17:29.095469
+Create Date: 2024-01-22 17:24:49.318794
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '7fc39600ae54'
+revision = '551f6dbfb2fb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,10 +41,19 @@ def upgrade():
     sa.UniqueConstraint('_password'),
     sa.UniqueConstraint('email')
     )
+    op.create_table('sessions',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('session_id', sa.String(length=255), nullable=True),
+    sa.Column('data', sa.LargeBinary(), nullable=True),
+    sa.Column('expiry', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('session_id')
+    )
     op.create_table('teachers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('firstname', sa.String(), nullable=False),
     sa.Column('lastname', sa.String(), nullable=False),
+    sa.Column('personal_email', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('_password', sa.String(), nullable=False),
     sa.Column('image_url', sa.NVARCHAR(), nullable=True),
@@ -54,7 +63,8 @@ def upgrade():
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('_password'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('personal_email')
     )
     op.create_table('course_teacher',
     sa.Column('teacher_id', sa.Integer(), nullable=False),
@@ -92,8 +102,7 @@ def upgrade():
     sa.Column('student_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['student_id'], ['students.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('content')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('contents',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -108,8 +117,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['student_id'], ['students.id'], ),
     sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('content_type')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('course_student',
     sa.Column('student_id', sa.Integer(), nullable=False),
@@ -131,8 +139,7 @@ def upgrade():
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['student_id'], ['students.id'], ),
     sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('teacher_remarks')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
     sa.Column('email', sa.String(), nullable=False),
@@ -160,6 +167,7 @@ def downgrade():
     op.drop_table('students')
     op.drop_table('course_teacher')
     op.drop_table('teachers')
+    op.drop_table('sessions')
     op.drop_table('parents')
     op.drop_table('courses')
     # ### end Alembic commands ###
