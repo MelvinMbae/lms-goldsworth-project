@@ -6,7 +6,7 @@ import './Dashboard.css';
 import Footer from './Footer';
 
 function StudentDash(){
-    const [state, setState] = useState({
+    const [state] = useState({
         options: {
           chart: {
             id: "basic-bar"
