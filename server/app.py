@@ -4,23 +4,23 @@ from flask_restful import Resource
 from config import mash, db, api, app
 from werkzeug.exceptions import NotFound, NotAcceptable, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 
-app.errorhandler(NotFound)
+@app.errorhandler(NotFound)
 def resource_missing(e):
-    return "Sorry the requested resource doe not exist!"
+    return "Sorry the requested resource does not exist!"
 
-app.errorhandler(MethodNotAllowed)
+@app.errorhandler(MethodNotAllowed)
 def wrong_method(e):
     return "The request made is not allowed!"
 
-app.errorhandler(BadRequest)
+@app.errorhandler(BadRequest)
 def bad_request(e):
     return "You have made an invalid request, try again with the correct details."
 
-app.errorhandler(ServiceUnavailable)
+@app.errorhandler(ServiceUnavailable)
 def service_error(e):
     return "Sorry for the inconvenience, the service is not available at the moment! Please try again later. Thankyou for your patience!"
 
-app.errorhandler(InternalServerError)
+@app.errorhandler(InternalServerError)
 def server_error(e):
     return "Sorry for the inconvenience, we are looking into the problem. Thankyou for your patience!"
 
@@ -75,10 +75,7 @@ class Login(Resource):
                 return User_details(user)
 
             return "Invalid email or password" , 400
-        return "User does not exist" , 404
-        
-
-
+        return "User does not exist" , 404       
 
 api.add_resource(Login, '/login')
 
