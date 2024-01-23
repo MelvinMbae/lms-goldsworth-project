@@ -1,0 +1,33 @@
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    height: 60px;
+    gap: 88px;
+    align-self: stretch;
+
+    #header{
+        margin: 0;
+        color: #00A8A2;
+        font-size: 30px;
+      }
+    
+    .nav{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    
+    a{
+        color: #45A5A1;
+        font-weight: bold;
+        margin-right: 30px;        border-radius: 30px;
+        padding: 10px 15px;
+    }
+    a:hover{
+        color: white;
+        background-color: #FF9F37;
+        transition: 0.5s;
+    }
+    }
+}

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './styles/index.css';
 import './styles/Profile.css'
 import './styles/App.css'
+import './styles/NavBar.css'
 import './styles/Dashboard.css'
 import './styles/Reportcard.css'; 
 import './styles/Chat.css'

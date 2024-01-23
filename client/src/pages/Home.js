@@ -11,7 +11,7 @@ function Home({ courses}) {
           <h1>Welcome to Goldworth.
             <br/>
             Your Education is our Responsibility.</h1>
-          <h3 className='home-text'>
+          <h3>
             In this age of digital revolution, coding isn’t just a skill—it’s a superpower!
             <br/>
             And if you’re an aspiring coder or an educator seeking to empower tech wizards, then you’re at the right place.</h3>
