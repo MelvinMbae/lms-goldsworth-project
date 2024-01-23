@@ -1,38 +1,89 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import About from './About';
+import './About.css';
+import ActiveCourse from './ActiveCourses';
+import Assignments from './Assignments';
+import Classes from './Classes';
+import './Courses.css';
+import CoursesPage from './CoursesPage';
+import Navbar from './Navbar';
+import ReportCard from './ReportCard';
+import StudentDash from './StudentDash';
+import Registrations from './components/RegPage';
+import ChatBox from './components/chatBox';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Registration from './pages/Registration';
 
-const DocumentDownload = () => {
-  const downloadDocument = async () => {
-    try {
-//input the actual url
-  const documentUrl = 'Doc.url';
-      const response = await fetch(documentUrl);
-      if (!response.ok) {
-        throw new Error(`Failed to fetch document. Status: ${response.status}`);
+
+function App() {
+  const [courses, setCourse] = useState([])
+  const [user, setUser] = useState("")
+  const [coursesList, setCoursesList] = useState([]);
+  const [courseListDictionary, setCourseListDictionary] = useState({});
+
+  function fetchCoursesData() {
+    fetch("/courses")
+      .then((response) => response.json())
+      .then((data) => {
+
+        data.forEach((course) => {
+          courseListDictionary[course.id] = course;
+        });
+
+        setCoursesList(data);
+        setCourseListDictionary(courseListDictionary);
+      });
+
+  }
+  useEffect(() => fetchCoursesData(), []);
+
+  useEffect(() => {
+    fetch("/courses").then((response) => {
+      if (response.ok) {
+        response.json()
+          .then((courses) => {
+            setCourse(courses)
+          })
       }
-          const blob = await response.blob();
+    })
+  }, [])
 
-        const link = document.createElement('a');
-
-      // to create a Blob URL for the fetched document
-      const blobUrl = window.URL.createObjectURL(blob);
-
-      // to set the link's href and download attributes
-      link.href = blobUrl;
-      link.download = 'downloaded_document.pdf';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error('Error downloading document:', error);
-    }
-  };
+  useEffect(() => {
+    fetch("/checksession").then((response) => {
+      if (response.ok) {
+        response.json()
+          .then((sessionMember) => {
+            setUser(sessionMember)
+          })
+      }
+    })
+  }, [])
 
   return (
-    <div>
-      <h1>Document Download</h1>
-      <button onClick={downloadDocument}>Download Document</button>
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
+          <Route path='/' index element={<Home courses={courses}/>} />
+          <Route path='/home' element={<Home courses={courses}/>} />
+          <Route  element={<Dashboard user={user}/>}>
+            <Route path='/dashboard' element={<StudentDash />} />
+            <Route path='/reportcard' element={<ReportCard />} />
+            <Route path='/active-courses' element={<ActiveCourse />} />
+            <Route path='/classes' element={<Classes />} />
+            <Route path='/assignments' element={<Assignments />} />
+            <Route path='/forums' element={<ChatBox />} />
+            <Route path='/about' element={<About setUser={setUser} />} />
+            <Route path='/coursespage' element={<CoursesPage coursesList={coursesList} user={user} />} />
+            <Route path='/registrations' element={<Registrations />} />
+          </Route>
+        </Route>
+        <Route path='/login' element={<Login setUser={setUser}/>} />
+        <Route path='/course-registration' element={<Registration />} />
+      </Routes>
+    </>
   );
 };
 
