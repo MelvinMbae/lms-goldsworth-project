@@ -192,9 +192,14 @@ class Students(Resource):
     
     def post(self):
         student_data = request.get_json()
+        # student_file = request.files['image_url']
+        # student_file.save(student_file.filename)
+        # print(request.files['image_url'].filename)
+
         new_student = Student(
             firstname = student_data['firstname'],
             lastname = student_data['lastname'],
+            image_url = student_data['image_url'],
             personal_email = student_data['personal_email'],
             password = student_data['password'],
             email = student_data['email'],

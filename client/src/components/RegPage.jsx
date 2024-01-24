@@ -1,6 +1,5 @@
-import React from "react";
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import StudentForm from "./StudentForm";
 import ParentForm from "./ParentForm";
 
@@ -9,9 +8,10 @@ function Registrations() {
     firstname: "",
     lastname: "",
     email: "",
+    personal_email: "",
     image_url: "",
     password: "",
-    parent_id:""
+    parent_id:"",
   });
   const [parent, setParent] = useState({
     Firstname: "",
@@ -21,6 +21,14 @@ function Registrations() {
     Password: "",
   });
   
+  const [ tab, setTab ] = useState(1)
+
+  function onNext(){
+    setTab(2)
+  }
+  function onBack(){
+    setTab(1)
+  }
 
   function handleParentChange(e) {
    
@@ -50,45 +58,52 @@ function Registrations() {
       .then((r) => { 
         if(r.ok){
           r.json().then((r) => {
-            console.log(r)
             
-            setStudent((prevstudent)=>{
-              return {...prevstudent , parent_id : r.id}
+            setStudent({...student , parent_id : r.id})
+            
+            return     fetch("/students", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(student),
             })
-            console.log(student)
-            // return     fetch("/students", {
-            //   method: "POST",
-            //   headers: {
-            //     "Content-Type": "application/json",
-            //   },
-            //   body: JSON.stringify(parent),
-            // })
+          })
+          .then((r) => { 
+
+            if(r.ok){
+              r.json().then((r) => {
+                console.log(r)
+              })
+            }
+            else {
+              throw new Error(`HTTP error ${r.status}`)
+            }
+          })
+          .catch((error) => {
+            console.error(error)
           })
         }
         else {
           throw new Error(`HTTP error ${r.status}`)
         }
-      })
+          })
       .catch((error) => {
         console.error(error)
       })
   }
+  console.log(student)
 
   return (
-    <form className="register" onSubmit={handleSubmit}>
-    <h1>Student Enrollment</h1>
-      <div className="forms">
-        <div>
-          <h2>Student Information</h2>
-          <StudentForm student={student} handleChange={handleStudentChange} /></div>
-        <div>
-          <h2>Parent Information</h2>
-          <ParentForm parent={parent} handleChange={handleParentChange} /></div>
-      </div>
-      <button className="btn" type="submit">
-        Register
-      </button>
-    </form>
+    <div className="register" >
+      <h1>Student Enrollment</h1>
+      <form  className="forms" onSubmit={handleSubmit} encType="multipart/formdata">
+        {tab === 1 ? 
+          <div><h2>Student Form</h2><StudentForm  student={student} handleChange={handleStudentChange} /></div> :
+          <div><h2>Parent Form</h2><ParentForm  parent={parent} student={student} handleChange={handleParentChange} /><button className="btn" type="submit">Register</button></div> }
+      </form>
+      {tab === 1 ? <button className="btn" onClick={onNext}><FaArrowRight /></button> : <button className="btn" onClick={onBack}><FaArrowLeft /></button>}
+    </div>
   );
 }
 

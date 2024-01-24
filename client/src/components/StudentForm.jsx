@@ -34,11 +34,22 @@ export default function StudentForm({ handleChange, student }) {
             />
         </div>
         <div className="form-item">
+        <label htmlFor="personal_email"> Personal_email: </label>
+        <input
+            type="personal_email"
+            id="personal_email"
+            autoComplete="off"
+            value={student.personal_email}
+            onChange={handleChange}
+        />
+        </div>
+        <div className="form-item">
             <label htmlFor="address"> Passport Photo: </label>
             <input
                 type='file'
                 id="image_url"
-                value={student.image_url}
+                name="image_url"
+                // value={student.image_url}
                 onChange={handleChange}
             />
             </div>

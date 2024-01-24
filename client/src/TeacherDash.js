@@ -6,7 +6,7 @@ import Chart from "react-apexcharts";
 function TeacherDash(){
     
     return(
-        <>
+        <Fragment>
             <div className='navbar'>
                 <div className='logo'>
                     <Link to={'/main'}>GoldWorth</Link>
@@ -49,7 +49,7 @@ function TeacherDash(){
                     
                 </div>    
             </div>
-        </>
+        </Fragment>
     )
 }
 export default TeacherDash

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Courses() {
+function CourseRegistration() {
 
   return (
     <div className='cards-container'>
@@ -38,4 +38,4 @@ function Courses() {
   )
 }
 
-export default Courses;
+export default CourseRegistration;

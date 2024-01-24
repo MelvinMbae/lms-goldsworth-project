@@ -5,7 +5,7 @@ function Profile() {
 
   const user = useContext(userContext)
 
-  console.log(user)
+  // console.log(user)
   return (
       <div className="nav-pane">
         <div className='profile-details'><h2>Calendar</h2></div>

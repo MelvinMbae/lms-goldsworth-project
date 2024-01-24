@@ -35,7 +35,7 @@ function Login({ setUser }) {
         });
         }
         else {
-          throw new Error(`HTTP error ${r.status}`)
+          throw new Error(`HTTP error ${r}`)
         }
       })
       .catch((error)=>console.error(error))
