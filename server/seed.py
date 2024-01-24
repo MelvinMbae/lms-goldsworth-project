@@ -1,18 +1,18 @@
-from models import Student, Teacher, Parent, Course, Content, User, Assignments, Report_Card
+from models import Student, Teacher, Parent, Course, Content, User, Assignments, Report_Card,Event
 import json
-from random import choice
+import pytz
+from random import choice,sample
 from faker import Faker
 from config import app, db
-
+from datetime import datetime, timedelta
 
 fake = Faker()
 
-with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
+with open("C:/Users/Melvin Mbae/Development/Code/lms/goldworth-lms/lms-goldsworth-project/client/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
 courses = data['courses']
 course_content = data['contents']
-# print(course_content)
 
 with app.app_context():
 
@@ -24,7 +24,7 @@ with app.app_context():
     Content.query.delete()
     Assignments.query.delete()
     Report_Card.query.delete()
-
+    Event.query.delete()
 
     departments = ['Networking','IT','CyberSecurity','Help Desk','Admin']
     expertise = ['engineering', 'software', 'networking', 'mobile-dev', 'web-dev']
@@ -37,6 +37,7 @@ with app.app_context():
     content_list = []
     assignments = []
     report_cards = []
+    events = []
 
     for i in range(20):
         teacher = Teacher(
@@ -63,11 +64,29 @@ with app.app_context():
         teachers.append(teacher)
 
     for c in courses:
+        start_time = fake.time_object()
+        duration_hours = fake.random_int(min=1, max=5)
+        timezone = pytz.timezone(fake.timezone())
+
+        start_datetime = datetime.combine(datetime.today(), start_time)
+        start_datetime = timezone.localize(start_datetime)
+
+        end_datetime = start_datetime + timedelta(hours=duration_hours)
+        
+        days_of_week = sample(range(1, 6), k=fake.random_int(min=1, max=5))
+        
         course = Course(
             course_name = c['course_name'],
             description = c['description'],
-            image_url = fake.image_url()
+            image_url=fake.image_url(),
+            startTime= start_datetime.time(),
+            endTime = end_datetime.time(),
+            daysOfWeek= ','.join(map(str, days_of_week)) ,
+            startRecur=datetime.now(),
+            endRecur=datetime.now() + timedelta(days=365)
+                        
         )
+        
         db.session.add(course)
         db.session.commit()
 
@@ -84,7 +103,7 @@ with app.app_context():
         db.session.add(content)
         db.session.commit()
 
-        content_list.append(course)
+        content_list.append(content)
 
 
     for i in range(10):
@@ -113,7 +132,7 @@ with app.app_context():
             firstname = fake.first_name(),
             lastname = fake.last_name(),
             personal_email = fake.email(),
-            email = f'{fake.last_name()}{fake.first_name()}@student.goldworth.com',
+            email = f'{fake.last_name()}.{fake.first_name()}@student.goldworth.com',
             password = fake.password(),
             parent_id = choice(parents).id
         )
@@ -145,17 +164,47 @@ with app.app_context():
 
         assignments.append(assignment)
 
-    for stude in students:
-        assigno = choice(assignments)
-        print(assigno.assignment_name)
-        report_card = Report_Card(
-            topic = assigno.assignment_name,
-            grade = fake.random_int(0,100),
-            teacher_remarks = fake.sentence(),
-            student_id = choice(students).id,
-            course_id = assigno.course_id
+    # for stude in students:
+    #     assigno = choice(assignments)
+    #     # print(assigno.assignment_name)
+    #     report_card = Report_Card(
+    #         topic = assigno.assignment_name,
+    #         grade = fake.random_int(0,100),
+    #         teacher_remarks = fake.sentence(),
+    #         student_id = choice(students).id,
+    #         course_id = assigno.course_id
+    #     )
+    #     db.session.add(report_card)
+    #     db.session.commit()
+
+    #     assignments.append(report_card)
+    courses=Course.query.all()
+    student=Student.query.all()
+    teacher=Teacher.query.all()
+    
+            
+    for event in range(50):
+        course = choice(courses)
+        student = choice(students)
+        teacher = choice(teachers)
+        
+        event=Event(
+            groupId= fake.random_int(min=1, max=100),
+            allDay= False,
+            start= datetime.now(),
+            end= datetime.now() + timedelta(days=365),
+            daysOfWeek= course.daysOfWeek,
+            startTime= course.startTime,
+            startRecur= course.startRecur,
+            endRecur= course.endRecur,         
+            endTime = course.endTime,
+            title=course.course_name,
+            student_id=student.id,
+            course_id=course.id,
+            teacher_id=teacher.id
+                 
         )
-        db.session.add(report_card)
+        db.session.add(event)
         db.session.commit()
 
-        assignments.append(report_card)
+        events.append(event)
