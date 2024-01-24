@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useContext} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import StudentDash from './StudentDash';
+import ParentDash from './ParentDash'
 import Navbar from './Navbar';
 import ReportCard from './ReportCard';
 import Dashboard from './pages/Dashboard';
@@ -11,15 +11,18 @@ import Assignments from './Assignments';
 import ChatBox from './components/chatBox';
 import CoursesPage from './CoursesPage'
 import About from './pages/About';
+import { appContext } from './utils/appContext';
 
 
 
 function ParentHome() {
   const [courses, setCourse] = useState([])
-  const [user, setUser] = useState("")
   const [assignments, setAssignments] = useState([])
   const [coursesList, setCoursesList] = useState([]);
   const [courseListDictionary, setCourseListDictionary] = useState({});
+
+  const { setUser } = useContext(appContext)
+
 
   function fetchCoursesData() {
     fetch("/courses")
@@ -71,12 +74,12 @@ function ParentHome() {
   }, [])
 
   return (
-      <userContext.Provider value={user}><Routes>
+      <Routes>
         <Route path='/' element={<Navbar setUser={setUser}/>}>
           <Route path='/' index element={<Home courses={courses}/>} />
           <Route path='/home' element={<Home courses={courses}/>} />
           <Route  element={<Dashboard/>}>
-            <Route path='/dashboard' element={<StudentDash />} />
+            <Route path='/dashboard' element={<ParentDash />} />
             <Route path='/reportcard' element={<ReportCard />} />
             <Route path='/active-courses' element={<ActiveCourse />} />
             <Route path='/assignments' element={<Assignments assignments={assignments}/>} />
@@ -85,7 +88,7 @@ function ParentHome() {
           <Route path='/about' element={<About setUser={setUser} />} />
         </Route>
         <Route path='/login' element={<Login setUser={setUser}/>} />
-      </Routes></userContext.Provider>
+      </Routes>
   );
 }
 

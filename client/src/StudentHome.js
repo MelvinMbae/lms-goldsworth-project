@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useContext} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -12,54 +12,13 @@ import Assignments from './Assignments';
 import ChatBox from './components/chatBox';
 import CoursesPage from './CoursesPage'
 import About from './pages/About';
-
+import { appContext } from './utils/appContext';
 
 
 
 function StudentHome() {
-  const [courses, setCourse] = useState([])
-  const [user, setUser] = useState("")
   const [assignments, setAssignments] = useState([])
-  const [coursesList, setCoursesList] = useState([]);
-  const [courseListDictionary, setCourseListDictionary] = useState({});
-
-  function fetchCoursesData() {
-    fetch("/courses")
-      .then((response) => response.json())
-      .then((data) => {
-
-        data.forEach((course) => {
-          courseListDictionary[course.id] = course;
-        });
-
-        setCoursesList(data);
-        setCourseListDictionary(courseListDictionary);
-      });
-
-  }
-  useEffect(() => fetchCoursesData(), []);
-
-  useEffect(() => {
-    fetch("/courses").then((response) => {
-      if (response.ok) {
-        response.json()
-          .then((courses) => {
-            setCourse(courses)
-          })
-      }
-    })
-  }, [])
-
-  useEffect(() => {
-    fetch("/checksession").then((response) => {
-      if (response.ok) {
-        response.json()
-          .then((sessionMember) => {
-            setUser(sessionMember)
-          })
-      }
-    })
-  }, [])
+  const { setUser , courses , coursesList } = useContext(appContext)
 
   useEffect(() => {
     fetch("/assignments").then((response) => {

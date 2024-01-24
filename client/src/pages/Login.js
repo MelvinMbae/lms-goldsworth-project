@@ -11,6 +11,16 @@ function Login({ setUser }) {
 
   const navigate = useNavigate();
 
+
+  function handleUser(user){
+    if("student_id" in user){
+      setUser({user_type:"student", user_details:user})
+    }
+    else if("parent_id" in user){
+      setUser({user_type:"parent", user_details:user})
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     if (!loginData) return;
@@ -30,7 +40,7 @@ function Login({ setUser }) {
       .then((r) => {
         if (r.ok){
           r.json().then((user) => {
-          setUser(user)
+            handleUser(user)
           navigate("/dashboard", { replace: true });
         });
         }

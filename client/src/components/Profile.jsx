@@ -1,9 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { userContext } from '../utils/UserContext';
 
-function Profile() {
+function Profile({ user }) {
 
-  const user = useContext(userContext)
 
   // console.log(user)
   return (
