@@ -1,6 +1,7 @@
 import React, { Fragment, useContext } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { userContext } from './utils/UserContext';
+import { MdLogout } from 'react-icons/md';
 
 function Navbar({ setUser }) {
   // console.log('Navbar setUser prop:', setUser);
@@ -34,23 +35,23 @@ function Navbar({ setUser }) {
           <ul className='nav'>
               <Link to={'/home'}>Home</Link>
               <Link to={'/about'}>About</Link>
-              <Link to={'/coursespage'}>Courses</Link>
+              <Link to={'/courses'}>Courses</Link>
               {children}
           </ul>
-        {user ? <span>{user.name} <button className="button" onClick={handleLogout}>Logout</button></span> : <Link to="/login" className="button">Login</Link>}
+        {user ? <span className='button'>{user.name} <MdLogout onClick={handleLogout}/></span> : <Link to="/login" className="button">Login</Link>}
       </Fragment>
     )
   }
 
   return (
-    <>
+    <Fragment>
       <div className='navbar-container'>
         {location.pathname === '/dashboard' ? <NavBar>
-                                                  <li><Link to={'/forums'}>Forums</Link></li>
+                                                  <Link to={'/forums'}>Forums</Link>
                                               </NavBar> : <NavBar />}
       </div>
       <Outlet />
-    </>
+    </Fragment>
   )
 }
 

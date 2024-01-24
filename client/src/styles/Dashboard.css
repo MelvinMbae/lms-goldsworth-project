@@ -1,6 +1,50 @@
-body{
-  box-sizing: border-box;
-  margin: 3px;
+.dashboard{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 20px;
+  /* flex-wrap: wrap;
+  flex: 1 1 0; */
+  align-items: center;
+  padding: 20px;
+
+  .contents{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: #bdd6e0; 
+    width: 100%;
+    height: 650px;
+    border-radius: 5px;
+    /* flex: 1 1 0; */
+    padding: 20px;
+
+    .top{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin-top: 4rem;
+
+      .data{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 150px;
+        color: #45A5A1;
+        /* text-shadow:0px 1px 7px #adacac; */
+        /* background-color: rgb(255, 255, 255); */
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 1.2rem;
+        
+        h1{
+          font-size: 50px;
+        }
+      }
+    }
+  }
 }
 
 .links{
@@ -49,29 +93,9 @@ body{
   margin-left: 24px;
 }
 
-.uno{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  height: 90vh;
-  margin-bottom: 0;
-  /* background: #00A8A2; */
-}
 
-.contents{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: #bdd6e0; 
-  width: 65%;
-  height: 650px;
-  border-radius: 5px;
-  flex: 0 1 0;
-  padding: 20px;
-  margin-top: 4rem;
-}
+
+
 
 
 .teacherContents{
@@ -86,11 +110,7 @@ body{
   /* justify-content: space-around; */
 }
 
-.top{
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 2rem;
-}
+
 
 .teachersTop{
   display: flex;
@@ -98,23 +118,7 @@ body{
   justify-content: space-around;
 }
 
-.data{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 200px;
-  color: #45A5A1;
-  /* text-shadow:0px 1px 7px #adacac; */
-  background-color: rgb(255, 255, 255);
-  border-radius: 5px;
-  padding: 20px;
-  margin-top: 1.2rem;
-  
-  h1{
-    font-size: 50px;
-  }
-}
+
 
 .dash-message{
   width: 400px;

@@ -1,9 +1,7 @@
 import React from 'react'
-import Navbar from '../Navbar';
 
 function Home({ courses}) {
 
-  // console.log(courses[0:3])
   return (
     <div className='home-container'>
       <div className='home-info'>

@@ -2,7 +2,7 @@ import { useLocation, Outlet } from 'react-router-dom';
 import Profile from '../components/Profile';
 import SideBar from '../components/SideBar';
 import { Fragment } from 'react';
-import Courses from '../Courses';
+import CoursesPage from '../CoursesPage';
 
 function Dashboard() {
     
@@ -17,16 +17,14 @@ function Dashboard() {
         )
     }
         return(
-            <Fragment>  
+            <div className='dashboard'>  
 
-                {location.pathname === '/courses' ? <DashPage><Courses /></DashPage> : <DashPage>
-                                                                                            <div className='uno'>
+                {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
                                                                                                 <Outlet />  
-                                                                                            </div>
                                                                                             <Profile />
                                                                                         </DashPage>}
                 {/*<div className='footer'></div> */} 
-            </Fragment>
+            </div>
         )
     }
 export default Dashboard;

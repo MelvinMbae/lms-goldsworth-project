@@ -52,11 +52,11 @@ class Student(db.Model):
 
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
-    user = db.relationship('User', backref='student')
-    assignments = db.relationship('Assignment', backref='student')
-    report_card = db.relationship('Report_Card', backref='student')
-    courses = db.relationship('Course', secondary=course_student, back_populates='students')
-    docs = db.relationship('Content')
+    user = db.relationship('User', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    assignments = db.relationship('Assignment', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    report_card = db.relationship('Report_Card', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    courses = db.relationship('Course', secondary=course_student, back_populates='students', cascade="save-update , merge, delete")
+    docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
 
     
     @hybrid_property
@@ -108,9 +108,9 @@ class Teacher(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    docs = db.relationship('Content')
-    user = db.relationship('User', backref='teacher')
-    courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers')
+    docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
+    user = db.relationship('User', backref='teacher', cascade="save-update , merge, delete, delete-orphan")
+    courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers', cascade="save-update , merge, delete")
     
     @hybrid_property
     def password(self):
@@ -158,8 +158,8 @@ class Parent(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    child = db.relationship('Student', backref='parent')
-    user = db.relationship('User', backref='parent')
+    child = db.relationship('Student', backref='parent', cascade="save-update , merge, delete, delete-orphan")
+    user = db.relationship('User', backref='parent', cascade="save-update , merge, delete, delete-orphan")
     
     @hybrid_property
     def password(self):
@@ -206,9 +206,9 @@ class Course(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    content = db.relationship('Content')
-    students = db.relationship('Student', secondary=course_student, back_populates='courses')
-    teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses')
+    content = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
+    students = db.relationship('Student', secondary=course_student, back_populates='courses', cascade="save-update , merge, delete")
+    teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses', cascade="save-update , merge, delete")
 
 
 class Content(db.Model):

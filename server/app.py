@@ -366,10 +366,11 @@ class Parents(Resource):
     def post(self):
         parent_data = request.get_json()
         new_parent = Parent(
-            firstname = parent_data['firstname'],
-            lastname = parent_data['lastname'],
-            password = parent_data['password'],
-            email = parent_data['email']
+            firstname = parent_data['Firstname'],
+            lastname = parent_data['Lastname'],
+            email = parent_data['Email'],
+            password = parent_data['Password'],
+            image_url = parent_data['Image_url']
         )
         db.session.add(new_parent)
         db.session.commit()

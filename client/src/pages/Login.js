@@ -34,7 +34,11 @@ function Login({ setUser }) {
           navigate("/dashboard", { replace: true });
         });
         }
+        else {
+          throw new Error(`HTTP error ${r.status}`)
+        }
       })
+      .catch((error)=>console.error(error))
   }
 
   function handleChange(e) {
