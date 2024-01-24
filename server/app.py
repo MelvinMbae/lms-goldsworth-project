@@ -1,6 +1,7 @@
 from flask import request, make_response, session
-from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignments
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignments, Event
 from flask_restful import Resource
+from datetime import datetime
 from config import mash, db, api, app
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 
@@ -450,7 +451,12 @@ class Courses(Resource):
             course_name = course_data['course_name'],
             description = course_data['description'],
             student_id = course_data['student_id'],
-            teacher_id = course_data['teacher_id']
+            teacher_id = course_data['teacher_id'],
+            daysOfWeek=course_data['daysOfWeek'],
+            startTime=datetime.fromisoformat(course_data['startTime']),
+            endTime=datetime.fromisoformat(course_data['endTime']),
+            startRecur=course_data['startRecur'],
+            endRecur=course_data['endRecur'],
         )
         db.session.add(new_course)
         db.session.commit()
@@ -653,93 +659,134 @@ class Report_CardbyId(Resource):
 api.add_resource(Report_CardbyId, '/report_cards/<int:id>')
 api.add_resource(Report_Cards, '/report_cards')
 
-# class AssignmentSchema(mash.SQLAlchemySchema):
+class EventSchema(mash.SQLAlchemySchema):
 
-#     class Meta:
-#         model = Assignments
+    class Meta:
+        model = Event
     
-#     id = mash.auto_field()
-#     assignment_name = mash.auto_field()
-#     topic = mash.auto_field()
-#     content = mash.auto_field()
-#     due_date = mash.auto_field()
-#     course_id = mash.auto_field()
-
-
-#     url = mash.Hyperlinks(
-#         {
-#             "self":mash.URLFor(
-#                 "assignmentsbyid",
-#                 values=dict(id="<id>")),
-#             "collection":mash.URLFor("assignments")
-
-#         }
-#     )
-
-# assignment_schema = AssignmentSchema()
-# assignments_schema = AssignmentSchema(many=True)
-
-# class Assignment(Resource):
-#     def get(self):
-#         assignment = Assignments.query.all()
-
-#         return make_response(
-#             assignments_schema.dump(assignment), 200
-#         )
+    id = mash.auto_field()
+    groupId = mash.auto_field()
+    allDay = mash.auto_field()
+    start = mash.auto_field()
+    end = mash.auto_field()
+    daysOfWeek = mash.auto_field()
+    startTime = mash.auto_field()
+    endTime = mash.auto_field()
+    startRecur = mash.auto_field()
+    endRecur = mash.auto_field()
+    title = mash.auto_field()
+    student_id = mash.auto_field()
+    course_id = mash.auto_field()
     
-#     def post(self):
-#         assignment_data = request.get_json()
-#         new_assignment = Content(
-#             assignment_name = assignment_data['assignment_name'],
-#             topic = assignment_data['topic'],
-#             content = assignment_data['content'],
-#             due_date = assignment_data['due_date'],
-#             course_id = assignment_data['course_id'],
-#         )
-#         db.session.add(new_assignment)
-#         db.session.commit()
+    url = mash.Hyperlinks(
+        {
+            "self":mash.URLFor(
+                "events",
+                values=dict(id="<id>")),
+            "collection":mash.URLFor("events")
 
-#         return make_response(
-#             content_schema.dump(new_assignment), 201
-#         )
+        }
+    )
 
-    
-# class AssignmentbyId(Resource):
-#     def get(self,id):
-#         assignment = Assignments.query.filter_by(id=id).first()
+event_schema = EventSchema()
+events_schema = EventSchema(many=True)
 
-#         return make_response(
-#             assignment_schema.dump(assignment), 200
-#         )
+class Events(Resource):
+    def get(self):
+        events = Event.query.all()
+        # Assuming you have an events schema defined
+        return make_response(
+            events_schema.dump(events), 200
+        )
+
+    def post(self):
+        data = request.get_json()
         
-#     def patch(self,id):
-#         assignment_data = request.get_json()
-#         assignment = Assignments.query.filter_by(id=id).first()
-
-#         for attr in assignment_data:
-#             setattr(assignment, attr, assignment_data[attr])
+        course = Course.query.get(data['course_id'])
         
-#         db.session.add(assignment)
-#         db.session.commit()
+        if course:
+            # Use the course information to set the title
+            title = f"{course.course_name} "
+        else:
+            title = "Unknown Course"
+            
+        custom_title = data.get('title')
+        event_title = custom_title if custom_title else title
 
-#         return make_response(
-#             assignment_schema.dump(assignment), 202
-#         )
 
-#     def delete(self,id):
-#         assignment = Assignments.query.filter_by(id=id).first()
+        new_event = Event(
+            groupId=data['groupId'],
+            allDay=data['allDay'],
+            start=datetime.fromisoformat(data['start']),
+            end=datetime.fromisoformat(data['end']),
+            daysOfWeek=data['daysOfWeek'],
+            startTime=datetime.fromisoformat(data['startTime']),
+            endTime=datetime.fromisoformat(data['endTime']),
+            startRecur=data['startRecur'],
+            endRecur=data['endRecur'],
+            title=event_title,
+            course_id=data['course_id'],
+            student_id=data['student_id'],
+            teacher_id=data['teacher_id'],
+            
+        )
+        db.session.add(new_event)
+        db.session.commit()
 
-#         db.session.delete(assignment)
-#         db.session.commit()
+        return make_response(
+            event_schema.dump(new_event), 200
+        )
 
-#         return "record successfully deleted" , 202
+class EventbyId(Resource):
+    def get(self,id):
+        event = Event.query.filter_by(id=id).first()
 
-# api.add_resource(AssignmentbyId, '/assignments/<int:id>')
-# api.add_resource(Assignment, '/assignments')
+        return make_response(
+            event_schema.dump(event), 200
+        )
+        
+    def patch(self,id):
+        data = request.get_json()
+        event = Event.query.filter_by(id=id).first()
+        
+        if not event:
+            return make_response({"message": "Event not found"}, 404)
+
+        for attr in data:
+            if attr in ['start', 'end', 'startTime', 'endTime', 'startRecur', 'endRecur']:
+                setattr(event, attr, datetime.fromisoformat(data[attr]))
+            else:
+                setattr(event, attr, data[attr])
+
+        # Update the title based on the course_id
+        if 'course_id' in data:
+            course = Course.query.get(data['course_id'])
+            if course:
+                # Use the course information to update the title
+                event.title = f"{course.course_name}" 
+            else:
+                event.title = "Unknown Course"
+
+        for attr in data:
+            setattr(event, attr, data[attr])
+        
+        db.session.add(event)
+        db.session.commit()
+
+        return make_response(
+            event_schema.dump(event), 200
+        )
+
+    def delete(self,id):
+        event = Event.query.filter_by(id=id).first()
+
+        db.session.delete(event)
+        db.session.commit()
+
+        return make_response({"message": "record successfully deleted"} , 200)
+
+api.add_resource(EventbyId, '/events/<int:id>')
+api.add_resource(Events, '/events')
 
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)    
-
-
-
-
+    app.run(port=5555, debug=True)
