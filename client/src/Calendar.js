@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -19,19 +19,18 @@ import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 
 function Calendar({ eventsList }) {
     const filteredEvents = eventsList.filter((event) => event.student_id === 2);
-    console.log()
+
+    const handleDateClick = () => {
+        alert("Date Event clicked!")
 
 
+    };
 
     const handleEventClick = (info) => {
-        // Access event details from the info object
         const eventTitle = info.event.title;
         const eventStart = info.event.start;
         const eventEnd = info.event.end;
 
-        console.log('eventEnd')
-
-        // Show an alert with event details
         Swal.fire({
             title: "Event Details",
             html: `<strong>Title:</strong> ${eventTitle}<br><strong>Start:</strong> ${eventStart}<br><strong>End:</strong> ${eventEnd}`,
@@ -46,6 +45,8 @@ function Calendar({ eventsList }) {
 
 
 
+
+
     return (
         <div style={{ width: '100%', padding: "20px" }}>
             Calender
@@ -54,7 +55,7 @@ function Calendar({ eventsList }) {
                 plugins={[dayGridPlugin, multiMonthPlugin, timeGridPlugin, interactionPlugin, bootstrap5Plugin, listPlugin]}
                 initialView={"dayGridMonth"}
                 headerToolbar={{
-                    start: 'today prev,next, addEventButton',
+                    start: 'today prev,next addEventButton',
                     center: 'title',
                     end: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,list'
 
@@ -95,10 +96,8 @@ function Calendar({ eventsList }) {
                         click: handleAddEvent,
                     },
                 }}
-
                 eventClick={handleEventClick}
-
-                
+                dateClick={handleDateClick}
 
             />
 
