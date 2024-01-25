@@ -8,8 +8,6 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 
 import Swal from "sweetalert2";
 
-
-
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
@@ -22,6 +20,7 @@ import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 function Calendar({ eventsList }) {
     const filteredEvents = eventsList.filter((event) => event.student_id === 2);
     console.log()
+
 
 
     const handleEventClick = (info) => {
@@ -40,6 +39,13 @@ function Calendar({ eventsList }) {
             confirmButtonText: "OK",
         });
     };
+
+    const handleAddEvent = () => {
+        alert("Custom button clicked!")
+    };
+
+
+
     return (
         <div style={{ width: '100%', padding: "20px" }}>
             Calender
@@ -48,7 +54,7 @@ function Calendar({ eventsList }) {
                 plugins={[dayGridPlugin, multiMonthPlugin, timeGridPlugin, interactionPlugin, bootstrap5Plugin, listPlugin]}
                 initialView={"dayGridMonth"}
                 headerToolbar={{
-                    start: 'today prev,next',
+                    start: 'today prev,next, addEventButton',
                     center: 'title',
                     end: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,list'
 
@@ -80,14 +86,20 @@ function Calendar({ eventsList }) {
                     student_id: event.student_id,
                     startRecur: event.startRecur,
                     endRecur: event.endRecur
-
-
-
-
-                }))}
-
+                }
+                ))
+                }
+                customButtons={{
+                    addEventButton: {
+                        text: "Add Event",
+                        click: handleAddEvent,
+                    },
+                }}
 
                 eventClick={handleEventClick}
+
+                
+
             />
 
         </div>

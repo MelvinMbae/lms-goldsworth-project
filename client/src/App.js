@@ -16,7 +16,7 @@ import CoursesPage from './CoursesPage'
 import About from './About';
 import './Courses.css'
 import './About.css';
-import Calendar from './Calender';
+import Calendar from './Calendar';
 
 
 function App() {
