@@ -22,7 +22,7 @@ import { appContext } from './utils/appContext';
 function TeacherHome() {
   const [assignments, setAssignments] = useState([])
 
-  const { setUser } = useContext(appContext)
+  const { setUser , courses , coursesList } = useContext(appContext)
 
   useEffect(() => {
     fetch("/assignments").then((response) => {

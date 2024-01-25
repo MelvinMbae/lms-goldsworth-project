@@ -6,10 +6,10 @@ function Assignments({ assignments }){
     return(
           <div className="assignments">  
               {assignments.map((assigno) => (
-                  <div class="assignment-card" key={assigno.id}>
+                  <div className="assignment-card" key={assigno.id}>
                       <h1>{assigno.assignment_name}</h1>
                       <p>{assigno.content}</p>
-                      <div><span class="snippet">{assigno.due_date}</span>
+                      <div><span className="snippet">{assigno.due_date}</span>
                       <span download><DownloadButton file={assigno.file}/></span></div>
                   </div>
               ))}                      

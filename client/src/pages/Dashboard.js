@@ -11,11 +11,10 @@ function Dashboard() {
     const location = useLocation()
     const { user } = useContext(appContext)
 
-
     function DashPage({ children }){
         return(
             <Fragment>
-                <SideBar user={user}/>
+                <SideBar user={user.user_details}/>
                 {children}
             </Fragment>
         )
