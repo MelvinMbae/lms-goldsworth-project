@@ -23,7 +23,7 @@ function Dashboard({ user }) {
                                                                                             <div className='uno'>
                                                                                                 <Outlet />  
                                                                                             </div>
-                                                                                            <Profile user={user}/>
+                                                                                            {/* <Profile user={user}/> */}
                                                                                         </DashPage>}
                 {/*<div className='footer'></div> */} 
             </Fragment>

@@ -6,7 +6,7 @@ function ActiveCourse({ registeredCourses}) {
   //   <div className='course-card' key={course.course_id}><h2>{course.title}</h2><p>{course.description}</p></div>
   // })
   return (
-    <div className='course-grid contents'> 
+    <div className='course-grid-contents'> 
       This is a list of selected courses!
       <h2>Courses Allocated</h2>
       <table>
@@ -26,7 +26,7 @@ function ActiveCourse({ registeredCourses}) {
           <tr>
             <td>Bio 1109</td>
             <td>Bio 4900</td>
-            <td>B3(Physical-Y1</td>
+            <td>B3Physical-Y1</td>
           </tr>
           <tr>
             <td>Bio 5200</td>

@@ -16,6 +16,7 @@ import CoursesPage from './CoursesPage'
 import About from './About';
 import './Courses.css'
 import './About.css';
+import Calendar from './Calender';
 
 
 function App() {
@@ -23,6 +24,25 @@ function App() {
   const [user, setUser] = useState("")
   const [coursesList, setCoursesList] = useState([]);
   const [courseListDictionary, setCourseListDictionary] = useState({});
+
+  const [eventsList, setEventsList] = useState([])
+  const [eventsDictionary, setEventsDictionary] = useState({})
+
+  function fetchEventData() {
+    fetch("/events")
+      .then((response) => response.json())
+      .then((eventData) => {
+        eventData.forEach((event) => {
+          eventsDictionary[event.id] = event;
+        });
+
+        setEventsList(eventData);
+        setEventsDictionary(eventsDictionary);
+      });
+
+  }
+  useEffect(() => fetchEventData(), []);
+  console.log(eventsList)
 
   function fetchCoursesData() {
     fetch("/courses")
@@ -70,6 +90,7 @@ function App() {
           <Route path='/home' element={<Home courses={courses}/>} />
           <Route  element={<Dashboard user={user}/>}>
             <Route path='/dashboard' element={<StudentDash />} />
+            <Route path='/calendar' element={<Calendar eventsList={eventsList}/>} />
             <Route path='/reportcard' element={<ReportCard />} />
             <Route path='/active-courses' element={<ActiveCourse />} />
             <Route path='/classes' element={<Classes />} />

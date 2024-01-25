@@ -72,11 +72,7 @@ const About = () => {
                     <p>Cynthia Laleti</p>
                     <p>Head of Education</p>
                 </div>
-                <div className="team-images">
-                    <img src='./images/user1.png' alt="Isaac Kivuva" />
-                    <p>Isaac Kivuva</p>
-                    <p>Chief Technology Officer</p>
-                </div>
+        
             </div>
 
             {/* <div className="about-images">

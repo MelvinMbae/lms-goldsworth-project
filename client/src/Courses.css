@@ -40,7 +40,7 @@
   flex-direction: column;
   padding: 15px;
   width: 300px;
-  height: 300px;
+  height: 500px;
   align-items: center;
   justify-content: space-between;
   background-image: url(https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
@@ -63,17 +63,16 @@
   align-self: center;
 }
 
-.courselist-cards h4,
-h3 {
-  font-size: small;
+.courselist-cards-h3 {
+  font-size: large;
   color: white;
   padding: 2px;
   /* border: none; */
 }
 
-.courselist-cards p {
+.courselist-cards-p {
   color: white;
-  font-size: smaller;
+  font-size: small;
   border: none;
 }
 

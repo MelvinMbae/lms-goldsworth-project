@@ -24,6 +24,8 @@ function SideBar() {
                 <Link to={'/dashboard'}>Dashboard</Link>
                 <Link to={'/active-courses'}>Active Courses</Link>
                 <Link to={'/classes'}>Classes</Link>
+                <Link to={'/calendar'}>Calendar</Link>
+
                 {props.children}
                 </div>
             <div id="main">
