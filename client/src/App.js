@@ -1,90 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import About from './About';
-import './About.css';
-import ActiveCourse from './ActiveCourses';
-import Assignments from './Assignments';
-import Classes from './Classes';
-import './Courses.css';
-import CoursesPage from './CoursesPage';
-import Navbar from './Navbar';
-import ReportCard from './ReportCard';
-import StudentDash from './StudentDash';
-import Registrations from './components/RegPage';
-import ChatBox from './components/chatBox';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Registration from './pages/Registration';
+// src/App.js
+import React, { useState } from 'react';
+import StudentDetails from './IndividuaStudent';
+import StudentList from './StudentList';
 
+const App = () => {
+  const [students, setStudents] = useState([
+    { id: 1, name: 'Martin Wambugu', rollNumber: 'A001', grade: 'B' },
+    { id: 2, name: 'Wilson Muita', rollNumber: 'A002', grade: 'A' },
+    { id: 2, name: 'Melvin Mbae', rollNumber: 'A003', grade: 'A' },
+    { id: 2, name: 'Michael Njogu', rollNumber: 'A004', grade: 'A' },
+    { id: 2, name: 'Cynthia M', rollNumber: 'A005', grade: 'A' },
+    { id: 2, name: 'Wilson Wachira', rollNumber: 'A006', grade: 'B' },
+  ]);
 
-function App() {
-  const [courses, setCourse] = useState([])
-  const [user, setUser] = useState("")
-  const [coursesList, setCoursesList] = useState([]);
-  const [courseListDictionary, setCourseListDictionary] = useState({});
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
-  function fetchCoursesData() {
-    fetch("/courses")
-      .then((response) => response.json())
-      .then((data) => {
-
-        data.forEach((course) => {
-          courseListDictionary[course.id] = course;
-        });
-
-        setCoursesList(data);
-        setCourseListDictionary(courseListDictionary);
-      });
-
-  }
-  useEffect(() => fetchCoursesData(), []);
-
-  useEffect(() => {
-    fetch("/courses").then((response) => {
-      if (response.ok) {
-        response.json()
-          .then((courses) => {
-            setCourse(courses)
-          })
-      }
-    })
-  }, [])
-
-  useEffect(() => {
-    fetch("/checksession").then((response) => {
-      if (response.ok) {
-        response.json()
-          .then((sessionMember) => {
-            setUser(sessionMember)
-          })
-      }
-    })
-  }, [])
+  const handleSelectStudent = (student) => {
+    setSelectedStudent(student);
+  };
 
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<Navbar user={user} setUser={setUser}/>}>
-          <Route path='/' index element={<Home courses={courses}/>} />
-          <Route path='/home' element={<Home courses={courses}/>} />
-          <Route  element={<Dashboard user={user}/>}>
-            <Route path='/dashboard' element={<StudentDash />} />
-            <Route path='/reportcard' element={<ReportCard />} />
-            <Route path='/active-courses' element={<ActiveCourse />} />
-            <Route path='/classes' element={<Classes />} />
-            <Route path='/assignments' element={<Assignments />} />
-            <Route path='/forums' element={<ChatBox />} />
-            <Route path='/about' element={<About setUser={setUser} />} />
-            <Route path='/coursespage' element={<CoursesPage coursesList={coursesList} user={user} />} />
-            <Route path='/registrations' element={<Registrations />} />
-          </Route>
-        </Route>
-        <Route path='/login' element={<Login setUser={setUser}/>} />
-        <Route path='/course-registration' element={<Registration />} />
-      </Routes>
-    </>
+    <div>
+      <StudentList students={students} onSelectStudent={handleSelectStudent} />
+      <StudentDetails selectedStudent={selectedStudent} />
+    </div>
   );
 };
 
-export default DocumentDownload;
+export default App;
