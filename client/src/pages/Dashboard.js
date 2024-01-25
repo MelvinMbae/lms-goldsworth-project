@@ -14,14 +14,13 @@ function Dashboard() {
     function DashPage({ children }){
         return(
             <Fragment>
-                <SideBar user={user.user_details}/>
+                <SideBar user={user}/>
                 {children}
             </Fragment>
         )
     }
         return(
             <div className='dashboard'>  
-
                 {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
                                                                                                 <Outlet />  
                                                                                             <Profile user={user}/>

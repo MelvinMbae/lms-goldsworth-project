@@ -4,6 +4,13 @@ import StudentHome from './StudentHome';
 import ParentHome from './ParentHome';
 import TeacherHome from './TeacherHome'
 import Navbar from './Navbar';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import CoursesPage from './CoursesPage'
+import About from './pages/About';
+import { Route, Routes } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import UserAuth from './pages/UserAuth';
 
 
 
@@ -67,7 +74,17 @@ function App() {
       <appContext.Provider value={{user , session , setSession , setUser , courses, coursesList }}>
         <div className=''>
           <Navbar />
-          <StudentHome />
+          <Routes>
+            <Route path='/' element={<Home courses={courses}/>}/>
+            <Route path='/about' element={<About />} />
+            <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
+            <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
+            <Route  element={<UserAuth user={user} />}>
+              <Route path='/dashboard' element={<Dashboard />}>
+                <Route element={<StudentHome />} />
+              </Route>
+            </Route>
+          </Routes>
         </div>
       </appContext.Provider>
   );
