@@ -48,9 +48,7 @@ function Calendar({ eventsList }) {
     };
 
     return (
-        <div style={{ width: '100%', padding: "20px" }}>
-            Calender
-
+        <div style={{ width: '100%', paddingLeft: "300px", paddingRight: "300px" }}>
             <FullCalendar
                 plugins={[dayGridPlugin, multiMonthPlugin, timeGridPlugin, interactionPlugin, bootstrap5Plugin, listPlugin]}
                 initialView={"dayGridMonth"}

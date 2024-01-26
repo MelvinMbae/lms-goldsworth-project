@@ -1,11 +1,15 @@
+.login-dialogue{
+    padding: 20px;
+}
+
 .form-dialogue {
     background: #fff;
     border: solid thin grey;
     padding: 20px;
     border-radius: 20px;
-    margin-top: 50px;
-    width: 350px;
-    padding-bottom: 20px;
+    /* margin-top: 50px; */
+    width: 750px;
+    /* padding-bottom: 20px; */
 }
 
 .form-dialogue>form>.form-item {
