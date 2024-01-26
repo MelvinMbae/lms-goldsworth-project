@@ -3,7 +3,7 @@ import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 
-function Login({ setSession , setUser }) {
+function Login({ session , setSession , setUser }) {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -13,10 +13,13 @@ function Login({ setSession , setUser }) {
 
   function handleUser(user){
     if("student_id" in user){
-      setSession({user_type:"student", user_details:user})
+      setSession({...session, user_type:"student", user_details:user})
+    }
+    else if("teacher_id" in user){
+      setSession({...session, user_type:"teacher", user_details:user})
     }
     else if("parent_id" in user){
-      setSession({user_type:"parent", user_details:user})
+      setSession({...session, user_type:"parent", user_details:user})
     }
   }
 

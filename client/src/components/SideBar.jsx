@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Fragment } from 'react';
 
 function SideBar({ user }) {
 
@@ -14,44 +13,32 @@ function SideBar({ user }) {
      }
 
 
-    // function Sidebar({ children }){
-    //     if((user.user_type === "student")){
-    //         return (  
-    //             <Fragment>
-    //                 {children}
-    //                 <Link to={'/dashboard'}>Dashboard</Link>
-    //                 <Link to={'/active-courses'}>Active Courses</Link>
-    //                 <Link to={'/classes'}>Classes</Link>
-    //                 <Link to={'/reportcard'}>Report Card</Link>
-    //                 <Link to={'/assignments'}>Assignments</Link>
-    //             </Fragment>
-    //             )
-    //         }
-    //     else if((user.user_type === "teacher")){
-    //         return (  
-    //             <Fragment>
-    //                 {children}
-    //                 <Link to={'/dashboard'}>Dashboard</Link>
-    //                 <Link to={'/active-courses'}>Active Courses</Link>
-    //                 <Link to={'/classes'}>Classes</Link>
-    //                 <Link to={'/reportcard'}>Report Card</Link>
-    //                 <Link to={'/assignments'}>Assignments</Link>
-    //             </Fragment>
-    //             )
-    //         }
-    //     else{
-    //         return (  
-    //             <Fragment>
-    //                 {children}
-    //                 <Link to={'/dashboard'}>Dashboard</Link>
-    //                 <Link to={'/active-courses'}>Active Courses</Link>
-    //                 <Link to={'/classes'}>Classes</Link>
-    //                 <Link to={'/reportcard'}>Report Card</Link>
-    //                 <Link to={'/assignments'}>Assignments</Link>
-    //             </Fragment>
-    //             )
-    //         }
-    //     }
+//     function Sidebar({ children }){
+//  if((session.user_type === "teacher")){
+//             return (  
+//                 <Fragment>
+//                     {children}
+//                     <Link to={'/dashboard'}>Dashboard</Link>
+//                     <Link to={'/active-courses'}>Active Courses</Link>
+//                     <Link to={'/classes'}>Classes</Link>
+//                     <Link to={'/reportcard'}>Report Card</Link>
+//                     <Link to={'/assignments'}>Assignments</Link>
+//                 </Fragment>
+//                 )
+//             }
+//         else{
+//             return (  
+//                 <Fragment>
+//                     {children}
+//                     <Link to={'/dashboard'}>Dashboard</Link>
+//                     <Link to={'/active-courses'}>Active Courses</Link>
+//                     <Link to={'/classes'}>Classes</Link>
+//                     <Link to={'/reportcard'}>Report Card</Link>
+//                     <Link to={'/assignments'}>Assignments</Link>
+//                 </Fragment>
+//                 )
+//             }
+//         }
 
   return (
         <div className='sidebar'>
@@ -61,10 +48,7 @@ function SideBar({ user }) {
                 <Link to={'/dashboard'}>Dashboard</Link>
                 <Link to={'/active-courses'}>Active Courses</Link>
                 <Link to={'/classes'}>Classes</Link>
-                <Link to={'/courses'}>Courses</Link>
-                <Link to={'/discussion'}>Discussion</Link>
                 <Link to={'/assignments'}>Assignments</Link>
-                <Link to={'/calender'}>Calender</Link>
                 <Link to={'/reportcard'}>ReportCard</Link>
             </div>
             <div id="main">

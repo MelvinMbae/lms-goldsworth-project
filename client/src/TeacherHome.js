@@ -2,10 +2,8 @@ import React, { useEffect, useState , useContext} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import StudentDash from './StudentDash';
 import TeacherDash from './TeacherDash'
 import Navbar from './Navbar';
-import ReportCard from './ReportCard';
 import Dashboard from './pages/Dashboard';
 import ActiveCourse from './ActiveCourses';
 import Classes from './Classes';
@@ -22,7 +20,7 @@ import { appContext } from './utils/appContext';
 function TeacherHome() {
   const [assignments, setAssignments] = useState([])
 
-  const { setUser , courses , coursesList } = useContext(appContext)
+  const { user , setUser , courses , coursesList } = useContext(appContext)
 
   useEffect(() => {
     fetch("/assignments").then((response) => {
@@ -44,7 +42,7 @@ function TeacherHome() {
             <Route path='/dashboard' element={<TeacherDash />} />
             <Route path='/active-courses' element={<ActiveCourse />} />
             <Route path='/classes' element={<Classes />} />
-            <Route path='/assignments' element={<Assignments assignments={assignments}/>} />
+            <Route path='/assignments' element={<Assignments user={user} assignments={assignments}/>} />
             <Route path='/forums' element={<ChatBox />} />
             <Route path='/registrations' element={<Registrations />} />
           </Route>

@@ -32,9 +32,9 @@ function StudentDash(){
     return(
             <div className='contents'>
                 <div className='top'>
-                        <span className='data'><h2>{studentReport['active-course']}</h2></span>
-                        <span className='data'><h1>{studentReport['course-hours']}</h1> <h2>  hrs</h2></span>
-                        <span className='data'><h1>{studentReport['courses-pursuing']}</h1> <h2>  Courses</h2></span>
+                    <span className='data'><h2>{studentReport['active-course']}</h2></span>
+                    <span className='data'><h1>{studentReport['course-hours']}</h1> <h2>  hrs</h2></span>
+                    <span className='data'><h1>{studentReport['courses-pursuing']}</h1> <h2>  Courses</h2></span>
                 </div>
                 <div className='graphs'>
                     <Chart

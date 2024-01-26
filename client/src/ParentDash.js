@@ -30,9 +30,7 @@ function ParentDash(){
                     <Link to={'home'}>Home</Link>
                     <Link to={'/about'}>About</Link>
                     <Link to={'/courses'}>Courses</Link>
-                    <Link to={'/contact'}>Contacts</Link>
                     <Link to={'/discussion'}>Discussion</Link>
-                    <Link to={'/user'}>user</Link>
                 </div>
                 
             </div>
@@ -41,7 +39,6 @@ function ParentDash(){
                     <div className='sides'>
                         <Link to={'/StudentDash'}>Dashboard</Link>
                         <Link to={'/courses'}>Courses</Link>
-                        <Link to={'/discussion'}>Discussion</Link>
                         <Link to={'/calender'}>Calender</Link>
                         <Link to={'/reportCard'}>Report Card</Link>
                         <Link to={'/assignments'}>Assignments</Link>

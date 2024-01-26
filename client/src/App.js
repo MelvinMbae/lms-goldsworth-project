@@ -1,16 +1,23 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { appContext } from './utils/appContext';
-import StudentHome from './StudentHome';
-import ParentHome from './ParentHome';
-import TeacherHome from './TeacherHome'
 import Navbar from './Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import CoursesPage from './CoursesPage'
 import About from './pages/About';
+import Classes from './Classes';
+import Assignments from './Assignments';
+import ChatBox from './components/chatBox';
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import UserAuth from './pages/UserAuth';
+import TeacherDash from './TeacherDash';
+import ActiveCourse from './ActiveCourses';
+import StudentEnrollment from './components/StudentEnrollment';
+import AssignmentForm from './AssignmentCreation';
+import CourseForm from './CourseForm';
+import Assignment from './Assignment';
+import CoursePage from './CoursePage';
 
 
 
@@ -19,7 +26,19 @@ function App() {
   const [user, setUser] = useState("")
   const [session, setSession] = useState({"user_type":'', "user_details":''})
   const [coursesList, setCoursesList] = useState([]);
-  const [courseListDictionary, setCourseListDictionary] = useState({});
+  const [courseListDictionary, setCourseListDictionary] = useState({});  
+  const [assignments, setAssignments] = useState([])
+
+  useEffect(() => {
+    fetch("/assignments").then((response) => {
+      if (response.ok) {
+        response.json()
+          .then((assignment) => {
+            setAssignments(assignment)
+          })
+      }
+    })
+  }, [])
 
   function fetchCoursesData() {
     fetch("/courses")
@@ -41,6 +60,9 @@ function App() {
     if("student_id" in user){
       setSession({user_type:"student", user_details:user})
     }
+    else if("teacher_id" in user){
+      setSession({user_type:"teacher", user_details:user})
+    }
     else if("parent_id" in user){
       setSession({user_type:"parent", user_details:user})
     }
@@ -59,15 +81,19 @@ function App() {
   }, [])
 
   // function SetPage(){
-  //   // if(user.user_type === "student"){
-  //   //   return <StudentHome />
-  //   // }
-  //   if(user.user_type === "student"){
-  //     return <StudentHome />
+  //   if(session.user_type === "student"){
+  //     return (<StudentHome />)
+      
   //   }
-
-  //   else{ return <ParentHome/> }
+  //   else if(session.user_type === "lecturer"){
+  //     return <TeacherDash />
+  //   }
+  //   else if(session.user_type === "parent"){
+  //     return <ParentDash/> 
+  //   }
   // }
+  // console.log(user)
+  
 
   return (
 
@@ -80,8 +106,17 @@ function App() {
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
             <Route  element={<UserAuth user={user} />}>
-              <Route path='/dashboard' element={<Dashboard />}>
-                <Route element={<StudentHome />} />
+              <Route element={<Dashboard />}>
+                <Route path='/dashboard' element={<TeacherDash />} />
+                <Route path='/active-courses' element={<ActiveCourse />} />
+                <Route path='/classes' element={<Classes />} />
+                <Route path='/assignments' element={<Assignments user={user} assignments={assignments}/>}></Route>
+                <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
+                <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
+                <Route path='/forums' element={<ChatBox />} />
+                <Route path='/enrollment' element={<StudentEnrollment />} />
+                <Route path='/new' element={<AssignmentForm/>} />
+                <Route path='/new-course' element={<CourseForm/>} />
               </Route>
             </Route>
           </Routes>

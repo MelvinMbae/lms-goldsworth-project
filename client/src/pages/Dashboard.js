@@ -9,12 +9,12 @@ import CoursesPage from '../CoursesPage';
 function Dashboard() {
     
     const location = useLocation()
-    const { user } = useContext(appContext)
+    const { user , session } = useContext(appContext)
 
     function DashPage({ children }){
         return(
             <Fragment>
-                <SideBar user={user}/>
+                <SideBar user={session}/>
                 {children}
             </Fragment>
         )

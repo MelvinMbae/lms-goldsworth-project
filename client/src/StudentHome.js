@@ -14,7 +14,7 @@ import { appContext } from './utils/appContext';
 
 function StudentHome() {
   const [assignments, setAssignments] = useState([])
-  // const { setUser, setSession , courses , coursesList } = useContext(appContext)
+  const { user , setUser, setSession , courses , coursesList } = useContext(appContext)
 
   useEffect(() => {
     fetch("/assignments").then((response) => {
@@ -29,12 +29,14 @@ function StudentHome() {
 
   return (
       <Routes>
-          <Route path='/dashboard' element={<StudentDash />} />
-          <Route path='/reportcard' element={<ReportCard />} />
-          <Route path='/active-courses' element={<ActiveCourse />} />
-          <Route path='/classes' element={<Classes />} />
-          <Route path='/assignments' element={<Assignments assignments={assignments}/>} />
-          <Route path='/forums' element={<ChatBox />} />
+          <Route  element={<Dashboard/>}>
+            <Route element={<StudentDash />} />
+            <Route path='/reportcard' element={<ReportCard />} />
+            <Route path='/active-courses' element={<ActiveCourse />} />
+            <Route path='/classes' element={<Classes />} />
+            <Route path='/assignments' element={<Assignments user={user} assignments={assignments}/>} />
+            <Route path='/forums' element={<ChatBox />} />
+          </Route>
       </Routes>
   );
 }

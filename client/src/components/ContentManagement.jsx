@@ -3,7 +3,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import StudentForm from "./StudentForm";
 import ParentForm from "./ParentForm";
 
-function Registrations() {
+function ContentManagement() {
   const [student, setStudent] = useState({
     firstname: "",
     lastname: "",
@@ -96,15 +96,9 @@ function Registrations() {
 
   return (
     <div className="register" >
-      <h1>Student Enrollment</h1>
-      <form  className="forms" onSubmit={handleSubmit} encType="multipart/formdata">
-        {tab === 1 ? 
-          <div><h2>Student Form</h2><StudentForm  student={student} handleChange={handleStudentChange} /></div> :
-          <div><h2>Parent Form</h2><ParentForm  parent={parent} student={student} handleChange={handleParentChange} /><button className="btn" type="submit">Register</button></div> }
-      </form>
-      {tab === 1 ? <button className="btn" onClick={onNext}><FaArrowRight /></button> : <button className="btn" onClick={onBack}><FaArrowLeft /></button>}
+
     </div>
   );
 }
 
-export default Registrations
+export default ContentManagement

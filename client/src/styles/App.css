@@ -326,26 +326,23 @@ li, a{
   .assignments{
     display: flex;
     flex-direction: column;
-    position: relative;
-    background-color: #0abeb867;
-    top: 10%;
-    width: 60%;
+    /* justify-content: center;
+    align-items: flex-start; */
+    background-color: #bdd6e0;
+    width: 50%;
     border-radius: 5px;
-    height: 50vh;
+    height: 650px;
     padding: 15px 20px;
     overflow-y: scroll;
-    scrollbar-gutter:unset;
-    scroll-behavior: smooth;
-
 
     .assignment-card{
-      height: 200px;
+      margin-bottom: 30px;
+      height: 250px;
       padding: 15px 20px;
-      /* border-bottom: 1px solid gray; */
-      /* border-width: 90%; */
 
     }
   }
+
   .side-nav {
     height: 100%;
     width: 0;
@@ -404,18 +401,7 @@ li, a{
   display: flex;
 }
 
-.assignments{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  columns: 2 340px;
-  gap: 20px;
-  width: 100%;
-  height: fit-content;
-  padding: 25px 120px;
-  background: #45A5A1;
-  border-radius: 14px;
-}
+
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
