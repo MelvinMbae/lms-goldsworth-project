@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import CreateEvent from './CreateEvent';
+
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -13,17 +15,18 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './index.css';
 import './App.css';
 import './Dashboard.css';
+import { useNavigate } from "react-router-dom";
 
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 
-
 function Calendar({ eventsList }) {
+
+    const navigate = useNavigate();
+
     const filteredEvents = eventsList.filter((event) => event.student_id === 2);
 
     const handleDateClick = () => {
         alert("Date Event clicked!")
-
-
     };
 
     const handleEventClick = (info) => {
@@ -40,12 +43,9 @@ function Calendar({ eventsList }) {
     };
 
     const handleAddEvent = () => {
+        navigate('/create-event');
         alert("Custom button clicked!")
     };
-
-
-
-
 
     return (
         <div style={{ width: '100%', padding: "20px" }}>

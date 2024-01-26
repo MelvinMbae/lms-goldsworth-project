@@ -1,0 +1,72 @@
+.form-dialogue {
+    background: #fff;
+    border: solid thin grey;
+    padding: 20px;
+    border-radius: 20px;
+    margin-top: 50px;
+    width: 350px;
+    padding-bottom: 20px;
+}
+
+.form-dialogue>form>.form-item {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.form-dialogue>form>.form-item>label {
+    color: #247254e8;
+    width: 100%;
+    text-align: left;
+}
+
+.form-dialogue>form>.form-item>input {
+    border: solid thin grey;
+    border-radius: 8px;
+    background: #918f8f70;
+}
+
+.form-dialogue>form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    row-gap: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+form>.event-btn {
+    font-weight: 550;
+    color: #ffffff;
+    padding: 10px;
+    height: auto;
+    border: none;
+    border-radius: 8px;
+    background: #1a6f6c;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form>.signup-btn {
+    font-weight: 400;
+    color: #1830b9;
+    padding: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+form>.signup-btn:hover {
+    color: #3b18b9;
+    text-decoration: underline;
+}
+
+.form-dialogue-h2{
+    align-self: center;
+}

@@ -16,7 +16,10 @@ import CoursesPage from './CoursesPage'
 import About from './About';
 import './Courses.css'
 import './About.css';
+import './CreateEvent.css'
 import Calendar from './Calendar';
+import CreateEvent from './CreateEvent';
+
 
 
 function App() {
@@ -91,6 +94,8 @@ function App() {
           <Route  element={<Dashboard user={user}/>}>
             <Route path='/dashboard' element={<StudentDash />} />
             <Route path='/calendar' element={<Calendar eventsList={eventsList}/>} />
+            <Route path="/create-event" element={<CreateEvent />} />
+
             <Route path='/reportcard' element={<ReportCard />} />
             <Route path='/active-courses' element={<ActiveCourse />} />
             <Route path='/classes' element={<Classes />} />

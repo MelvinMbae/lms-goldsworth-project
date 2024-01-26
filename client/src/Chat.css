@@ -168,7 +168,8 @@
     max-width: 500px;
     border-radius: 20px 20px 0 20px;
     height: auto;
-    margin-left: auto
+    margin-left: auto;
+    padding: 10px;
 
   }
   .received-message{
