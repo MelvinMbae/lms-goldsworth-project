@@ -1,9 +1,9 @@
 import React from 'react'
-
+import './classes.css'
 function Classes() {
   return (
-    <div className='contents'>
-      <div className="introduction-page">
+    <div className='classes'>
+      <div className="class-header">
         <h2>Introduction to Biochemistry</h2>
         <div className="class-info">
           <div>
@@ -17,7 +17,7 @@ function Classes() {
           </div>
         </div>
       </div>
-      <div className="math-class-page">
+      <div className="class-header">
         <h2>Mathematics Fundamentals</h2>
         <div className="class-info">
           <div>
@@ -31,7 +31,7 @@ function Classes() {
           </div>
         </div>
       </div>
-      <div className="history-class-page">
+      <div className="class-header">
         <h2>World History Through the Ages</h2>
         <div className="class-info">
           <div>

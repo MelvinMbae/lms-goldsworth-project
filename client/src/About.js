@@ -3,29 +3,25 @@ import React from 'react';
 const About = () => {
     return (
         <div>
-            <div className='about-us-cover'>
-                <div className="text">
-                    About Us
-
-                    {/* Welcome to GOLDWORTH, a leading online learning platform designed to empower individuals through education. At GOLDWORTH, we believe in the transformative power of learning, and our mission is to make high-quality education accessible to everyone, anywhere in the world. */}
-                </div>
-            </div>
-
             <div className="about-container">
                 <div className="about-header">
-                    <h2>About GOLDWORTH</h2>
-                </div>
-                <div className="about-content">
+                    <h2>Why choose us?</h2>
+                    <div className='line'></div>
                     <p>
-                        Welcome to GOLDWORTH, a leading online learning platform designed to empower individuals through education.
+                        We are a leading online learning platform designed to empower individuals through education.<br/><br/>
                         At GOLDWORTH, we believe in the transformative power of learning, and our mission is to make high-quality
-                        education accessible to everyone, anywhere in the world.
+                        education accessible to everyone, <br/>anywhere in the world.
                     </p>
                     <p>
                         Our platform offers a diverse range of courses spanning various subjects, from technology and business to
-                        arts and sciences. Each course is crafted by industry experts and experienced educators to provide you
-                        with valuable skills and knowledge that can propel your personal and professional growth.
+                        arts and sciences. <br/>Each course is crafted by industry experts and experienced educators to provide you
+                        with valuable skills and <br/>knowledge that can propel your personal and professional growth.
                     </p>
+                </div>
+            </div>
+            <div className='about'>
+                <div className="about-content">
+                 
                     <h3 className='heading-3'>Our Mission</h3>
                     <p>
                         To democratize education by providing accessible, high-quality learning experiences that empower individuals
@@ -37,7 +33,6 @@ const About = () => {
                         positive societal impact.
                     </p>
                 </div>
-            </div>
 
             <div className='about-us-story'>
                     <h3 className='ourstory-heading'>Our Story</h3>
@@ -45,44 +40,72 @@ const About = () => {
                         At Goldworth, our story is woven with a passion for education and a commitment to empowering learners worldwide. It all began with a vision to create an innovative Learning Management System that transcends traditional boundaries, providing a dynamic and personalized educational experience. Over the years, our dedicated team of educators, technologists, and visionaries have collaborated to build a platform that seamlessly integrates cutting-edge technology with pedagogical expertise.
                     </p>
             </div>
-            <h3 className='heading-3'>Meet Our Team</h3>
-            <div className='team-images-container'>
-                <div className="team-images">
-                    <img src="./images/user1.png" alt="Michael Njogu" />
-                    <p>Michael Njogu</p>
-                    <p>Co-Founder and CEO</p>
-                </div>
-                <div className="team-images">
-                    <img src="./images/user1.png" alt="Cynthia Laleti" />
-                    <p>Cynthia Laleti</p>
-                    <p>Head of Education</p>
-                </div>
-                <div className="team-images">
-                    <img src='./images/user1.png' alt="Isaac Kivuva" />
-                    <p>Isaac Kivuva</p>
-                    <p>Chief Technology Officer</p>
-                </div>
-                <div className="team-images">
-                    <img src="./images/user1.png" alt="Michael Njogu" />
-                    <p>Michael Njogu</p>
-                    <p>Co-Founder and CEO</p>
-                </div>
-                <div className="team-images">
-                    <img src="./images/user1.png" alt="Cynthia Laleti" />
-                    <p>Cynthia Laleti</p>
-                    <p>Head of Education</p>
-                </div>
-                <div className="team-images">
-                    <img src='./images/user1.png' alt="Isaac Kivuva" />
-                    <p>Isaac Kivuva</p>
-                    <p>Chief Technology Officer</p>
-                </div>
             </div>
+           <div className='team-wrapper'>
+            <h1>Meet Our Team</h1>
 
-            {/* <div className="about-images">
+            <div className='team'>
+                <div className="team-member">
+                <div className="team-images">
+<img src='./images/user1.png' alt="Isaac Kivuva" /></div>
+                    <h4>Michael Njogu</h4>
+                    <p className='role'>Michael Njogu</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
+                        Vivamus lacinia elit vel nisi mollis sagittis. 
+                        Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
+                </div>
+                <div className="team-member">
+                <div className="team-images">
+<img src='./images/user1.png' alt="Isaac Kivuva" /></div>
+                   <h4>Cynthia Laleti</h4>
+                    <p className='role'>Cynthia Laleti</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
+                        Vivamus lacinia elit vel nisi mollis sagittis. 
+                        Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
+                </div>
+                <div className="team-member">
+                <div className="team-images">
+<img src='./images/user1.png' alt="Isaac Kivuva" /></div>
+                <h4>Michael Njogu</h4>
+                    <p className='role'>Isaac Kivuva</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
+                        Vivamus lacinia elit vel nisi mollis sagittis. 
+                        Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
+                </div>
+                <div className="team-member">
+                <div className="team-images">
+<img src='./images/user1.png' alt="Isaac Kivuva" /></div>
+                <h4>Melvin Mbae</h4>
+                    <p className='role'>Melvin Mbae</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
+                        Vivamus lacinia elit vel nisi mollis sagittis. 
+                        Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
+                </div>
+                <div className="team-member">
+                <div className="team-images">
+<img src='./images/user1.png' alt="Isaac Kivuva" /> </div>
+                <h4>Michael Njogu</h4>
+                    <p className='role'>Cynthia Laleti</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
+                        Vivamus lacinia elit vel nisi mollis sagittis. 
+                        Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
+                </div>
+                
+            </div>
+            </div>
+            <div className='section'>
+             <div className="about-image">
                 <img src="https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxlYXJuaW5nJTIwbWFuYWdlbWVudCUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D" alt="Computer" />
-            </div> */}
+            </div> 
+            <div className="about-image">
+                <img src="https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxlYXJuaW5nJTIwbWFuYWdlbWVudCUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D" alt="Computer" />
+            </div> 
+            <div className="about-image">
+                <img src="https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxlYXJuaW5nJTIwbWFuYWdlbWVudCUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D" alt="Computer" />
+            </div> 
 
+           
+            </div>
             <div className='benefits-to-parents'>
                 <h3 className='heading-3'>Benefits for Parents</h3>
                 <p>
@@ -104,7 +127,7 @@ const About = () => {
                     Email: support@goldworth.com
                 </p>
             </div>
-
+ 
         </div >
     );
 };
