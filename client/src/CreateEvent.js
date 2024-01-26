@@ -126,7 +126,7 @@ export default function CreateEvent() {
                         />
                     </div>
                     <div className="form-item">
-                        <label htmlFor="endRecur"> endRecur:</label>
+                        <label htmlFor="endRecur"> Start Recurrence:</label>
                         <input
                             type="date"
                             id="endRecur"
@@ -135,7 +135,7 @@ export default function CreateEvent() {
                         />
                     </div>
                     <div className="form-item">
-                        <label htmlFor="title"> title:</label>
+                        <label htmlFor="title"> Title:</label>
                         <input
                             type="text"
                             id="title"
