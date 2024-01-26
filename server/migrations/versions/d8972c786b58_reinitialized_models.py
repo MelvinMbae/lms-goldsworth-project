@@ -1,16 +1,8 @@
-<<<<<<<< HEAD:server/migrations/versions/551f6dbfb2fb_model_creation.py
-"""Model creation
+"""Reinitialized Models
 
-Revision ID: 551f6dbfb2fb
+Revision ID: d8972c786b58
 Revises: 
-Create Date: 2024-01-22 17:24:49.318794
-========
-"""Created tables
-
-Revision ID: e497e2e4e32a
-Revises: 
-Create Date: 2024-01-18 22:09:17.581699
->>>>>>>> melvin/courses-component:server/migrations/versions/e497e2e4e32a_created_tables.py
+Create Date: 2024-01-23 00:24:26.324602
 
 """
 from alembic import op
@@ -18,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:server/migrations/versions/551f6dbfb2fb_model_creation.py
-revision = '551f6dbfb2fb'
-========
-revision = 'e497e2e4e32a'
->>>>>>>> melvin/courses-component:server/migrations/versions/e497e2e4e32a_created_tables.py
+revision = 'd8972c786b58'
 down_revision = None
 branch_labels = None
 depends_on = None

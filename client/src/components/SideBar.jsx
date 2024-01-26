@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { useLocation } from "react-router-dom";
 
-function SideBar() {
+function SideBar({ user }) {
 
     function openNav() {
         document.getElementById("mySide-nav").style.width = "250px";
@@ -13,45 +12,51 @@ function SideBar() {
         document.getElementById("main").style.display = "block";
      }
 
-    const location = useLocation();
 
-    function Sidebar(props){
-        return (
-           
+//     function Sidebar({ children }){
+//  if((session.user_type === "teacher")){
+//             return (  
+//                 <Fragment>
+//                     {children}
+//                     <Link to={'/dashboard'}>Dashboard</Link>
+//                     <Link to={'/active-courses'}>Active Courses</Link>
+//                     <Link to={'/classes'}>Classes</Link>
+//                     <Link to={'/reportcard'}>Report Card</Link>
+//                     <Link to={'/assignments'}>Assignments</Link>
+//                 </Fragment>
+//                 )
+//             }
+//         else{
+//             return (  
+//                 <Fragment>
+//                     {children}
+//                     <Link to={'/dashboard'}>Dashboard</Link>
+//                     <Link to={'/active-courses'}>Active Courses</Link>
+//                     <Link to={'/classes'}>Classes</Link>
+//                     <Link to={'/reportcard'}>Report Card</Link>
+//                     <Link to={'/assignments'}>Assignments</Link>
+//                 </Fragment>
+//                 )
+//             }
+//         }
+
+  return (
+        <div className='sidebar'>
             <div className="assignment-container">
-                <div id="mySide-nav" class="side-nav"> 
+            <div id="mySide-nav" class="side-nav"> 
                 <a href="javascript:void(0)" class="closebtn" onClick={() => closeNav()}>x</a>
                 <Link to={'/dashboard'}>Dashboard</Link>
                 <Link to={'/active-courses'}>Active Courses</Link>
                 <Link to={'/classes'}>Classes</Link>
-                {props.children}
-                </div>
+                <Link to={'/assignments'}>Assignments</Link>
+                <Link to={'/reportcard'}>ReportCard</Link>
+            </div>
             <div id="main">
                 <span style={{fontSize:'30px', cursor:'pointer'}} onClick={() => openNav()}>☰</span>
-            </div>
-            </div>
-            )
-        }
-
-  return (
-        <div className='sidebar'>
-            {location.pathname === "/dashboard" ? <Sidebar>
-                                <Link to={'/reportcard'}>Report Card</Link>
-                                <Link to={'/assignments'}>Assignments</Link>
-                            </Sidebar> : <Sidebar />
-            }
+            </div></div>
         </div>
   )
 }
 export default SideBar;
 
 
-
-
-
-                    // <Link to={'/dashboard'}>Dashboard</Link>
-                    // <Link to={'/courses'}>Courses</Link>
-                    // <Link to={'/discussion'}>Discussion</Link>
-                    // <Link to={'/assignments'}>Assignments</Link>
-                    // <Link to={'/calender'}>Calender</Link>
-                    // <Link to={'/reportcard'}>ReportCard</Link>
