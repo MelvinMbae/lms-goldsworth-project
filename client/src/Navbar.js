@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useContext } from 'react'
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { appContext } from './utils/appContext';
+import { MdLogout } from 'react-icons/md';
 
-function Navbar({ user, setUser }) {
-  // console.log('Navbar setUser prop:', setUser);
+function Navbar() {
 
   const navigate = useNavigate();
-  const location = useLocation()
+  const { user , setUser } = useContext(appContext)
 
   function handleLogout() {
     fetch("/logout", {
@@ -25,30 +26,17 @@ function Navbar({ user, setUser }) {
       })
   }
 
-  function NavBar({ children }){
-    return (
-      <Fragment>
-        <h1 id='header'>GOLDWORTH</h1>
-          <ul className='nav'>
-              <li><Link to={'/home'}>Home</Link></li>
-              <li><Link to={'/about'}>About</Link></li>
-              <li><Link to={'/coursespage'}>Courses</Link></li>
-              {children}
-          </ul>
-        {user ? <span>{user.name} <button className="button" onClick={handleLogout}>Logout</button></span> : <Link to="/login" className="button">Login</Link>}
-      </Fragment>
-    )
-  }
-
   return (
-    <>
       <div className='navbar-container'>
-        {location.pathname === '/dashboard' ? <NavBar>
-                                                  <li><Link to={'/forums'}>Forums</Link></li>
-                                              </NavBar> : <NavBar />}
+        <h1 id='header'>GOLDWORTH</h1>
+        <ul className='nav'>
+            <Link to={'/'}>Home</Link>
+            <Link to={'/about'}>About</Link>
+            <Link to={'/courses'}>Courses</Link>
+            {user.name ? <Link to={'/forums'}>Forums</Link> : null}
+        </ul>
+        {user.name ? <span className='button'>{user.name} <MdLogout onClick={handleLogout}/></span> : <Link to="/login" className="button">Login</Link>}
       </div>
-      <Outlet />
-    </>
   )
 }
 

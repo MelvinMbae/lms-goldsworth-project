@@ -43,13 +43,12 @@ const About = () => {
             </div>
            <div className='team-wrapper'>
             <h1>Meet Our Team</h1>
-
             <div className='team'>
                 <div className="team-member">
                 <div className="team-images">
 <img src='./images/user1.png' alt="Isaac Kivuva" /></div>
                     <h4>Michael Njogu</h4>
-                    <p className='role'>Michael Njogu</p>
+                    <p className='role'>Founder & CEO</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
                         Vivamus lacinia elit vel nisi mollis sagittis. 
                         Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
@@ -58,7 +57,7 @@ const About = () => {
                 <div className="team-images">
 <img src='./images/user1.png' alt="Isaac Kivuva" /></div>
                    <h4>Cynthia Laleti</h4>
-                    <p className='role'>Cynthia Laleti</p>
+                    <p className='role'>Head of Education</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
                         Vivamus lacinia elit vel nisi mollis sagittis. 
                         Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
@@ -67,7 +66,7 @@ const About = () => {
                 <div className="team-images">
 <img src='./images/user1.png' alt="Isaac Kivuva" /></div>
                 <h4>Michael Njogu</h4>
-                    <p className='role'>Isaac Kivuva</p>
+                    <p className='role'>UI Developer</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
                         Vivamus lacinia elit vel nisi mollis sagittis. 
                         Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
@@ -76,16 +75,7 @@ const About = () => {
                 <div className="team-images">
 <img src='./images/user1.png' alt="Isaac Kivuva" /></div>
                 <h4>Melvin Mbae</h4>
-                    <p className='role'>Melvin Mbae</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
-                        Vivamus lacinia elit vel nisi mollis sagittis. 
-                        Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
-                </div>
-                <div className="team-member">
-                <div className="team-images">
-<img src='./images/user1.png' alt="Isaac Kivuva" /> </div>
-                <h4>Michael Njogu</h4>
-                    <p className='role'>Cynthia Laleti</p>
+                    <p className='role'>Marketing</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
                         Vivamus lacinia elit vel nisi mollis sagittis. 
                         Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricies felis.</p>
@@ -93,23 +83,11 @@ const About = () => {
                 
             </div>
             </div>
-            <div className='section'>
-             <div className="about-image">
-                <img src="https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxlYXJuaW5nJTIwbWFuYWdlbWVudCUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D" alt="Computer" />
-            </div> 
-            <div className="about-image">
-                <img src="https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxlYXJuaW5nJTIwbWFuYWdlbWVudCUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D" alt="Computer" />
-            </div> 
-            <div className="about-image">
-                <img src="https://images.unsplash.com/photo-1517148815978-75f6acaaf32c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fGxlYXJuaW5nJTIwbWFuYWdlbWVudCUyMHN5c3RlbXxlbnwwfHwwfHx8MA%3D%3D" alt="Computer" />
-            </div> 
-
-           
-            </div>
             <div className='benefits-to-parents'>
+                <div className='bubble'>
                 <h3 className='heading-3'>Benefits for Parents</h3>
                 <p>
-                    At GOLDWORTH, we understand the importance of parental involvement in a student's education journey. Here's
+                    At GOLDWORTH, we understand the importance of parental involvement in a student's education journey. <br/>Here's
                     how GOLDWORTH benefits parents:
                 </p>
                 <ul>
@@ -118,15 +96,16 @@ const About = () => {
                     <li>Communication Hub: Stay informed with regular updates and communication from instructors and the school.</li>
                     <li>Flexible Learning Plans: Tailor learning plans to fit your child's schedule and educational goals.</li>
                 </ul>
-            </div>
-            <div className="about-contact">
-                <h3 className='contact-heading'>Contact Us</h3>
+                </div>
+                <div className="about-contact">
+                <h2 className='contact-heading'>Contact Us</h2>
                 <p className='contact-paragraph'>
                     For any inquiries or assistance, feel free to contact our support team:
-                    <br />
                     Email: support@goldworth.com
                 </p>
             </div>
+            </div>
+            
  
         </div >
     );

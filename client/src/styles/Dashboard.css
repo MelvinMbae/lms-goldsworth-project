@@ -1,3 +1,54 @@
+<<<<<<< HEAD:client/src/Dashboard.css
+=======
+.dashboard{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 20px;
+  /* flex-wrap: wrap;
+  flex: 1 1 0; */
+  align-items: center;
+  padding: 20px;
+
+  .contents{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: #bdd6e0; 
+    width: 100%;
+    height: 650px;
+    border-radius: 5px;
+    /* flex: 1 1 0; */
+    padding: 20px;
+
+    .top{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      margin-top: 4rem;
+
+      .data{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: flex-end;
+        width: 150px;
+        color: #45A5A1;
+        /* text-shadow:0px 1px 7px #adacac; */
+        /* background-color: rgb(255, 255, 255); */
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 1.2rem;
+        
+        h1{
+          font-size: 50px;
+        }
+      }
+    }
+  }
+}
+>>>>>>> origin:client/src/styles/Dashboard.css
 
 .links{
   display: flex;
@@ -45,6 +96,7 @@
   margin-left: 24px;
 }
 
+<<<<<<< HEAD:client/src/Dashboard.css
 /*.uno{
   display: flex;
   flex-direction: column;
@@ -56,6 +108,11 @@
   /* background: #00A8A2; 
 }
 */
+=======
+
+
+
+>>>>>>> origin:client/src/styles/Dashboard.css
 
 
 .teacherContents{
@@ -70,11 +127,7 @@
   /* justify-content: space-around; */
 }
 
-.top{
-  display: flex;
-  justify-content: space-evenly;
-  margin-top: 2rem;
-}
+
 
 .teachersTop{
   display: flex;
@@ -82,23 +135,7 @@
   justify-content: space-around;
 }
 
-.data{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: flex-end;
-  width: 200px;
-  color: #45A5A1;
-  /* text-shadow:0px 1px 7px #adacac; */
-  background-color: rgb(255, 255, 255);
-  border-radius: 5px;
-  padding: 20px;
-  margin-top: 1.2rem;
-  
-  h1{
-    font-size: 50px;
-  }
-}
+
 
 .dash-message{
   width: 400px;

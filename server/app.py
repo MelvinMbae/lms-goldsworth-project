@@ -1,5 +1,5 @@
 from flask import request, make_response, session
-from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignments
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment
 from flask_restful import Resource
 from config import mash, db, api, app
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
@@ -192,9 +192,14 @@ class Students(Resource):
     
     def post(self):
         student_data = request.get_json()
+        # student_file = request.files['image_url']
+        # student_file.save(student_file.filename)
+        # print(request.files['image_url'].filename)
+
         new_student = Student(
             firstname = student_data['firstname'],
             lastname = student_data['lastname'],
+            image_url = student_data['image_url'],
             personal_email = student_data['personal_email'],
             password = student_data['password'],
             email = student_data['email'],
@@ -366,10 +371,11 @@ class Parents(Resource):
     def post(self):
         parent_data = request.get_json()
         new_parent = Parent(
-            firstname = parent_data['firstname'],
-            lastname = parent_data['lastname'],
-            password = parent_data['password'],
-            email = parent_data['email']
+            firstname = parent_data['Firstname'],
+            lastname = parent_data['Lastname'],
+            email = parent_data['Email'],
+            password = parent_data['Password'],
+            image_url = parent_data['Image_url']
         )
         db.session.add(new_parent)
         db.session.commit()
@@ -653,89 +659,89 @@ class Report_CardbyId(Resource):
 api.add_resource(Report_CardbyId, '/report_cards/<int:id>')
 api.add_resource(Report_Cards, '/report_cards')
 
-# class AssignmentSchema(mash.SQLAlchemySchema):
+class AssignmentSchema(mash.SQLAlchemySchema):
 
-#     class Meta:
-#         model = Assignments
+    class Meta:
+        model = Assignment
     
-#     id = mash.auto_field()
-#     assignment_name = mash.auto_field()
-#     topic = mash.auto_field()
-#     content = mash.auto_field()
-#     due_date = mash.auto_field()
-#     course_id = mash.auto_field()
+    id = mash.auto_field()
+    assignment_name = mash.auto_field()
+    topic = mash.auto_field()
+    content = mash.auto_field()
+    due_date = mash.auto_field()
+    course_id = mash.auto_field()
 
 
-#     url = mash.Hyperlinks(
-#         {
-#             "self":mash.URLFor(
-#                 "assignmentsbyid",
-#                 values=dict(id="<id>")),
-#             "collection":mash.URLFor("assignments")
+    url = mash.Hyperlinks(
+        {
+            "self":mash.URLFor(
+                "assignmentbyid",
+                values=dict(id="<id>")),
+            "collection":mash.URLFor("assignments")
 
-#         }
-#     )
+        }
+    )
 
-# assignment_schema = AssignmentSchema()
-# assignments_schema = AssignmentSchema(many=True)
+assignment_schema = AssignmentSchema()
+assignments_schema = AssignmentSchema(many=True)
 
-# class Assignment(Resource):
-#     def get(self):
-#         assignment = Assignments.query.all()
+class Assignments(Resource):
+    def get(self):
+        assignments = Assignment.query.all()
 
-#         return make_response(
-#             assignments_schema.dump(assignment), 200
-#         )
+        return make_response(
+            assignments_schema.dump(assignments), 200
+        )
     
-#     def post(self):
-#         assignment_data = request.get_json()
-#         new_assignment = Content(
-#             assignment_name = assignment_data['assignment_name'],
-#             topic = assignment_data['topic'],
-#             content = assignment_data['content'],
-#             due_date = assignment_data['due_date'],
-#             course_id = assignment_data['course_id'],
-#         )
-#         db.session.add(new_assignment)
-#         db.session.commit()
+    def post(self):
+        assignment_data = request.get_json()
+        new_assignment = Content(
+            assignment_name = assignment_data['assignment_name'],
+            topic = assignment_data['topic'],
+            content = assignment_data['content'],
+            due_date = assignment_data['due_date'],
+            course_id = assignment_data['course_id'],
+        )
+        db.session.add(new_assignment)
+        db.session.commit()
 
-#         return make_response(
-#             content_schema.dump(new_assignment), 201
-#         )
+        return make_response(
+            assignment_schema.dump(new_assignment), 201
+        )
 
     
-# class AssignmentbyId(Resource):
-#     def get(self,id):
-#         assignment = Assignments.query.filter_by(id=id).first()
+class AssignmentbyId(Resource):
+    def get(self,id):
+        assignment = Assignment.query.filter_by(id=id).first()
 
-#         return make_response(
-#             assignment_schema.dump(assignment), 200
-#         )
+        return make_response(
+            assignment_schema.dump(assignment), 200
+        )
         
-#     def patch(self,id):
-#         assignment_data = request.get_json()
-#         assignment = Assignments.query.filter_by(id=id).first()
+    def patch(self,id):
+        assignment_data = request.get_json()
+        assignment = Assignment.query.filter_by(id=id).first()
 
-#         for attr in assignment_data:
-#             setattr(assignment, attr, assignment_data[attr])
+        for attr in assignment_data:
+            setattr(assignment, attr, assignment_data[attr])
         
-#         db.session.add(assignment)
-#         db.session.commit()
+        db.session.add(assignment)
+        db.session.commit()
 
-#         return make_response(
-#             assignment_schema.dump(assignment), 202
-#         )
+        return make_response(
+            assignment_schema.dump(assignment), 202
+        )
 
-#     def delete(self,id):
-#         assignment = Assignments.query.filter_by(id=id).first()
+    def delete(self,id):
+        assignment = Assignment.query.filter_by(id=id).first()
 
-#         db.session.delete(assignment)
-#         db.session.commit()
+        db.session.delete(assignment)
+        db.session.commit()
 
-#         return "record successfully deleted" , 202
+        return "record successfully deleted" , 202
 
-# api.add_resource(AssignmentbyId, '/assignments/<int:id>')
-# api.add_resource(Assignment, '/assignments')
+api.add_resource(AssignmentbyId, '/assignments/<int:id>')
+api.add_resource(Assignments, '/assignments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)    

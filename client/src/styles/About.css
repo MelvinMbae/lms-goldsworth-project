@@ -45,10 +45,10 @@
     font-size: 1.8vmin;
   }
 .about-content h3{
-    color: #FF9F37;
+    color: black;
 }
   .about-us-story {
-    background: #F98304;
+    background: #00A8A2;
     color: white;
     justify-content: space-evenly;
     align-items: flex-start;
@@ -58,6 +58,8 @@
   }
 .about-us-story h3{
     color: black;
+    font-size: 35px;
+    text-transform: capitalize;
 }
 .about{
     display: flex;
@@ -108,37 +110,46 @@
     width: auto;
 }*/
 .team-wrapper{
-    background: #F98304;
     box-sizing: border-box;
     margin-top: 5%;
 }
 .team-wrapper h1{
+    color: black;
     font-size: 42px;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
     text-align: center;
+    text-decoration: underline;
+
 }
 .team{
     display: flex;
     text-align: center;
     width: auto;
     justify-content: center;
+    flex-wrap: wrap;
 }
 .team-member{
-    background-color: white;
+    background: #00A8A2;
+    color: white;
     margin: 5px;
     width: 300px;
     margin-bottom: 50px;
     padding: 40px;
     line-height: 20px;
     position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.team-member:hover{
+    background: #fb901fec;
 }
 .team-member h4{
-    color: #F98304;
+    color: black;
     font-size: 20px;
     margin-top: 50px;
 }
 .role{
-    color: rgb(40, 146, 56);
+    color: black;
     font-size: 12px;
     text-transform: uppercase;
     margin: 12px 0;
@@ -153,4 +164,32 @@
     transform: translate(-50%);
     background: white;
     padding: 5px;
+}
+.section{
+    display: flex;
+    justify-content: space-evenly;
+}
+.benefits-to-parents{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 40px;
+    height: 400px;
+}
+.benefits-to-parents li{
+    list-style-type: circle;
+}
+.benefits-to-parents h3{
+    font-size: 3vmin;
+    color: black;
+    font-weight: bold;
+}.about-contact{
+    color: black;
+}
+
+.bubble{
+    background:#fb901fec;
+    padding: 20px;
+    border-radius: 70px 140px 70px 140px;
+    color: white;
 }
