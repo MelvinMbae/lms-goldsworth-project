@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './App.css'; // Import the CSS file
+import './App.css';
 
 const AssignmentList = () => {
   const [assignments, setAssignments] = useState([
-    { id: 1, student: 'Student A', grade: '', comments: '' },
-    { id: 2, student: 'Student B', grade: '', comments: '' },
-    { id: 3, student: 'Student C', grade: '', comments: '' },
+    { id: 1, student: 'Michael Njogu', grade: '', comments: '' },
+    { id: 2, student: 'Wilson Wanjiru', grade: '', comments: '' },
+    { id: 3, student: 'Martin Gakuya', grade: '', comments: '' },
   ]);
 
   const handleGradeChange = (id, grade) => {
@@ -24,15 +24,36 @@ const AssignmentList = () => {
     );
   };
 
+  const handleCreateAssignment = () => {
+    const studentName = window.prompt('Enter student name:');
+    if (studentName) {
+      const newAssignment = {
+        id: assignments.length + 1,
+        student: studentName,
+        grade: '',
+        comments: '',
+      };
+      setAssignments((prevAssignments) => [...prevAssignments, newAssignment]);
+    }
+  };
+
+  const handleDeleteAssignment = (id) => {
+    setAssignments((prevAssignments) =>
+      prevAssignments.filter((assignment) => assignment.id !== id)
+    );
+  };
+
   return (
     <div>
-      <h1>Assignment List</h1>
+      <h1>Grade List</h1>
+      <button onClick={handleCreateAssignment}>Create Grades</button>
       <table>
         <thead>
           <tr>
             <th>Student</th>
             <th>Grade</th>
             <th>Comments</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +72,9 @@ const AssignmentList = () => {
                   value={assignment.comments}
                   onChange={(e) => handleCommentsChange(assignment.id, e.target.value)}
                 />
+              </td>
+              <td>
+                <button onClick={() => handleDeleteAssignment(assignment.id)}>Delete</button>
               </td>
             </tr>
           ))}
