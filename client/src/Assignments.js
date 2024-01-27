@@ -2,7 +2,7 @@ import React from "react";
 import DownloadButton from "./components/DownloadComp";
 import { Link } from "react-router-dom";
 
-function Assignments({ user , assignments }){
+function Assignments({ session , assignments }){
 
     function UtilityMenu(){
         return (
@@ -21,7 +21,7 @@ function Assignments({ user , assignments }){
 
     return(
           <div className="assignments">
-            <UtilityMenu />
+            {session.user_type === 'teacher' ? <UtilityMenu /> : null}
             <div>{assignments.map((assigno) => (
                 <div className="assignment-card" key={assigno.id}>
                     <Link to={`/assignments/${assigno.id}`}><h1>{assigno.assignment_name}</h1></Link>

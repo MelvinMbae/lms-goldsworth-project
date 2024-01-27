@@ -6,7 +6,7 @@ import { MdLogout } from 'react-icons/md';
 function Navbar() {
 
   const navigate = useNavigate();
-  const { user , setUser } = useContext(appContext)
+  const { user , session  , setUser } = useContext(appContext)
 
   function handleLogout() {
     fetch("/logout", {
@@ -35,7 +35,7 @@ function Navbar() {
             <Link to={'/courses'}>Courses</Link>
             {user.name ? <Link to={'/forums'}>Forums</Link> : null}
         </ul>
-        {user.name ? <span className='button'>{user.name} <MdLogout onClick={handleLogout}/></span> : <Link to="/login" className="button">Login</Link>}
+        {user.name ? <span className='button'>{session.user_type} <MdLogout onClick={handleLogout}/></span> : <Link to="/login" className="button">Login</Link>}
       </div>
   )
 }

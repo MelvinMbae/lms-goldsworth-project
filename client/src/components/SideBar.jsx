@@ -50,7 +50,8 @@ function SideBar({ user }) {
                 <Link to={'/classes'}>Classes</Link>
                 <Link to={'/assignments'}>Assignments</Link>
                 <Link to={'/reportcard'}>ReportCard</Link>
-            </div>
+                <Link to={'/calendar'}>Calendar</Link>
+                </div>
             <div id="main">
                 <span style={{fontSize:'30px', cursor:'pointer'}} onClick={() => openNav()}>☰</span>
             </div></div>

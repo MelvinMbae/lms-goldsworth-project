@@ -203,13 +203,17 @@ class Course(db.Model):
     course_name = db.Column(db.String, nullable = False , unique = True)
     description = db.Column(db.String, nullable = False)
     image_url= db.Column(db.NVARCHAR)
+    daysOfWeek = db.Column(db.String)  
+    startRecur = db.Column(db.DateTime)
+    endRecur = db.Column(db.DateTime)    
+    startTime = db.Column(db.Time) 
+    endTime = db.Column(db.Time)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     content = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
     students = db.relationship('Student', secondary=course_student, back_populates='courses', cascade="save-update , merge, delete")
     teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses', cascade="save-update , merge, delete")
-
 
 class Content(db.Model):
     __tablename__ = 'contents'
@@ -252,3 +256,31 @@ class Assignment(db.Model):
 
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    
+class Event(db.Model):
+    __tablename__ = 'events'
+
+    id = db.Column(db.Integer, primary_key=True)
+    groupId = db.Column(db.Integer) 
+    allDay = db.Column(db.Boolean, default=False)
+    start = db.Column(db.DateTime, nullable=False)
+    end = db.Column(db.DateTime)
+    daysOfWeek = db.Column(db.String)  
+    startTime = db.Column(db.Time) 
+    endTime = db.Column(db.Time)  
+    startRecur = db.Column(db.DateTime)
+    endRecur = db.Column(db.DateTime)
+    title = db.Column(db.String, nullable=False)
+    
+    def __repr__(self):
+        return f"Event(id={self.id}, title={self.title}, start={self.start}, end={self.end})"
+    
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
+    
+    
+    student = db.relationship('Student')
+    course = db.relationship('Course')
+    teacher = db.relationship('Teacher')
+    

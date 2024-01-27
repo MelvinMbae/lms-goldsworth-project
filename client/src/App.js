@@ -12,13 +12,20 @@ import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import UserAuth from './pages/UserAuth';
 import TeacherDash from './TeacherDash';
+import ParentDash from './ParentDash'
 import ActiveCourse from './ActiveCourses';
 import StudentEnrollment from './components/StudentEnrollment';
 import AssignmentForm from './AssignmentCreation';
 import CourseForm from './CourseForm';
 import Assignment from './Assignment';
 import CoursePage from './CoursePage';
-
+import './CreateEvent.css'
+import Calendar from './Calendar';
+import CreateEvent from './CreateEvent';
+import ReportCard from './ReportCard';
+import StudentDash from './StudentDash';
+import TeacherHome from './TeacherHome';
+// import ParentDash from './ParentDash'
 
 
 function App() {
@@ -39,6 +46,25 @@ function App() {
       }
     })
   }, [])
+
+  const [eventsList, setEventsList] = useState([])
+  const [eventsDictionary, setEventsDictionary] = useState({})
+
+  function fetchEventData() {
+    fetch("/events")
+      .then((response) => response.json())
+      .then((eventData) => {
+        eventData.forEach((event) => {
+          eventsDictionary[event.id] = event;
+        });
+
+        setEventsList(eventData);
+        setEventsDictionary(eventsDictionary);
+      });
+
+  }
+  useEffect(() => fetchEventData(), []);
+  // console.log(eventsList)
 
   function fetchCoursesData() {
     fetch("/courses")
@@ -80,18 +106,18 @@ function App() {
     })
   }, [])
 
-  // function SetPage(){
-  //   if(session.user_type === "student"){
-  //     return (<StudentHome />)
+  function SetPage(){
+    if(session.user_type === "student"){
+      return (<StudentDash />)
       
-  //   }
-  //   else if(session.user_type === "lecturer"){
-  //     return <TeacherDash />
-  //   }
-  //   else if(session.user_type === "parent"){
-  //     return <ParentDash/> 
-  //   }
-  // }
+    }
+    else if(session.user_type === "teacher"){
+      return <TeacherDash />
+    }
+    else if(session.user_type === "parent"){
+      return <ParentDash/> 
+    }
+  }
   // console.log(user)
   
 
@@ -107,16 +133,19 @@ function App() {
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>
-                <Route path='/dashboard' element={<TeacherDash />} />
+                <Route path='/dashboard' element={<SetPage />} />
+                <Route path='/calendar' element={<Calendar eventsList={eventsList}/>} />
+                <Route path="/create-event" element={<TeacherHome><CreateEvent /></TeacherHome>} />
                 <Route path='/active-courses' element={<ActiveCourse />} />
                 <Route path='/classes' element={<Classes />} />
-                <Route path='/assignments' element={<Assignments user={user} assignments={assignments}/>}></Route>
+                <Route path='/assignments' element={<Assignments session={session} assignments={assignments}/>}></Route>
                 <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
                 <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
                 <Route path='/forums' element={<ChatBox />} />
-                <Route path='/enrollment' element={<StudentEnrollment />} />
-                <Route path='/new' element={<AssignmentForm/>} />
-                <Route path='/new-course' element={<CourseForm/>} />
+                <Route path='/enrollment' element={<TeacherHome><StudentEnrollment /></TeacherHome>} />
+                <Route path='/new' element={<TeacherHome><AssignmentForm/></TeacherHome>} />
+                <Route path='/new-course' element={<TeacherHome><CourseForm/></TeacherHome>} />
+                <Route path='/reportcard' element={<ReportCard />} />
               </Route>
             </Route>
           </Routes>

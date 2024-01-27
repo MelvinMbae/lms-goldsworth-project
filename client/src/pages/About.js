@@ -63,20 +63,16 @@ const About = () => {
                     <p>Chief Technology Officer</p>
                 </div>
                 <div className="team-images">
-                    <img src="./images/user1.png" alt="Michael Njogu" />
-                    <p>Michael Njogu</p>
-                    <p>Co-Founder and CEO</p>
+                    <img src="./images/user1.png" alt="Erick Mwirigi" />
+                    <p>Erick Mwirigi</p>
+                    <p></p>
                 </div>
                 <div className="team-images">
-                    <img src="./images/user1.png" alt="Cynthia Laleti" />
-                    <p>Cynthia Laleti</p>
-                    <p>Head of Education</p>
+                    <img src="./images/user1.png" alt="Melvin Mbae" />
+                    <p>Melvin Mbae</p>
+                    <p>Head of Marketing</p>
                 </div>
-                <div className="team-images">
-                    <img src='./images/user1.png' alt="Isaac Kivuva" />
-                    <p>Isaac Kivuva</p>
-                    <p>Chief Technology Officer</p>
-                </div>
+        
             </div>
 
             {/* <div className="about-images">
