@@ -28,6 +28,8 @@ body {
   height: 85vh;
   width: 100%;
   padding-left: 250px;
+  /* padding-right: 250px; */
+
   margin: 10px;
 
 }
@@ -62,7 +64,7 @@ body {
 
 /* ChatBar styles */
 .sidebar-section {
-  width: 400px;
+  width: 450px;
   background-color: #f4f7f7;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;

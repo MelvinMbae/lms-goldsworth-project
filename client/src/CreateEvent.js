@@ -11,8 +11,8 @@ export default function CreateEvent() {
         daysOfWeek: "1,2,3,4,5",
         startTime: new Date(),
         endTime: new Date(),
-        startRecur: new Date(),
-        endRecur: new Date(),
+        // startRecur: new Date(),
+        // endRecur: new Date(),
         title: "",
         student_id: 2,
         course_id: 2,
@@ -37,8 +37,8 @@ export default function CreateEvent() {
             start: formData.start.toISOString().split('T')[0],
             end: formData.end.toISOString().split('T')[0],
             startTime: formData.startTime.toISOString().split('T')[1].slice(0, 5),
-            endRecur: formData.endRecur.toISOString().split('T')[0],
-            startRecur: formData.startRecur.toISOString().split('T')[0],
+            endRecur: formData.endRecur ? formData.endRecur.toISOString().split('T')[0] : null,
+            startRecur: formData.startRecur ? formData.startRecur.toISOString().split('T')[0] : null,
         };
 
         const emptyField = Object.keys(formattedFormData).find(
@@ -55,7 +55,7 @@ export default function CreateEvent() {
             return;
         }
 
-        fetch("http://127.0.0.1:5555/events", {
+        fetch("/events", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
