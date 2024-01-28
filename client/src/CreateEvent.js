@@ -11,8 +11,8 @@ export default function CreateEvent() {
         daysOfWeek: "1,2,3,4,5",
         startTime: new Date(),
         endTime: new Date(),
-        // startRecur: new Date(),
-        // endRecur: new Date(),
+        startRecur: new Date(),
+        endRecur: new Date(),
         title: "",
         student_id: 2,
         course_id: 2,
@@ -25,6 +25,10 @@ export default function CreateEvent() {
         const id = e.target.id;
         let value = e.target.value;
 
+        if (id === 'start' || id === 'end' || id === 'startTime' || id === 'startRecur' || id === 'endRecur') {
+            value = new Date(value);
+        }
+
         setFormData({ ...formData, [id]: value });
     }
 
@@ -34,11 +38,11 @@ export default function CreateEvent() {
         // Format date values
         const formattedFormData = {
             ...formData,
-            start: formData.start.toISOString().split('T')[0],
-            end: formData.end.toISOString().split('T')[0],
-            startTime: formData.startTime.toISOString().split('T')[1].slice(0, 5),
-            endRecur: formData.endRecur ? formData.endRecur.toISOString().split('T')[0] : null,
-            startRecur: formData.startRecur ? formData.startRecur.toISOString().split('T')[0] : null,
+            start: formData.start.toDateString().split('T')[0],
+            end: formData.end.toDateString().split('T')[0],
+            startTime: formData.startTime.toDateString().split('T')[1].slice(0, 5),
+            endRecur: formData.endRecur ? formData.endRecur.toDateString().split('T')[0] : null,
+            startRecur: formData.startRecur ? formData.startRecur.toDateString().split('T')[0] : null,
         };
 
         const emptyField = Object.keys(formattedFormData).find(
