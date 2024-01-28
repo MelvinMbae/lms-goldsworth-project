@@ -8,6 +8,8 @@ const AssignmentList = () => {
     { id: 3, student: 'Martin Gakuya', grade: '', comments: '' },
   ]);
 
+  const [formVisible, setFormVisible] = useState(true);
+
   const handleGradeChange = (id, grade) => {
     setAssignments((prevAssignments) =>
       prevAssignments.map((assignment) =>
@@ -43,45 +45,59 @@ const AssignmentList = () => {
     );
   };
 
+  const handleSubmit = () => {
+    // Handle the submission logic, e.g., send data to a server
+    console.log('Submitted:', assignments);
+
+    // Hide the form after submission
+    setFormVisible(false);
+  };
+
   return (
     <div>
       <h1>Grade List</h1>
-      <button onClick={handleCreateAssignment}>Create Grades</button>
-      <table>
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Grade</th>
-            <th>Comments</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {assignments.map((assignment) => (
-            <tr key={assignment.id}>
-              <td>{assignment.student}</td>
-              <td>
-                <input
-                  type="text"
-                  value={assignment.grade}
-                  onChange={(e) => handleGradeChange(assignment.id, e.target.value)}
-                />
-              </td>
-              <td>
-                <textarea
-                  value={assignment.comments}
-                  onChange={(e) => handleCommentsChange(assignment.id, e.target.value)}
-                />
-              </td>
-              <td>
-                <button onClick={() => handleDeleteAssignment(assignment.id)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {formVisible && (
+        <div>
+          <button onClick={handleCreateAssignment}>Create Grades</button>
+          <table>
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Grade</th>
+                <th>Comments</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {assignments.map((assignment) => (
+                <tr key={assignment.id}>
+                  <td>{assignment.student}</td>
+                  <td>
+                    <input
+                      type="text"
+                      value={assignment.grade}
+                      onChange={(e) => handleGradeChange(assignment.id, e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <textarea
+                      value={assignment.comments}
+                      onChange={(e) => handleCommentsChange(assignment.id, e.target.value)}
+                    />
+                  </td>
+                  <td>
+                    <button onClick={() => handleDeleteAssignment(assignment.id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default AssignmentList;
+
