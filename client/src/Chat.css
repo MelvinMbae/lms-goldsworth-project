@@ -18,7 +18,6 @@ ol {
 }
 
 body {
-  font-family: 'Arial', sans-serif;
   background-color: #f5f5f5;
   color: #333;
 }
@@ -33,22 +32,38 @@ body {
 
 }
 
-.mb-0{
-color: rgb(155, 152, 152);
-max-lines: 1;
+.chat-time {
+  color: rgb(155, 152, 152);
+  align-items: end;
+  width: 150px
 }
 
-.message-pill{
+.mb-0 {
+  color: rgb(155, 152, 152);
+  max-lines: 1;
+}
+
+.message-pill {
   width: 50px;
-  align-self: center;
-  background-color: #45a049;
+  align-self: flex-end;
+}
+
+.message-pill p {
+  color: rgb(73, 132, 73);
+  font-weight: bold;
+  align-items: end;
+}
+
+.message-time p {
+  font-weight: bold;
+  font-size: x-small;
 }
 
 
 /* ChatBar styles */
 .sidebar-section {
-  width: 500px;
-  background-color: #fff;
+  width: 400px;
+  background-color: #f4f7f7;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   border: solid;
@@ -94,11 +109,14 @@ max-lines: 1;
 
 /* Main ChatBox styles */
 .chat-box {
+
   flex: 1;
   display: flex;
   flex-direction: column;
   margin-left: 10px;
   margin-right: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 
   border: solid 1px rgb(187, 236, 238);
 
@@ -136,19 +154,25 @@ max-lines: 1;
   flex-direction: column;
   flex: 1;
   padding: 20px;
-  background-color: #fff;
+  background-color: #f4f7f7;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 100%;
 }
 
 .sent-message {
-  background-color: #4caf50;
+  background-color: #54dd90;
   color: white;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
-  max-width: 70%;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  max-width: 80%;
   align-self: flex-end;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s;
+}
+
+.sent-message:hover {
+  background-color: #45a049;
 }
 
 .received-message {
@@ -167,7 +191,7 @@ max-lines: 1;
   top: 90%;
   width: auto;
   align-items: center;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .inner-input {

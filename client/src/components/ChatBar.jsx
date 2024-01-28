@@ -77,9 +77,9 @@ function ChatBar() {
               <p className="mb-0">{lastMessage}</p>
             )}
           </div>
-          <div className="chat-time d-flex flex-column align-self-start mt-3 ">
+          <div className="chat-time flex-column align-self-start mt-3 ">
             <p className="fs-6 mb-2">{getCurrentTime()}</p>
-            <span className="message-pill align-item-start">{chatHistory.length}</span>
+            <span className="message-pill align-item-start"><p>{chatHistory.length}</p></span>
           </div>
         </div>
       ))}

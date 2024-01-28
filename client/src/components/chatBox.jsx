@@ -110,7 +110,7 @@ const ChatBox = () => {
 												: "received-message px-2 py-3 my-3 ml-4"
 										}>
 										<p className="p-0 m-0">{msg.message}</p>
-										<span className="message-time">{msg.timestamp}</span>
+										<span className="message-time"><p>{msg.timestamp}</p></span>
 									</div>
 								))}
 							</div>
