@@ -19,7 +19,6 @@ import AssignmentForm from './AssignmentCreation';
 import CourseForm from './CourseForm';
 import Assignment from './Assignment';
 import CoursePage from './CoursePage';
-import './CreateEvent.css'
 import Calendar from './Calendar';
 import CreateEvent from './CreateEvent';
 import ReportCard from './ReportCard';
@@ -131,6 +130,7 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
+
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>

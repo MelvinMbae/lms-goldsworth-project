@@ -10,10 +10,10 @@ import { useParams } from 'react-router-dom'
   return (
     <div className='assignments'>
         <div className='assignment-container'>
-            <h1>{assignment.assignment_name}</h1>
+            <h1>{assignment[0].assignment_name}</h1>
             <div>
-                <h2>{assignment.topic}</h2>
-                <p>{assignment.content}</p>
+                <h2>{assignment[0].topic}</h2>
+                <p>{assignment[0].content}</p>
             </div>
         </div>
     </div>
