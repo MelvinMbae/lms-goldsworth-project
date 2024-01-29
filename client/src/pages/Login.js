@@ -49,6 +49,7 @@ function Login({ session , setSession , setUser }) {
         }
         else {
           throw new Error(`HTTP error ${r}`)
+          console.log(r)
         }
       })
       .catch((error)=>console.error(error))
