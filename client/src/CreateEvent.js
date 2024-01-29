@@ -26,7 +26,7 @@ export default function CreateEvent() {
         let value = e.target.value;
 
         if (id === 'start' || id === 'end' || id === 'startTime' || id === 'startRecur' || id === 'endRecur') {
-            value = new Date(value);
+            // value = new Date(value);
         }
 
         setFormData({ ...formData, [id]: value });
@@ -38,11 +38,13 @@ export default function CreateEvent() {
         // Format date values
         const formattedFormData = {
             ...formData,
-            start: formData.start.toDateString().split('T')[0],
-            end: formData.end.toDateString().split('T')[0],
-            startTime: formData.startTime.toDateString().split('T')[1].slice(0, 5),
-            endRecur: formData.endRecur ? formData.endRecur.toDateString().split('T')[0] : null,
-            startRecur: formData.startRecur ? formData.startRecur.toDateString().split('T')[0] : null,
+            start: formData.start,
+            end: formData.end,
+            startTime: formData.startTime,
+            endTime: formData.endTime,
+
+            endRecur: formData.endRecur ? formData.endRecur : null,
+            startRecur: formData.startRecur ? formData.startRecur : null,
         };
 
         const emptyField = Object.keys(formattedFormData).find(
@@ -121,7 +123,16 @@ export default function CreateEvent() {
                         />
                     </div>
                     <div className="form-item">
-                        <label htmlFor="startRecur"> startRecur:</label>
+                        <label htmlFor="endTime"> EndTime:</label>
+                        <input
+                            type="time"
+                            id="endTime"
+                            value={formData.endTime}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-item">
+                        <label htmlFor="startRecur"> Start Recurrence:</label>
                         <input
                             type="date"
                             id="startRecur"
@@ -130,7 +141,7 @@ export default function CreateEvent() {
                         />
                     </div>
                     <div className="form-item">
-                        <label htmlFor="endRecur"> Start Recurrence:</label>
+                        <label htmlFor="endRecur"> End Recurrence:</label>
                         <input
                             type="date"
                             id="endRecur"
