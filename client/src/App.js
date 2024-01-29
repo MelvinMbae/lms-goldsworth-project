@@ -24,6 +24,7 @@ import CreateEvent from './CreateEvent';
 import ReportCard from './ReportCard';
 import StudentDash from './StudentDash';
 import TeacherHome from './TeacherHome';
+import AssignmentList from './Grading';
 // import ParentDash from './ParentDash'
 
 
@@ -143,6 +144,7 @@ function App() {
                 <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
                 <Route path='/forums' element={<ChatBox />} />
                 <Route path='/enrollment' element={<TeacherHome><StudentEnrollment /></TeacherHome>} />
+                <Route path='/grading' element={<AssignmentList />} />
                 <Route path='/new' element={<TeacherHome><AssignmentForm/></TeacherHome>} />
                 <Route path='/new-course' element={<TeacherHome><CourseForm/></TeacherHome>} />
                 <Route path='/reportcard' element={<ReportCard />} />

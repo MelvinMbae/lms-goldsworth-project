@@ -10,7 +10,7 @@ function Assignments({ session , assignments }){
                 <div>
                     <span>
                         <button>Edit</button>
-                        <button>Grade Assignment</button>
+                        <Link className="button" to={"/grading"}>Grade Assignment</Link>
                         <Link className="button" to={"/new"}>Add Assignment</Link>
                     </span>
                     <button>Save</button>
@@ -22,7 +22,10 @@ function Assignments({ session , assignments }){
     return(
           <div className="assignments">
             {session.user_type === 'teacher' ? <UtilityMenu /> : null}
-            <div>{assignments.map((assigno) => (
+            <div>
+            <Link className="button" to={"/grading"}>Grade Assignment</Link>
+
+            {assignments.map((assigno) => (
                 <div className="assignment-card" key={assigno.id}>
                     <Link to={`/assignments/${assigno.id}`}><h2>{assigno.assignment_name}</h2></Link>
                     <p>{assigno.content}</p>

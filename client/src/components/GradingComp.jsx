@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Grading(){
+const AssignmentList = () => {
   const [assignments, setAssignments] = useState([
     { id: 1, student: 'Student A', grade: '', comments: '' },
     { id: 2, student: 'Student B', grade: '', comments: '' },
@@ -59,4 +59,4 @@ function Grading(){
   );
 };
 
-export default Grading;
+export default AssignmentList;
