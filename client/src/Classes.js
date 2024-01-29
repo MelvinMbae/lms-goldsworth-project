@@ -2,7 +2,7 @@ import React from 'react'
 import './classes.css'
 function Classes() {
   return (
-    <div className='classes'>
+    <div className='contents'>
       <div className="class-header">
         <h2>Introduction to Biochemistry</h2>
         <div className="class-info">
