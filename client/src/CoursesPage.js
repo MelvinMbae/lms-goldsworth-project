@@ -2,7 +2,7 @@ import CoursesCollection from "./CoursesCollection";
 import React from "react";
 
 function CoursesPage({ coursesList }) {
-    console.log(coursesList)
+
     return (
         <div>
             <div className="courses-page">

@@ -3,13 +3,25 @@ import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 
-function Login({ setUser }) {
+function Login({ session , setSession , setUser }) {
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
 
   const navigate = useNavigate();
+
+  function handleUser(user){
+    if("student_id" in user){
+      setSession({...session, user_type:"student", user_details:user})
+    }
+    else if("teacher_id" in user){
+      setSession({...session, user_type:"teacher", user_details:user})
+    }
+    else if("parent_id" in user){
+      setSession({...session, user_type:"parent", user_details:user})
+    }
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,11 +42,16 @@ function Login({ setUser }) {
       .then((r) => {
         if (r.ok){
           r.json().then((user) => {
-          setUser(user)
+            setUser(user)
+            handleUser(user)
           navigate("/dashboard", { replace: true });
         });
         }
+        else {
+          throw new Error(`HTTP error ${r}`)
+        }
       })
+      .catch((error)=>console.error(error))
   }
 
   function handleChange(e) {
