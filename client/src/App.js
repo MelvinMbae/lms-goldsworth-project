@@ -130,6 +130,7 @@ function App() {
             <Route path='/' element={<Home courses={courses}/>}/>
             <Route path='/about' element={<About />} />
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
+            <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>
@@ -140,7 +141,6 @@ function App() {
                 <Route path='/classes' element={<Classes />} />
                 <Route path='/assignments' element={<Assignments session={session} assignments={assignments}/>}></Route>
                 <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
-                <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
                 <Route path='/forums' element={<ChatBox />} />
                 <Route path='/enrollment' element={<TeacherHome><StudentEnrollment /></TeacherHome>} />
                 <Route path='/new' element={<TeacherHome><AssignmentForm/></TeacherHome>} />

@@ -45,23 +45,22 @@ function Calendar({ eventsList }) {
     };
 
     return (
-        <div style={{ width: '100%', paddingLeft: "300px", paddingRight: "300px" }}>
+        <div className='contents'>
             <FullCalendar
                 plugins={[dayGridPlugin, multiMonthPlugin, timeGridPlugin, interactionPlugin, bootstrap5Plugin, listPlugin]}
                 initialView={"dayGridMonth"}
                 headerToolbar={{
-                    start: 'today prev,next addEventButton',
+                    start: 'prev,next addEventButton',
                     center: 'title',
                     end: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,list'
 
                 }}
 
-
                 eventAdd={true}
                 selectable={true}
 
                 height={"120vh"}
-                themeSystem={"bootstrap5"}
+                themeSystem={""}
                 navLinks={true}
                 editable={false}
                 nowIndicator={true}
@@ -93,9 +92,7 @@ function Calendar({ eventsList }) {
                 }}
                 eventClick={handleEventClick}
                 dateClick={handleDateClick}
-
             />
-
         </div>
     )
 }

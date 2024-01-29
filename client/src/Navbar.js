@@ -6,6 +6,8 @@ import { MdLogout } from 'react-icons/md';
 function Navbar() {
 
   const navigate = useNavigate();
+  const location = useLocation()
+
   const { user , session  , setUser } = useContext(appContext)
 
   function handleLogout() {
@@ -26,16 +28,22 @@ function Navbar() {
       })
   }
 
+  function SetNavbar({ children }){
+    return (        
+      <ul className='nav'>
+        <Link to={'/'}>Home</Link>
+        <Link to={'/about'}>About</Link>
+        <Link to={'/courses'}>Courses</Link>
+        { children }
+      </ul> 
+    )
+  }
+
   return (
       <div className='navbar-container'>
         <h1 id='header'>GOLDWORTH</h1>
-        <ul className='nav'>
-            <Link to={'/'}>Home</Link>
-            <Link to={'/about'}>About</Link>
-            <Link to={'/courses'}>Courses</Link>
-            {user.name ? <Link to={'/forums'}>Forums</Link> : null}
-        </ul>
-        {user.name ? <span className='button'>{session.user_type} <MdLogout onClick={handleLogout}/></span> : <Link to="/login" className="button">Login</Link>}
+        {user.name ? <SetNavbar><Link to={'/dashboard'}>Dashboard</Link></SetNavbar> : <SetNavbar />}
+        {user.name ? <span className='button'>{session.user_type}<MdLogout onClick={handleLogout}/></span> : <Link to="/login" className="button">Login</Link>}
       </div>
   )
 }

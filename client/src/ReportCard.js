@@ -50,10 +50,7 @@ const ReportCard = () => {
         <h1>Report Card</h1>
       </div>
       <div className="student-info">
-        <span>
-          <h3>Attendance:</h3>
-          <p>{studentReport.attendance}</p>
-        </span>
+        <p>Attendance: {studentReport.attendance}</p>
         <table className="report-card-table">
           <thead>
             <tr>

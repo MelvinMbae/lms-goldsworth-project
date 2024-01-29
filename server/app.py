@@ -185,7 +185,7 @@ student_schema = StudentSchema()
 students_schema = StudentSchema(many=True)
 
 
-class Students(Resource):
+class Students(Resource,ModelView):
     def get(self):
         students = Student.query.all()
 
@@ -248,6 +248,7 @@ class StudentbyId(Resource):
 
         return "Record successfully deleted" , 202
 
+admin.add_views(Students(Student, db.session))
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
 

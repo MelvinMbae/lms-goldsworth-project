@@ -14,7 +14,7 @@ function Dashboard() {
     function DashPage({ children }){
         return(
             <Fragment>
-                <SideBar user={session}/>
+                { session.user_type === 'parent' ? null : <SideBar />}
                 {children}
             </Fragment>
         )
@@ -22,10 +22,9 @@ function Dashboard() {
         return(
             <div className='dashboard'>  
                 {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
-                                                                                                <Outlet />  
+                                                                                            <Outlet />  
                                                                                             <Profile user={user}/>
                                                                                         </DashPage>}
-                {/*<div className='footer'></div> */} 
             </div>
         )
     }

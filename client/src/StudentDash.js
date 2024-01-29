@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Chart from "react-apexcharts";
+import { Link } from 'react-router-dom';
 
 
 function StudentDash(){
@@ -32,9 +33,9 @@ function StudentDash(){
     return(
             <div className='contents'>
                 <div className='top'>
-                    <span className='data'><h2>{studentReport['active-course']}</h2></span>
-                    <span className='data'><h1>{studentReport['course-hours']}</h1> <h2>  hrs</h2></span>
-                    <span className='data'><h1>{studentReport['courses-pursuing']}</h1> <h2>  Courses</h2></span>
+                    <span className='data'><h2><Link to={'/active-courses'}>{studentReport['active-course']}</Link></h2></span>
+                    <span className='data'><h2>Required Man Hours: </h2><h2>{studentReport['course-hours']}</h2></span>
+                    <span className='data'><h2><Link to={'/active-courses'}>Active Courses: {studentReport['courses-pursuing']}</Link></h2></span>
                 </div>
                 <div className='graphs'>
                     <Chart

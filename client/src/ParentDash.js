@@ -21,55 +21,30 @@ function ParentDash(){
         ]
       })
     return(
-        <>
-            <div className='navbar'>
-                <div className='logo'>
-                    <Link to={'/main'}>GoldWorth</Link>
+        <div className='contents'>
+            <div className='top'>
+                <div className='data'>
+                    <span>Courses Enrolled</span>
                 </div>
-                <div className='links'>
-                    <Link to={'home'}>Home</Link>
-                    <Link to={'/about'}>About</Link>
-                    <Link to={'/courses'}>Courses</Link>
-                    <Link to={'/discussion'}>Discussion</Link>
+                <div className='data'>
+                    <span>Required man hours</span>
                 </div>
-                
+                <div className='data'>
+                    <span>Number of courses</span>
+                </div>
             </div>
-            <div className='uno'>
-                <div className='sidebar'>
-                    <div className='sides'>
-                        <Link to={'/StudentDash'}>Dashboard</Link>
-                        <Link to={'/courses'}>Courses</Link>
-                        <Link to={'/calender'}>Calender</Link>
-                        <Link to={'/reportCard'}>Report Card</Link>
-                        <Link to={'/assignments'}>Assignments</Link>
-                    </div>
-                    <div className='contents'>
-                        <div className='top'>
-                            <div className='data'>
-                                <span>Courses selection</span>
-                            </div>
-                            <div className='data'>
-                                <span>Required man hours</span>
-                            </div>
-                            <div className='data'>
-                                <span>Number of courses</span>
-                            </div>
-                        </div>
-                        <div className='graphs'>
-                        <Chart
-                            options={state.options}
-                            series={state.series}
-                            type="line"
-                            width="650"
-                        />              
-                        </div>
-
-                    </div>
-                </div>
-                <div className='footer'>
-                </div>    
+            <div className='top'>
+              <div className='data'>
+                  <span>Classes</span>
+              </div>
+              <div className='data'>
+                  <span>Assignments</span>
+              </div>
+              <div className='data'>
+                  <span>Report Card</span>
+              </div>
             </div>
-        </>
+        </div>
     )
 }
 export default ParentDash

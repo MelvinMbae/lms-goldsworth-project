@@ -24,7 +24,7 @@ function Assignments({ session , assignments }){
             {session.user_type === 'teacher' ? <UtilityMenu /> : null}
             <div>{assignments.map((assigno) => (
                 <div className="assignment-card" key={assigno.id}>
-                    <Link to={`/assignments/${assigno.id}`}><h1>{assigno.assignment_name}</h1></Link>
+                    <Link to={`/assignments/${assigno.id}`}><h2>{assigno.assignment_name}</h2></Link>
                     <p>{assigno.content}</p>
                     <div><span className="snippet">{assigno.due_date}</span>
                     <span download><DownloadButton file={assigno.file}/></span></div>
