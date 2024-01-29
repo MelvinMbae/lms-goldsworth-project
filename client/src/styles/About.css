@@ -171,7 +171,7 @@
 }
 .benefits-to-parents{
     display: flex;
-    flex-direction: row;
+    flex-direction:row;
     gap: 20px;
     padding: 40px;
     height: 400px;
@@ -192,4 +192,21 @@
     padding: 20px;
     border-radius: 70px 140px 70px 140px;
     color: white;
+}
+.form{
+    display: block;
+    box-shadow: 1px 1px 3px 2px #dddd;
+    margin: auto;
+    padding: 30px;
+    background-color: #F1FAFE;
+}
+.form input, textarea{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 10px auto;
+    padding: 15px 20px;
+}
+.form span{
+    color: #f98304;
 }

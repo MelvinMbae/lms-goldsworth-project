@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const About = () => {
+    const [data, setData] = useState({username:"", email:"", message:""})
+    const handleChange =(e)=>{
+        const name  = e.target.name;
+        const value = e.target.value;
+        setData({...data, [name]:value})
+    }
+    const handleSubmit =(e)=>{
+        e.preventDefault()
+        alert('Feedback submitted!')
+    }
+
     return (
         <div>
             <div className="about-container">
@@ -97,13 +108,14 @@ const About = () => {
                     <li>Flexible Learning Plans: Tailor learning plans to fit your child's schedule and educational goals.</li>
                 </ul>
                 </div>
-                <div className="about-contact">
-                <h2 className='contact-heading'>Contact Us</h2>
-                <p className='contact-paragraph'>
-                    For any inquiries or assistance, feel free to contact our support team:
-                    Email: support@goldworth.com
-                </p>
-            </div>
+                <form className='form' method='post' onSubmit={handleSubmit}>
+                <h2 className='contact-heading'>Contact <span>Us</span></h2>
+                    <input type='text'  name ='username' placeholder='Username' onChange={handleChange} value={data.username}/>
+                    <input type='email' name = 'email' placeholder='Email Address'  onChange={handleChange} value={data.email}/>
+                    <textarea name='message'  name = 'message'id='' cols='30' rows='10' placeholder='Type your message here...' onChange={handleChange} value={data.message}/>
+                    <button className='button' type='submit'>Submit</button>
+                </form>
+        
             </div>
             
  
