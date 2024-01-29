@@ -467,8 +467,8 @@ class Courses(Resource):
             student_id = course_data['student_id'],
             teacher_id = course_data['teacher_id'],
             daysOfWeek=course_data['daysOfWeek'],
-            startTime=datetime.fromisoformat(course_data['startTime']),
-            endTime=datetime.fromisoformat(course_data['endTime']),
+            startTime=datetime.strptime(course_data['startTime'],"%H:%M").time(),
+            endTime=datetime.strptime(course_data['endTime'],"%H:%M").time(),
             startRecur=course_data['startRecur'],
             endRecur=course_data['endRecur'],
         )
@@ -791,10 +791,7 @@ events_schema = EventSchema(many=True)
 class Events(Resource):
     def get(self):
         events = Event.query.all()
-        # Assuming you have an events schema defined
-        return make_response(
-            events_schema.dump(events), 200
-        )
+        return make_response(events_schema.dump(events), 200)
 
     def post(self):
         data = request.get_json()
@@ -802,7 +799,6 @@ class Events(Resource):
         course = Course.query.get(data['course_id'])
         
         if course:
-            # Use the course information to set the title
             title = f"{course.course_name} "
         else:
             title = "Unknown Course"
@@ -810,48 +806,41 @@ class Events(Resource):
         custom_title = data.get('title')
         event_title = custom_title if custom_title else title
 
-
         new_event = Event(
             groupId=data['groupId'],
             allDay=data['allDay'],
-            start=datetime.fromisoformat(data['start']),
-            end=datetime.fromisoformat(data['end']),
+            start=datetime.strptime(data['start'], "%Y-%m-%d").date(),
+            end=datetime.strptime(data['end'], "%Y-%m-%d").date(),
             daysOfWeek=data['daysOfWeek'],
-            startTime=datetime.fromisoformat(data['startTime']),
-            endTime=datetime.fromisoformat(data['endTime']),
-            startRecur=data['startRecur'],
-            endRecur=data['endRecur'],
+            startTime=datetime.strptime(data['startTime'], "%H:%M").time(),
+            endTime=datetime.strptime(data['endTime'], "%H:%M").time(),
+            startRecur=datetime.strptime(data['startRecur'],"%Y-%m-%d").date(),
+            endRecur=datetime.strptime(data['endRecur'],"%Y-%m-%d").date(),
             title=event_title,
             course_id=data['course_id'],
             student_id=data['student_id'],
             teacher_id=data['teacher_id'],
-            
         )
         db.session.add(new_event)
         db.session.commit()
 
-        return make_response(
-            event_schema.dump(new_event), 200
-        )
+        return make_response(event_schema.dump(new_event), 200)
 
 class EventbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         event = Event.query.filter_by(id=id).first()
+        return make_response(event_schema.dump(event), 200)
 
-        return make_response(
-            event_schema.dump(event), 200
-        )
-        
-    def patch(self,id):
+    def patch(self, id):
         data = request.get_json()
         event = Event.query.filter_by(id=id).first()
-        
+
         if not event:
             return make_response({"message": "Event not found"}, 404)
 
         for attr in data:
             if attr in ['start', 'end', 'startTime', 'endTime', 'startRecur', 'endRecur']:
-                setattr(event, attr, datetime.fromisoformat(data[attr]))
+                setattr(event, attr, datetime.strptime(data[attr], "%H:%M").time())
             else:
                 setattr(event, attr, data[attr])
 
@@ -859,28 +848,22 @@ class EventbyId(Resource):
         if 'course_id' in data:
             course = Course.query.get(data['course_id'])
             if course:
-                # Use the course information to update the title
                 event.title = f"{course.course_name}" 
             else:
                 event.title = "Unknown Course"
 
-        for attr in data:
-            setattr(event, attr, data[attr])
-        
         db.session.add(event)
         db.session.commit()
 
-        return make_response(
-            event_schema.dump(event), 200
-        )
+        return make_response(event_schema.dump(event), 200)
 
-    def delete(self,id):
+    def delete(self, id):
         event = Event.query.filter_by(id=id).first()
 
         db.session.delete(event)
         db.session.commit()
 
-        return make_response({"message": "record successfully deleted"} , 200)
+        return make_response({"message": "Record successfully deleted"}, 200)
 
 api.add_resource(EventbyId, '/events/<int:id>')
 api.add_resource(Events, '/events')

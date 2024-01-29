@@ -25,6 +25,10 @@ export default function CreateEvent() {
         const id = e.target.id;
         let value = e.target.value;
 
+        if (id === 'start' || id === 'end' || id === 'startTime' || id === 'startRecur' || id === 'endRecur') {
+            // value = new Date(value);
+        }
+
         setFormData({ ...formData, [id]: value });
     }
 
@@ -34,11 +38,13 @@ export default function CreateEvent() {
         // Format date values
         const formattedFormData = {
             ...formData,
-            start: formData.start.toISOString().split('T')[0],
-            end: formData.end.toISOString().split('T')[0],
-            startTime: formData.startTime.toISOString().split('T')[1].slice(0, 5),
-            endRecur: formData.endRecur.toISOString().split('T')[0],
-            startRecur: formData.startRecur.toISOString().split('T')[0],
+            start: formData.start,
+            end: formData.end,
+            startTime: formData.startTime,
+            endTime: formData.endTime,
+
+            endRecur: formData.endRecur ? formData.endRecur : null,
+            startRecur: formData.startRecur ? formData.startRecur : null,
         };
 
         const emptyField = Object.keys(formattedFormData).find(
@@ -55,7 +61,7 @@ export default function CreateEvent() {
             return;
         }
 
-        fetch("http://127.0.0.1:5555/events", {
+        fetch("/events", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -74,7 +80,7 @@ export default function CreateEvent() {
     }
 
     return (
-        <div className="login-dialogue">
+        <div className="form-box">
             <div className="form-dialogue">
                 <form onSubmit={handleSubmit}>
                     <h2 className="form-dialogue-h2">Create an Event</h2>
@@ -117,7 +123,16 @@ export default function CreateEvent() {
                         />
                     </div>
                     <div className="form-item">
-                        <label htmlFor="startRecur"> startRecur:</label>
+                        <label htmlFor="endTime"> EndTime:</label>
+                        <input
+                            type="time"
+                            id="endTime"
+                            value={formData.endTime}
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="form-item">
+                        <label htmlFor="startRecur"> Start Recurrence:</label>
                         <input
                             type="date"
                             id="startRecur"
@@ -126,7 +141,7 @@ export default function CreateEvent() {
                         />
                     </div>
                     <div className="form-item">
-                        <label htmlFor="endRecur"> Start Recurrence:</label>
+                        <label htmlFor="endRecur"> End Recurrence:</label>
                         <input
                             type="date"
                             id="endRecur"

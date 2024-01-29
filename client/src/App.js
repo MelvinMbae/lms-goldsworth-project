@@ -136,7 +136,7 @@ function App() {
               <Route element={<Dashboard />}>
                 <Route path='/dashboard' element={<SetPage />} />
                 <Route path='/calendar' element={<Calendar eventsList={eventsList}/>} />
-                <Route path="/create-event" element={<TeacherHome><CreateEvent /></TeacherHome>} />
+                <Route path="/create-event" element={<CreateEvent />} />
                 <Route path='/active-courses' element={<ActiveCourse />} />
                 <Route path='/classes' element={<Classes />} />
                 <Route path='/assignments' element={<Assignments session={session} assignments={assignments}/>}></Route>
