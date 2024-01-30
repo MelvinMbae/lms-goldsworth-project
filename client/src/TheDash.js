@@ -57,7 +57,7 @@ function TheDash() {
              
             </div>
             <div className='list-container'>
-              {teachers.slice(3, 9,).map((teacher)=>(
+              {teachers.slice(3, 8,).map((teacher)=>(
                 <div className='list'>
                   <div className='teacher-details'>
                   <img id='teacher-img'src='./images/user1.png' alt={teacher.firstname} />
