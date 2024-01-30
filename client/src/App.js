@@ -24,8 +24,7 @@ import CreateEvent from './CreateEvent';
 import ReportCard from './ReportCard';
 import StudentDash from './StudentDash';
 import TeacherHome from './TeacherHome';
-import AssignmentList from './Grading';
-// import ParentDash from './ParentDash'
+import AssignmentList from './AssignmentList'
 
 
 function App() {
