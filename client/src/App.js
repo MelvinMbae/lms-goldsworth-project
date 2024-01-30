@@ -117,7 +117,7 @@ function App() {
       return <ParentDash/> 
     }
   }
-  
+  console.log(user)
 
   return (
 
@@ -129,7 +129,6 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
-
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>

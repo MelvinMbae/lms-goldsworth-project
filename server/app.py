@@ -46,6 +46,8 @@ def User_details(user):
                 "image_url": user.teacher.image_url,
                 "expertise": user.teacher.expertise,
                 "department": user.teacher.department,
+                "docs": contents_schema.dump(user.teacher.docs),
+                "courses": courses_schema.dump(user.teacher.courses),
             }, 200
         )
     elif 'student' in user.email:
@@ -55,6 +57,10 @@ def User_details(user):
                 "name" : f'{user.student.firstname} {user.student.lastname}',
                 "email" : user.email,
                 "image_url": user.student.image_url,
+                "report_card": report_cards_schema.dump(user.student.report_card),
+                "assignments": assignments_schema.dump(user.student.assignments),
+                "docs": contents_schema.dump(user.student.docs),
+                "courses": courses_schema.dump(user.student.courses),
             }, 200
         )
     return make_response(

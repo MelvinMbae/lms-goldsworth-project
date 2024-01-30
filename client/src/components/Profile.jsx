@@ -7,7 +7,7 @@ function Profile({ user }) {
         <div className='profile-details'>
             <h2>Profile</h2>
             <div>
-                <img src={user.image_url}/>
+                <img src={user.image_url} alt="user-avatar"/>
                 <p>StudentID: STU_{user.student_id}</p>
                 <p>{user.email}</p>
             </div>

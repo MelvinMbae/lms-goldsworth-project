@@ -1,6 +1,3 @@
-import React from 'react';
-import CreateEvent from './CreateEvent';
-
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -10,8 +7,6 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 
 import Swal from "sweetalert2";
 
-// import 'bootstrap/dist/css/bootstrap.css';
-// import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from "react-router-dom";
 
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';

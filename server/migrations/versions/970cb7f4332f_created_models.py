@@ -1,8 +1,8 @@
-"""Newer Models
+"""Created models
 
-Revision ID: f8a916125ebf
+Revision ID: 970cb7f4332f
 Revises: 
-Create Date: 2024-01-26 19:13:53.335642
+Create Date: 2024-01-30 09:50:26.297270
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f8a916125ebf'
+revision = '970cb7f4332f'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,8 +24,8 @@ def upgrade():
     sa.Column('description', sa.String(), nullable=False),
     sa.Column('image_url', sa.NVARCHAR(), nullable=True),
     sa.Column('daysOfWeek', sa.String(), nullable=True),
-    sa.Column('startRecur', sa.DateTime(), nullable=True),
-    sa.Column('endRecur', sa.DateTime(), nullable=True),
+    sa.Column('startRecur', sa.Date(), nullable=True),
+    sa.Column('endRecur', sa.Date(), nullable=True),
     sa.Column('startTime', sa.Time(), nullable=True),
     sa.Column('endTime', sa.Time(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
@@ -135,13 +135,13 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('groupId', sa.Integer(), nullable=True),
     sa.Column('allDay', sa.Boolean(), nullable=True),
-    sa.Column('start', sa.DateTime(), nullable=False),
-    sa.Column('end', sa.DateTime(), nullable=True),
+    sa.Column('start', sa.Date(), nullable=False),
+    sa.Column('end', sa.Date(), nullable=True),
     sa.Column('daysOfWeek', sa.String(), nullable=True),
     sa.Column('startTime', sa.Time(), nullable=True),
     sa.Column('endTime', sa.Time(), nullable=True),
-    sa.Column('startRecur', sa.DateTime(), nullable=True),
-    sa.Column('endRecur', sa.DateTime(), nullable=True),
+    sa.Column('startRecur', sa.Date(), nullable=True),
+    sa.Column('endRecur', sa.Date(), nullable=True),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('course_id', sa.Integer(), nullable=False),
     sa.Column('student_id', sa.Integer(), nullable=False),

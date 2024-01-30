@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
  function Assignment({ assignments }) {
 
     const { assignmentID } = useParams()
-    const assignment = assignments.filter((assignment)=> assignment.id == parseInt(assignmentID))
+    const assignment = assignments.filter((assignment)=> assignment.id === parseInt(assignmentID))
     console.log(assignment[0])
 
   return (

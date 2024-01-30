@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 function CoursePage({ coursesList }) {
     const { courseID } = useParams()
-    const course = coursesList.filter((course)=> course.id == parseInt(courseID))
+    const course = coursesList.filter((course)=> course.id === parseInt(courseID))
 
 
   return (

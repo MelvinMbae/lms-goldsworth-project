@@ -4,7 +4,7 @@ import { appContext } from "./utils/appContext";
 
 function TeacherHome({ children }) {
 
-  const { user , session  , setUser } = useContext(appContext)
+  const {  session  } = useContext(appContext)
 
 
   return (
