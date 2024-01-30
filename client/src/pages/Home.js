@@ -1,9 +1,7 @@
 import React from 'react'
-import Navbar from '../Navbar';
 
 function Home({ courses}) {
 
-  // console.log(courses[0:3])
   return (
     <div className='home-container'>
       <div className='home-info'>
@@ -11,7 +9,7 @@ function Home({ courses}) {
           <h1>Welcome to Goldworth.
             <br/>
             Your Education is our Responsibility.</h1>
-          <h3 className='home-text'>
+          <h3>
             In this age of digital revolution, coding isn’t just a skill—it’s a superpower!
             <br/>
             And if you’re an aspiring coder or an educator seeking to empower tech wizards, then you’re at the right place.</h3>
@@ -24,7 +22,7 @@ function Home({ courses}) {
             It should be a pencil, not a pen
             </q>
             <br/><br/>Paul Graham.</p>
-        </div>
+      </div>
       <div className='course-cards'>
         {courses.slice(1,5).map((course)=>(<div key={course.id} className='course-card'>
           <h3 id='course-header'>{course.course_name} </h3>
@@ -32,9 +30,9 @@ function Home({ courses}) {
           </div>
           ))}
       </div>
-      <div className='content'>
+      <div className='home-info'>
       <img  id='image-2' src='/images/home-2.jpeg' alt='teacher' />
-        <p className='content-text'>
+        <p className='home-text content'>
           <h1>Education Confidence</h1>
           <p>Our teaching methods are child-driven, skill-based, and are focused on the overall development of each child. <br />We provide a safe, healthy, and encouraging learning environment that prepares our children for the global demands of tomorrow.</p>
           <ol>
@@ -44,8 +42,8 @@ function Home({ courses}) {
           </ol>
         </p>
       </div>
-      <div className='content-1'>
-        <p className='content-1-text'>
+      <div className='home-info content-1'>
+        <p className='home-text'>
           <h1>Achieve Academic Sucess</h1>
           <p>Exceptional value with an easy-to-use platform.</p>
           <ol>
@@ -56,9 +54,9 @@ function Home({ courses}) {
         </p>
         <img  id='image-3' src='/images/home-3.jpeg' alt='woman with laptop' />
       </div>
-      <div className='content-2'>
+      <div className='home-info'>
       <img  id='image-4' src='/images/home-4.jpeg' alt='students' />
-        <p className='content-2-text'>
+        <p className='home-text'>
           <h1>Unify, Manage, Excel</h1>
           <p>Enhance your collaboration between parents, teachers and students.</p>
           <ol>

@@ -1,6 +1,3 @@
-import React from 'react';
-import CreateEvent from './CreateEvent';
-
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -10,11 +7,6 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 
 import Swal from "sweetalert2";
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import './index.css';
-import './App.css';
-import './Dashboard.css';
 import { useNavigate } from "react-router-dom";
 
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
@@ -48,23 +40,22 @@ function Calendar({ eventsList }) {
     };
 
     return (
-        <div style={{ width: '100%', paddingLeft: "300px", paddingRight: "300px" }}>
+        <div className='contents'>
             <FullCalendar
                 plugins={[dayGridPlugin, multiMonthPlugin, timeGridPlugin, interactionPlugin, bootstrap5Plugin, listPlugin]}
                 initialView={"dayGridMonth"}
                 headerToolbar={{
-                    start: 'today prev,next addEventButton',
+                    start: 'prev,next addEventButton',
                     center: 'title',
                     end: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,list'
 
                 }}
 
-
                 eventAdd={true}
                 selectable={true}
 
                 height={"120vh"}
-                themeSystem={"bootstrap5"}
+                themeSystem={""}
                 navLinks={true}
                 editable={false}
                 nowIndicator={true}
@@ -96,9 +87,7 @@ function Calendar({ eventsList }) {
                 }}
                 eventClick={handleEventClick}
                 dateClick={handleDateClick}
-
             />
-
         </div>
     )
 }

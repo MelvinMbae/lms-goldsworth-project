@@ -1,4 +1,4 @@
-from models import Student, Teacher, Parent, Course, Content, User, Assignments, Report_Card,Event
+from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event
 import json
 import pytz
 from random import choice,sample
@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 fake = Faker()
 
-with open("C:/Users/Melvin Mbae/Development/Code/lms/goldworth-lms/lms-goldsworth-project/client/db.json" , mode='r') as course_data:
+with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
 courses = data['courses']
@@ -22,7 +22,7 @@ with app.app_context():
     Course.query.delete()
     User.query.delete()
     Content.query.delete()
-    Assignments.query.delete()
+    Assignment.query.delete()
     Report_Card.query.delete()
     Event.query.delete()
 
@@ -151,8 +151,8 @@ with app.app_context():
         students.append(student)
     
     for i in range(10):
-        assignment = Assignments(
-            assignment_name = f'{choice(assignment_heads)}{fake.text(max_nb_chars=15)}',
+        assignment = Assignment(
+            assignment_name = f'{assignment_heads[choice(range(9))]} {fake.text(max_nb_chars=20)}',
             topic = fake.text(),
             content = fake.paragraph(),
             due_date = fake.future_date(),

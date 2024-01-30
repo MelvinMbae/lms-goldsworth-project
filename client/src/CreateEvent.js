@@ -80,7 +80,7 @@ export default function CreateEvent() {
     }
 
     return (
-        <div className="login-dialogue">
+        <div className="form-box">
             <div className="form-dialogue">
                 <form onSubmit={handleSubmit}>
                     <h2 className="form-dialogue-h2">Create an Event</h2>
