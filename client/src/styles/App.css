@@ -6,6 +6,27 @@ li, a{
 #root{
   color: #004B5B;
   box-sizing: border-box;
+  --fc-button-bg-color: #45A5A1 ;
+
+  .fc-button{
+    border: none;
+    margin: 2% 1% 2% 0;
+  }
+  .fc-toolbar-chunk{
+    width: 20rem;
+  
+    .fc-button-group {
+    justify-content: space-around;
+    }
+    
+    .fc-prev-button{
+      margin-right: 4%;
+    }
+    .fc-next-button{
+      margin-right: 14%;
+    }
+  }
+
 }
 .button{
   background-color: #45A5A1;
@@ -325,20 +346,55 @@ li, a{
   }
   .assignments{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: #bdd6e0;
     width: 100%;
     border-radius: 5px;
     height: 650px;
-    padding: 30px 20px;
+    padding: 30px 40px;
     overflow-y: scroll;
     font-size: 14px;
 
     .assignment-card{
-      margin-bottom: 30px;
-      height: 250px;
-      padding: 10px 15px;
+      width: 100%;
+      margin: 40px 0;
+      height: 200px;
+      padding: 30px 35px 0px 35px;
+      background-color: #fff;
+      border-radius: 5px;
 
+      a{
+        color: #004B5B;
+      }
+    }
+    .assignment-bar{
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-end;
+      width: 200px;
+      height: 50vh;
+      padding: 10px 15px;
+      margin: 40px 0;
+      row-gap: 15px;
+
+      a{
+        font-size: 15px;
+        color: #004B5B;
+      }
+    }
+
+    .save-btn{
+      background-color: rgba(255, 255, 255, 0);
+      border: none;
+    }
+    .download-btns{
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0px;
     }
   }
 
@@ -352,12 +408,6 @@ li, a{
  #main span:hover {
     color: #FF9F37;
  }
- 
-
-.assignment-container{
-  display: flex;
-}
-
 
 
 .card {
@@ -369,11 +419,6 @@ li, a{
   text-align: center;
   font-family: arial;
   border-radius: 16px;
-}
-
-.snippet {
-  color: grey;
-  font-size: 22px;
 }
 
 .card button {

@@ -1,17 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function CoursesCard({ course, addToEnrolledCourses }) {
+
+  const location = useLocation()
   return (
     <div className="courselist-cards">
       <div>
         <h3 className="courselist-cards-h3">{course.course_name}</h3>
-        <p className="courselist-cards-p">{course.description}</p>
       </div>
       <div className="view-course-btns">
         <Link to={`/courses/${course.id}`} className="courseButton">View</Link>
-        <button className="courseButton" onClick={addToEnrolledCourses}>Enroll
-        </button>
+        {location.pathname === "/courses" ? <button className="courseButton" onClick={addToEnrolledCourses}>Enroll</button> : null}
       </div>
     </div>
   );

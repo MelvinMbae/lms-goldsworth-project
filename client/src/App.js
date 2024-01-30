@@ -117,7 +117,7 @@ function App() {
       return <ParentDash/> 
     }
   }
-  console.log(user)
+  // console.log(assignments)
 
   return (
 

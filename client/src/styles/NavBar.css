@@ -6,6 +6,8 @@
     height: 60px;
     gap: 88px;
     align-self: stretch;
+    background-color: #fff;
+
 
     #header{
         margin: 0;

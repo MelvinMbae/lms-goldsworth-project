@@ -20,7 +20,7 @@ function DownloadButton(){
   };
 
   return (
-      <button onClick={downloadDocument} className='btn'>Download Document</button>
+      <button onClick={downloadDocument} className='button'>Download</button>
   );
 };
 

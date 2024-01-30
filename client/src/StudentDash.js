@@ -12,7 +12,7 @@ function StudentDash(){
               <span className='title'>
                 <h1>Active Course</h1>
               </span>
-                <span className='title-child'><h2><Link to={'/active-courses'}>{user.courses[0].course_name}</Link></h2></span>
+                <span className='title-child'><h2><Link to={`/courses/${user.courses[0].id}`}>{user.courses[0].course_name}</Link></h2></span>
                 <div className='top'>
                     <span className='data'><h2>Required Man-hours: </h2><h2>{"20"}</h2></span>
                     <span className='data'><h2><Link to={'/active-courses'}>Courses Enrolled: {user.courses.length}</Link></h2></span>
