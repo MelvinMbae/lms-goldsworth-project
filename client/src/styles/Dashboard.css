@@ -8,7 +8,6 @@
   column-gap: 40px;
   align-items: center;
 
-
   .contents{
     display: flex;
     flex-direction: column;
@@ -17,7 +16,7 @@
     width: 100%;
     height: 650px;
     border-radius: 5px;
-    padding: 20px;
+    padding: 20px 30px 20px 20px;
 
     .title {
       width: 18%;
@@ -25,50 +24,69 @@
       border-radius: 4px;
       position: relative;
       background-color: #45A5A1;
-      padding: 0 20px;
+      padding: 10px 20px;
       color: #fff;
 
       h1{
-        font-size: 1.4rem;
-      }
-    }
-
-    .title-child {
-      margin-top: -8.1rem;
-      border-radius: 4px;
-      position: relative;
-      /* background-color: #45A5A1; */
-      padding: 0 20px;
-
-      a {
-        float: right;
         font-size: 1.4rem;
         color: #fff;
       }
     }
 
+    .title-child {
+      margin-top: -8rem;
+      border-radius: 4px;
+      position: relative;
+      padding: 0 20px;
+
+      a {
+        float: right;
+        font-size: 1.4rem;
+        color: #2a6461;
+      }
+    }
+
+
+
     .top{
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-evenly;
+      /* flex-wrap: wrap; */
+      column-gap: 20px;
+      justify-content: flex-end;
       margin-top: 4rem;
 
       .data{
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: flex-end;
+         background-color: #45A5A1;
         width: 150px;
-        color: #45A5A1;
+        height: 90px;
+        color: #fff;
         border-radius: 5px;
-        padding: 20px;
+        padding: 10px 20px;
         margin-top: 1.2rem;
         
-        h1{
-          font-size: 50px;
+        h2{
+          font-size: 20px;
+        }
+
+        a {
+          color: #fff;
         }
       }
+    }
+
+    .dash-message{
+      margin-left: 5%;
+      margin-bottom: -35px;
+      color: #fff;
+      border-radius: 5px;
+      background-color: #00A8A2;
+      padding: 30px;
+      width: 400px;
     }
   }
 }
@@ -96,15 +114,15 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    height: 90vh;
+    height: 87.9vh;
     background-color: #00A8A2;
     transition: 0.4s;
-    padding: 20px 20px;
+    padding: 20px 15px;
     margin-left: 0;
   
     a {
-      width: 80%;
-      padding: 20px 10px;
+      width: 65%;
+      padding: 20px 20px;
       font-size: 16px;
       color: white;
     }
@@ -113,7 +131,7 @@
       background-color: #fff;
       color: #FF9F37;
       font-weight: bold;
-      padding-right: 35px;
+      padding-right: 30px;
       transition: 0.7s;
       border-radius: 4px;
     }
@@ -123,27 +141,20 @@
 .teacherContents{
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   background: #bdd6e0; 
   width: 1145px;
   height: 425px;
   border-radius: 5px;
   flex-shrink: 0;
-  /* justify-content: space-around; */
 }
 
 
 
 .teachersTop{
   display: flex;
-  /* flex-direction: column; */
   justify-content: space-around;
 }
 
-
-.dash-message{
-  width: 400px;
-}
 
 .graphs{
   display: flex;
