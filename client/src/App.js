@@ -18,7 +18,7 @@ import AssignmentForm from './AssignmentCreation';
 import CourseForm from './CourseForm';
 import Assignment from './Assignment';
 import CoursePage from './CoursePage';
-
+import TheDash from './TheDash';
 
 
 function App() {
@@ -105,6 +105,8 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
+            <Route path='/thedash' element={<TheDash />} />
+
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>
                 <Route path='/dashboard' element={<TeacherDash />} />

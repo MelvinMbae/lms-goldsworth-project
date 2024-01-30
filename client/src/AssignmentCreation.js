@@ -34,7 +34,7 @@ function AssignmentForm() {
                 })
             }
             else{
-                throw new Error(error)
+                throw new Error('error')
             }
         })
         .catch((error)=>console.error(error))
