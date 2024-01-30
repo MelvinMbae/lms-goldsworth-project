@@ -1,14 +1,15 @@
 import React from 'react'
 
-export default function SignUpForm({ handleChange, handleSubmit, formData }) {
+export default function ParentForm({ handleChange, parent }) {
+
   return (
-    <form onSubmit={handleSubmit} className="form-dialogue">
+    <div id='parentform' className="form-dialogue">
         <div className="form-item">
             <label htmlFor="firstname"> First Name: </label>
             <input
                 type="text"
-                id="firstname"
-                value={formData.firstname}
+                id="Firstname"
+                value={parent.Firstname}
                 autoComplete="off"
                 onChange={handleChange}
             />
@@ -17,8 +18,8 @@ export default function SignUpForm({ handleChange, handleSubmit, formData }) {
             <label htmlFor="lastname"> Last Name: </label>
             <input
                 type="text"
-                id="lastname"
-                value={formData.lastname}
+                id="Lastname"
+                value={parent.Lastname}
                 autoComplete="off"
                 onChange={handleChange}
             />
@@ -27,9 +28,9 @@ export default function SignUpForm({ handleChange, handleSubmit, formData }) {
             <label htmlFor="email"> Email: </label>
             <input
                 type="email"
-                id="email"
+                id="Email"
                 autoComplete="off"
-                value={formData.email}
+                value={parent.Email}
                 onChange={handleChange}
             />
         </div>
@@ -37,8 +38,8 @@ export default function SignUpForm({ handleChange, handleSubmit, formData }) {
             <label htmlFor="address"> Passport Photo: </label>
             <input
                 type='file'
-                id="image_url"
-                value={formData.image_url}
+                id="Image_url"
+                value={parent.Image_url}
                 onChange={handleChange}
             />
             </div>
@@ -46,15 +47,12 @@ export default function SignUpForm({ handleChange, handleSubmit, formData }) {
             <label htmlFor="password"> Password: </label>
             <input
                 type="password"
-                id="password"
+                id="Password"
                 autoComplete="off"
-                value={formData.password}
+                value={parent.Password}
                 onChange={handleChange}
             />
         </div>
-        <button className="btn" type="submit">
-            Register
-        </button>
-    </form>
+    </div>
   )
 }

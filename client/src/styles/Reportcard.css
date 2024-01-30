@@ -3,54 +3,58 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    /* flex: 1 1 0; */
     align-items: center;
-    width: 60%;
-    height: 60vh;
+    width: 100%;
+    height: 700px;
+    border-radius: 5px;
+
+    /* display: flex;
+    flex-direction: column;
+    background-color: #bdd6e0;
+    width: 100%;
+    border-radius: 5px;
+    height: 650px;
+    padding: 30px 20px;
+    overflow-y: scroll;
+    font-size: 14px; */
   }
 
   .header {
-    width:60%;
+    width:100%;
     background-color: #45A5A1;
     padding: 10px;
     text-align: center;
     color: white;
-    position: fixed;
   }
 
   .student-info {
-    width: 100%;
-    font-size: larger;
     font-family: 'Courier New', Courier, monospace;
-    display: flex;
-    justify-content: space-evenly;
     flex-direction: row-reverse;
     align-items: center;
-    position: relative;
-    top: 30%;
     
-    span{
-      position: relative;
-      top: 140%;
+    p{
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
       background-color: #45A5A1;
       text-align: right;
       color: #fff;
-      width: 200px;
-      height: 100px;
+      width: 150px;
+      height: 40px;
       margin-bottom: 20px;
       border-radius: 5px;
       padding: 24px;
-
-      p{
-        font-size: 24px;
-        font-weight: bold;
-      }
+      font-weight: bold;
+      font-size: 18px;
     }
 
     report-card-table {
       color: black;
       border-color: black;
       width: 50%;
-      margin: 0 auto;
+      /* margin: 0 auto; */
       text-align: left;
     }
 

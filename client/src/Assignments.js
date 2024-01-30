@@ -1,65 +1,38 @@
 import React from "react";
-import { Link } from 'react-router-dom'
-import Navbar from "./Navbar";
 import DownloadButton from "./components/DownloadComp";
+import { Link } from "react-router-dom";
 
-function Assignments(){
+function Assignments({ session , assignments }){
 
-  let studentReport = {
-    "student_id":"3",
-    "attendance":80,
-    "attendance_remark":"Well done!",
-    "name":"Michael Njogu",
-    "courses-pursuing":3,
-    "active-course":"software engineering",
-    "course-hours":40,
-    "phases":["Phase 0", "Phase 1", "Phase 2", "Phase 3", "Phase 4","Phase 5"],
-    "teacher_report":{
-      "assignments":[{
-              "ass_id": 1,
-              "ass_name":"Perfectly done",
-              "content":"Refer to previous code challenge for guidance",
-              "due_date":"Date",
-              "file":null,},
-              {
-              "ass_id": 1,
-              "ass_name":"Perfectly done",
-              "content":"Refer to previous code challenge for guidance",
-              "due_date":"Date",
-              "file":null,},
-              {
-                "ass_id": 1,
-                "ass_name":"Perfectly done",
-                "content":"Refer to previous code challenge for guidance",
-                "due_date":"Date",
-                "file":null,}]
-            },
-      "course_work":[
-                {"course":"Machine learning",
-                "course_id":"ML_101",
-                "grade":40,
-                "remarks":"Good job on practicals"},
-                {"course":"Data Analytics",
-                "course_id":"DA_101",
-                "grade":70,
-                "remarks":"Awaiting code challenge submission"},
-                {"course":"Software_Engineering",
-                "course_id":"SE_101",
-                "grade":80,
-                "remarks":"Well done"}
-              ]
+    function UtilityMenu(){
+        return (
+            <div className="assignment-bar">
+                <div>
+                    <span>
+                        <button>Edit</button>
+                        <Link className="button" to={"/grading"}>Grade Assignment</Link>
+                        <Link className="button" to={"/new"}>Add Assignment</Link>
+                    </span>
+                    <button>Save</button>
+                </div>
+            </div>
+        )
     }
 
     return(
-          <div className="assignments">  
-              {studentReport.teacher_report.assignments.map((assigno) => (
-                  <div class="assignment-card" key={assigno.ass_id}>
-                      <h1>{assigno.ass_name}</h1>
-                      <p>{assigno.content}</p>
-                      <div><span class="snippet">{assigno.due_date}</span>
-                      <span download><DownloadButton file={assigno.file}/></span></div>
-                  </div>
-              ))}                      
+          <div className="assignments">
+            {session.user_type === 'teacher' ? <UtilityMenu /> : null}
+            <div>
+            <Link className="button" to={"/grading"}>Grade Assignment</Link>
+
+            {assignments.map((assigno) => (
+                <div className="assignment-card" key={assigno.id}>
+                    <Link to={`/assignments/${assigno.id}`}><h2>{assigno.assignment_name}</h2></Link>
+                    <p>{assigno.content}</p>
+                    <div><span className="snippet">{assigno.due_date}</span>
+                    <span download><DownloadButton file={assigno.file}/></span></div>
+                </div>
+            ))}</div>                      
           </div>
     )
 }
