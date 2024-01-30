@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import './TheDash.css';
 import TheBar from './TheBar';
 import { FaBook } from "react-icons/fa";
+import Profile from './pages/Profile';
 
 function TheDash() {
   const [courses, setCourses] = useState([]);
@@ -39,6 +40,7 @@ function TheDash() {
         <TheBar />
         <div className='dashboard-content'>
           <h1 className='dash-header'>Dashboard</h1>
+          <Profile />
           <div className='card-container'>
             {courses.slice(5, 8,).map((course) => (
               <div className='card'>
@@ -52,21 +54,18 @@ function TheDash() {
           <div className='teacher-list'>
             <div className='list-header'>
               <h1 className='dash-header'>Teachers</h1>
-              <select>
-                <option value="english">English</option>
-                <option value="swahili">Swahili</option>
-              </select>
+             
             </div>
             <div className='list-container'>
-              {teachers.slice(0, 6,).map((teacher)=>(
+              {teachers.slice(3, 9,).map((teacher)=>(
                 <div className='list'>
                   <div className='teacher-details'>
                   <img id='teacher-img'src='./images/user1.png' alt={teacher.firstname} />
                   <h2>{`${teacher.firstname} ${teacher.lastname}`}</h2>
                   </div>
-                  <span>{teacher.expertise}</span>
-                  <span>{teacher.department}</span>
-                  <span className='teacher-todo'>:</span>
+            <span >{teacher.expertise}</span>
+            <span>{teacher.department}</span>
+            <span className='teacher-todo'>:</span>
                 </div>
               ))}
             </div>
