@@ -1,11 +1,12 @@
 from flask import Flask
 from flask_bcrypt import Bcrypt
-from flask_marshmallow import Marshmallow
+from flask_marshmallow import Marshmallow, schema
 from flask_migrate import Migrate
 from flask_cors import CORS
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
+from flask_admin import Admin
 
 app = Flask(__name__)
 
@@ -25,3 +26,4 @@ bcrypt = Bcrypt(app)
 mash = Marshmallow(app)
 api = Api(app)
 db.init_app(app)
+admin = Admin(app, name="GoldWorth")

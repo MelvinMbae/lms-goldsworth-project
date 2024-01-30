@@ -1,32 +1,31 @@
 import { useLocation, Outlet } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { appContext } from '../utils/appContext';
 import Profile from '../components/Profile';
 import SideBar from '../components/SideBar';
 import { Fragment } from 'react';
-import Courses from '../Courses';
+import CoursesPage from '../CoursesPage';
 
-function Dashboard({ user }) {
+function Dashboard() {
     
     const location = useLocation()
+    const { user , session } = useContext(appContext)
 
     function DashPage({ children }){
         return(
             <Fragment>
-                <SideBar />
+                { session.user_type === 'parent' ? null : <SideBar />}
                 {children}
             </Fragment>
         )
     }
         return(
-            <Fragment>  
-
-                {location.pathname === '/courses' ? <DashPage><Courses /></DashPage> : <DashPage>
-                                                                                            <div className='uno'>
-                                                                                                <Outlet />  
-                                                                                            </div>
+            <div className='dashboard'>  
+                {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
+                                                                                            <Outlet />  
                                                                                             <Profile user={user}/>
                                                                                         </DashPage>}
-                {/*<div className='footer'></div> */} 
-            </Fragment>
+            </div>
         )
     }
 export default Dashboard;

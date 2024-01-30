@@ -52,11 +52,11 @@ class Student(db.Model):
 
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
-    user = db.relationship('User', backref='student')
-    assignments = db.relationship('Assignments', backref='student')
-    report_card = db.relationship('Report_Card', backref='student')
-    courses = db.relationship('Course', secondary=course_student, back_populates='students')
-    docs = db.relationship('Content')
+    user = db.relationship('User', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    assignments = db.relationship('Assignment', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    report_card = db.relationship('Report_Card', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    courses = db.relationship('Course', secondary=course_student, back_populates='students', cascade="save-update , merge, delete")
+    docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
 
     
     @hybrid_property
@@ -108,9 +108,9 @@ class Teacher(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    docs = db.relationship('Content')
-    user = db.relationship('User', backref='teacher')
-    courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers')
+    docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
+    user = db.relationship('User', backref='teacher', cascade="save-update , merge, delete, delete-orphan")
+    courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers', cascade="save-update , merge, delete")
     
     @hybrid_property
     def password(self):
@@ -158,8 +158,8 @@ class Parent(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    child = db.relationship('Student', backref='parent')
-    user = db.relationship('User', backref='parent')
+    child = db.relationship('Student', backref='parent', cascade="save-update , merge, delete, delete-orphan")
+    user = db.relationship('User', backref='parent', cascade="save-update , merge, delete, delete-orphan")
     
     @hybrid_property
     def password(self):
@@ -203,13 +203,17 @@ class Course(db.Model):
     course_name = db.Column(db.String, nullable = False , unique = True)
     description = db.Column(db.String, nullable = False)
     image_url= db.Column(db.NVARCHAR)
+    daysOfWeek = db.Column(db.String)  
+    startRecur = db.Column(db.Date)
+    endRecur = db.Column(db.Date)    
+    startTime = db.Column(db.Time) 
+    endTime = db.Column(db.Time)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    content = db.relationship('Content')
-    students = db.relationship('Student', secondary=course_student, back_populates='courses')
-    teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses')
-
+    content = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
+    students = db.relationship('Student', secondary=course_student, back_populates='courses', cascade="save-update , merge, delete")
+    teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses', cascade="save-update , merge, delete")
 
 class Content(db.Model):
     __tablename__ = 'contents'
@@ -239,7 +243,7 @@ class Report_Card(db.Model):
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
 
-class Assignments(db.Model):
+class Assignment(db.Model):
     __tablename__ = 'assignments'
     
     id = db.Column(db.Integer , primary_key = True)
@@ -252,3 +256,31 @@ class Assignments(db.Model):
 
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    
+class Event(db.Model):
+    __tablename__ = 'events'
+
+    id = db.Column(db.Integer, primary_key=True)
+    groupId = db.Column(db.Integer) 
+    allDay = db.Column(db.Boolean, default=False)
+    start = db.Column(db.Date, nullable=False)
+    end = db.Column(db.Date)
+    daysOfWeek = db.Column(db.String)  
+    startTime = db.Column(db.Time) 
+    endTime = db.Column(db.Time)  
+    startRecur = db.Column(db.Date)
+    endRecur = db.Column(db.Date)
+    title = db.Column(db.String, nullable=False)
+    
+    def __repr__(self):
+        return f"Event(id={self.id}, title={self.title}, start={self.start}, end={self.end})"
+    
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
+    
+    
+    student = db.relationship('Student')
+    course = db.relationship('Course')
+    teacher = db.relationship('Teacher')
+    
