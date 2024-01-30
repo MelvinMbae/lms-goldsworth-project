@@ -7,6 +7,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap; 
+
   }
 .course-header{
   margin-bottom: 100px;
@@ -15,9 +17,10 @@
   font-size: 40px;
  }
  #courses-img{
-  max-width: 100%; 
-
- }
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+   }
  .course-list {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: auto;
@@ -35,6 +38,7 @@
 }
 .course-card-content{
   background: #ddded8;
+  height: fit-content;
   color: black;
 }
 .courses-btn{

@@ -1,12 +1,15 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useContext} from 'react';
+import { appContext } from './utils/appContext';
 import './TheDash.css';
-import TheBar from './TheBar';
+import SideBar from './components/SideBar';
 import { FaBook } from "react-icons/fa";
 import Profile from './pages/Profile';
 
 function TheDash() {
   const [courses, setCourses] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const { user } = useContext(appContext)
+
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -37,10 +40,10 @@ function TheDash() {
   return (
     <div>
       <div className='dashboard'>
-        <TheBar />
+        <SideBar />
         <div className='dashboard-content'>
           <h1 className='dash-header'>Dashboard</h1>
-          <Profile />
+          <Profile user={user}/>
           <div className='card-container'>
             {courses.slice(5, 8,).map((course) => (
               <div className='card'>

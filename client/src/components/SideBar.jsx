@@ -1,62 +1,25 @@
-import { Link } from 'react-router-dom'
+import React from 'react';
+import '../styles/Sidebar.css';
+import { GoCommentDiscussion } from "react-icons/go";
+import { TbReportAnalytics } from "react-icons/tb";
+import { FaRegCalendarAlt } from "react-icons/fa";
+import { MdOutlineLibraryBooks,MdOutlineDashboard } from "react-icons/md";
+import { PiBooks } from "react-icons/pi";
 
-function SideBar({ user }) {
-
-    function openNav() {
-        document.getElementById("mySide-nav").style.width = "250px";
-        document.getElementById("main").style.display='none';
-     }
-     
-     function closeNav() {
-        document.getElementById("mySide-nav").style.width = "0";
-        document.getElementById("main").style.display = "block";
-     }
-
-
-//     function Sidebar({ children }){
-//  if((session.user_type === "teacher")){
-//             return (  
-//                 <Fragment>
-//                     {children}
-//                     <Link to={'/dashboard'}>Dashboard</Link>
-//                     <Link to={'/active-courses'}>Active Courses</Link>
-//                     <Link to={'/classes'}>Classes</Link>
-//                     <Link to={'/reportcard'}>Report Card</Link>
-//                     <Link to={'/assignments'}>Assignments</Link>
-//                 </Fragment>
-//                 )
-//             }
-//         else{
-//             return (  
-//                 <Fragment>
-//                     {children}
-//                     <Link to={'/dashboard'}>Dashboard</Link>
-//                     <Link to={'/active-courses'}>Active Courses</Link>
-//                     <Link to={'/classes'}>Classes</Link>
-//                     <Link to={'/reportcard'}>Report Card</Link>
-//                     <Link to={'/assignments'}>Assignments</Link>
-//                 </Fragment>
-//                 )
-//             }
-//         }
-
+function SideBar() {
   return (
-        <div className='sidebar'>
-            <div className="assignment-container">
-            <div id="mySide-nav" class="side-nav"> 
-                <a href="javascript:void(0)" class="closebtn" onClick={() => closeNav()}>x</a>
-                <Link to={'/dashboard'}>Dashboard</Link>
-                <Link to={'/active-courses'}>Active Courses</Link>
-                <Link to={'/classes'}>Classes</Link>
-                <Link to={'/assignments'}>Assignments</Link>
-                <Link to={'/reportcard'}>ReportCard</Link>
-            </div>
-            <div id="main">
-                <span style={{fontSize:'30px', cursor:'pointer'}} onClick={() => openNav()}>☰</span>
-            </div></div>
-        </div>
+    <div className='menu'>
+      <div className='menu-list'>
+        <a href="/thedash" className='item'><MdOutlineDashboard className='icon'/> Dashboard</a>
+        <a href="/courses" className='item'><PiBooks className='icon'/> Courses</a>
+        <a href="/assignments" className='item'><MdOutlineLibraryBooks className='icon'/> Assignments</a>
+        <a href="" className='item'><TbReportAnalytics className='icon'/> Report Card</a>
+        <a href="/calendar" className='item'><FaRegCalendarAlt className='icon'/> Calendar</a>
+        <a href="/forums" className='item'><GoCommentDiscussion className='icon'/> Discussion</a>
+</div>
+    </div>
   )
 }
-export default SideBar;
 
+export default SideBar;
 
