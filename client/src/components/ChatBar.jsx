@@ -65,11 +65,11 @@ function ChatBar() {
   return (
     <section className="sidebar-section px-4 py-3">
       {users.map((user) => (
-        <div key={user.id} className="chat d-flex justify-content-start gap-3 px-4 align-items-center flex-nowrap my-2" onClick={() => handleUserClick(user.name)}>
+        <div key={user.id} className="chat justify-content-start gap-3 px-4 align-items-center flex-nowrap my-2" onClick={() => handleUserClick(user.name)}>
           <div className="profile">
             <img className="profile-img" src={user.profileImage} alt="profile" />
           </div>
-          <div className="chat-preview d-flex flex-column b-2 justify-content-center align-items-start">
+          <div className="chat-preview flex-column b-2 justify-content-center align-items-start">
             <h6 className="text-start fw-bold">{user.name}</h6>
             {isTyping ? (
               <p className="mb-0 typing">Typing...</p>

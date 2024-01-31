@@ -25,12 +25,11 @@ body {
 /* General styles */
 .app {
   display: flex;
-  height: 85vh;
+  height: 90vh;
   width: 100%;
-  padding-left: 250px;
-  /* padding-right: 250px; */
-
-  margin: 10px;
+  flex-direction: row;
+  /* margin: 10px; */
+  column-gap: 10px;
 
 }
 
@@ -64,14 +63,16 @@ body {
 
 /* ChatBar styles */
 .sidebar-section {
-  width: 450px;
+  width: 350px;
   background-color: #f4f7f7;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   border: solid;
   display: flex;
   flex-direction: column;
-  row-gap: 0px;
+  row-gap: 12px;
+  border-radius: 10px;
+  
 }
 
 .chat {
@@ -79,7 +80,7 @@ body {
   /* display: flex; */
   /* align-items: center; */
   padding: 2px;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: background-color 0.3s;
 }
 
@@ -117,8 +118,10 @@ body {
   flex-direction: column;
   margin-left: 10px;
   margin-right: 10px;
+  
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
+  border-radius: 10px;
 
   border: solid 1px rgb(187, 236, 238);
 
@@ -131,6 +134,7 @@ body {
   color: white;
   padding: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px 10px 0px 0px;
 }
 
 .sticky-top {
@@ -187,10 +191,12 @@ body {
 
 .chat-input {
   background-color: #fff;
+  border-radius: 10px;
   padding: 10px;
   border-top: 1px solid #ccc;
   display: flex;
-  top: 90%;
+  position:relative;
+  top: 85%;
   width: auto;
   align-items: center;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
@@ -229,11 +235,18 @@ body {
 .px-4 {
   padding-right: 1rem !important;
   padding-left: 1rem !important;
+  padding-top: 12px;
+  padding-bottom: 12px;
   border: solid 1px rgb(187, 236, 238);
+  /* width: auto; */
 }
 
 .d-flex {
-  width: 100%
+  width: auto;
 }
-
+.form-control{
+  width:100%;
+  border-radius: 10px;
+  
+}
 /* Add more styles as needed */
