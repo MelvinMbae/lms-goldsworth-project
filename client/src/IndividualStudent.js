@@ -1,61 +1,69 @@
 import React, { Fragment } from 'react';
+import './IndividualStudent.css'; // Import the new CSS file
 
 const IndividualStudent = ({ selectedStudent }) => {
-return (
-    <div  className="indiv-student">
-    <h2>User Profile</h2>
-    {selectedStudent ? (
-        <Fragment><div className='student-title'><div className='student-avator'>
-                <img
-                    src={selectedStudent.profilePicture || "image_placeholder_url"}
-                    alt={`${selectedStudent.name}'s profile`}
-                    />
-                    <div>
-                    <h3>{selectedStudent.name}</h3>
-                    <p>Email: {selectedStudent.email}</p>
-                    </div>
-                    </div>
-                    <div className='student-avator'>
-                    <p>Course: {selectedStudent.course}</p>
-                    <p>No of Assignments: {selectedStudent.numberOfAssignments}</p>
-                    
-                    <p>Date of Enrollment: {selectedStudent.dateOfEnrollment}</p>
-                    </div>
-                </div>
-                <div><div>
-                    <p>Parent Details: {selectedStudent.parentDetails}</p>
-                    </div>
-        <div>
-            
-        <h3>Assignment Project Status</h3>
-        {selectedStudent.assignmentProjects && selectedStudent.assignmentProjects.length > 0 ? (
-            <table style={{ border: '1px solid #ddd', borderRadius: '8px', marginTop: '10px', padding: '10px', width: '100%' }}>
-            <thead>
-                <tr>
-                <th>Project Name</th>
-                <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {selectedStudent.assignmentProjects.map((project, index) => (
-                <tr key={index}>
-                    <td>{project.name}</td>
-                    <td>{project.status}</td>
-                </tr>
-                ))}
-            </tbody>
-            </table>
-        ) : (
-            <p>No assignment projects found.</p>
-        )}
-        </div>
-        </div>
+  return (
+    <div className="indiv-student">
+      <div className="user-profile">
+        <h2>User Profile</h2>
+      </div>
+      {selectedStudent ? (
+        <Fragment>
+          <div className='student-avator'>
+            {/* Your content for the student avatar */}
+          </div>
+          <div className="details-container">
+            <div className='details-column'>
+              <h3>{selectedStudent.name}</h3>
+              <div className="detail-container">
+                <p>Email:</p>
+                <p>{selectedStudent.email}</p>
+              </div>
+              <div className="detail-container">
+                <p>Course:</p>
+                <p>{selectedStudent.course}</p>
+              </div>
+              <div className="detail-container">
+                <p>No of Assignments:</p>
+                <p>{selectedStudent.numberOfAssignments}</p>
+              </div>
+              <div className="detail-container">
+                <p>Date of Enrollment:</p>
+                <p>{selectedStudent.dateOfEnrollment}</p>
+              </div>
+            </div>
+            <div className='details-column'>
+              <h3>Assignment Project Status</h3>
+              <div className="status-container">
+                {selectedStudent.assignmentProjects && selectedStudent.assignmentProjects.length > 0 ? (
+                  <div>
+                    {selectedStudent.assignmentProjects.map((project, index) => (
+                      <div key={index} className="detail-container">
+                        <p><strong>Project Name:</strong></p>
+                        <p>{project.name}</p>
+                        <p><strong>Status:</strong></p>
+                        <p>{project.status}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p>No assignment projects found.</p>
+                )}
+              </div>
+            </div>
+            <div className='details-column'>
+              <h3>Parent Details:</h3>
+              <div className="detail-container">
+                <p>{selectedStudent.parentDetails}</p>
+              </div>
+            </div>
+          </div>
         </Fragment>
-    ) : (
+      ) : (
         <p>Please select a student from the list.</p>
-    )}
+      )}
     </div>
-);
+  );
 };
 
 export default IndividualStudent;
