@@ -44,10 +44,12 @@ function StudentDash() {
         <div className='card-container'>
             {courses.slice(5, 8,).map((course) => (
               <div className='card'>
-                <Link to='/course/courseID'><div className='card-title'>
+                <Link to={`/courses/${course.id}`}>
+                  
+                <div className='card-title'>
                   <h2>{course.course_name}</h2>
-                </div></Link>
-
+                </div>
+                </Link>
               </div>
             ))}
           </div>

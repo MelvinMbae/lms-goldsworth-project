@@ -167,7 +167,7 @@ li, a{
     width: 150px;
     background: #FF9F37;
     border-radius: 50%;
-    bottom: 6px;
+    bottom: -10px;
     left: -60px;
   }
   .circle-2{

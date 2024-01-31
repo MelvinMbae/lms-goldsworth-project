@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-
+import './styles/Courses.css';
 
 function CoursePage({ coursesList }) {
     const { courseID } = useParams()
-    const course = coursesList.filter((course)=> course.id == parseInt(courseID))
+    const course = coursesList.filter((course)=> course.id == parseInt(courseID))[0]
     console.log(course[0])
     console.log(coursesList)
 
@@ -11,9 +11,10 @@ function CoursePage({ coursesList }) {
   return (
     <div className='courses'>
         <div className='course-container'>
-            <h1>{course.course_name}</h1>
+            <h1 className="course-page-header">{course.course_name}</h1>
             <div>
-                <p>{course.description}</p>
+                <p className="course-page-content">{course.description}</p>
+                
             </div>
         </div>
     </div>

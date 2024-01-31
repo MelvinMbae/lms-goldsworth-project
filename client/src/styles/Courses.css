@@ -53,3 +53,24 @@
   width: 100%;
   font-size: 18px;
 }
+.courses{
+  background: #e0e0df;
+  flex: 1;
+  border-radius: 30px 30px;
+  padding: 10px;
+  height: 100vh;
+}
+.course-page-header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  padding: 20px;
+}
+.course-page-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 18px;
+}
