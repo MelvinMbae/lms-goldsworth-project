@@ -1,8 +1,8 @@
-"""Created models
+"""Recreated models
 
-Revision ID: 970cb7f4332f
+Revision ID: d5fbe670d713
 Revises: 
-Create Date: 2024-01-30 09:50:26.297270
+Create Date: 2024-01-31 18:55:41.215857
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '970cb7f4332f'
+revision = 'd5fbe670d713'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('course_name', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
-    sa.Column('image_url', sa.NVARCHAR(), nullable=True),
+    sa.Column('image_url', sa.LargeBinary(), nullable=True),
     sa.Column('daysOfWeek', sa.String(), nullable=True),
     sa.Column('startRecur', sa.Date(), nullable=True),
     sa.Column('endRecur', sa.Date(), nullable=True),
@@ -39,7 +39,7 @@ def upgrade():
     sa.Column('lastname', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('_password', sa.String(), nullable=False),
-    sa.Column('image_url', sa.NVARCHAR(), nullable=True),
+    sa.Column('image_url', sa.LargeBinary(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -61,7 +61,7 @@ def upgrade():
     sa.Column('personal_email', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('_password', sa.String(), nullable=False),
-    sa.Column('image_url', sa.NVARCHAR(), nullable=True),
+    sa.Column('image_url', sa.LargeBinary(), nullable=True),
     sa.Column('expertise', sa.String(), nullable=True),
     sa.Column('department', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
@@ -85,7 +85,7 @@ def upgrade():
     sa.Column('personal_email', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('_password', sa.String(), nullable=False),
-    sa.Column('image_url', sa.NVARCHAR(), nullable=True),
+    sa.Column('image_url', sa.LargeBinary(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('parent_id', sa.Integer(), nullable=True),
@@ -100,6 +100,7 @@ def upgrade():
     sa.Column('assignment_name', sa.String(), nullable=False),
     sa.Column('topic', sa.String(), nullable=False),
     sa.Column('content', sa.String(), nullable=False),
+    sa.Column('assignment_file', sa.LargeBinary(), nullable=True),
     sa.Column('due_date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -113,6 +114,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('content_name', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
+    sa.Column('content_file', sa.LargeBinary(), nullable=True),
     sa.Column('content_type', sa.String(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -155,7 +157,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('topic', sa.String(), nullable=False),
     sa.Column('grade', sa.Integer(), nullable=False),
-    sa.Column('teacher_remarks', sa.String(), nullable=False),
+    sa.Column('teacher_remarks', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('course_id', sa.Integer(), nullable=True),

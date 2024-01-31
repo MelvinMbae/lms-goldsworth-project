@@ -2,8 +2,8 @@ from flask import request, make_response, session
 from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event
 from flask_restful import Resource
 from datetime import datetime
-from config import mash, db, api, app, admin
-from flask_admin.contrib.sqla import ModelView
+from config import mash, db, api, app
+# from flask_admin.contrib.sqla import ModelView
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 
 @app.errorhandler(NotFound)
@@ -168,6 +168,8 @@ class StudentSchema(mash.SQLAlchemySchema):
 
     class Meta:
         model = Student
+
+        # load_instance = True
     
     id = mash.auto_field()
     firstname = mash.auto_field()
@@ -191,7 +193,7 @@ student_schema = StudentSchema()
 students_schema = StudentSchema(many=True)
 
 
-class Students(Resource,ModelView):
+class Students(Resource):
     def get(self):
         students = Student.query.all()
 
@@ -200,19 +202,17 @@ class Students(Resource,ModelView):
         )
     
     def post(self):
-        student_data = request.get_json()
-        # student_file = request.files['image_url']
-        # student_file.save(student_file.filename)
-        # print(request.files['image_url'].filename)
+        student_image = request.files['image_url']
+        student_image.save(student_image.filename)
 
         new_student = Student(
-            firstname = student_data['firstname'],
-            lastname = student_data['lastname'],
-            image_url = student_data['image_url'],
-            personal_email = student_data['personal_email'],
-            password = student_data['password'],
-            email = student_data['email'],
-            parent_id = student_data['parent_id']
+            firstname = request.form.get('firstname'),
+            lastname = request.form.get('lastname'),
+            image_url = student_image.read(),
+            personal_email = request.form.get('personal_email'),
+            password = request.form.get('password'),
+            email = request.form.get('email'),
+            parent_id = request.form.get('parent_id')
         )
         db.session.add(new_student)
         db.session.commit()
@@ -254,7 +254,7 @@ class StudentbyId(Resource):
 
         return "Record successfully deleted" , 202
 
-admin.add_views(Students(Student, db.session))
+# admin.add_views(Students(Student, db.session))
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
 
@@ -285,7 +285,7 @@ class TeacherSchema(mash.SQLAlchemySchema):
 teacher_schema = TeacherSchema()
 teachers_schema = TeacherSchema(many=True)
 
-class Teachers(Resource,ModelView):
+class Teachers(Resource):
     
     column_searchable_list = ('firstname', 'lastname' ,'email')
     def get(self):
@@ -300,7 +300,7 @@ class Teachers(Resource,ModelView):
         new_teacher = Teacher(
             firstname = teacher_data['firstname'],
             lastname = teacher_data['lastname'],
-            image_url = teacher_data['image_url'],
+            # image_url = teacher_data['image_url'],
             personal_email = teacher_data['personal_email'],
             password = teacher_data['password'],
             email = teacher_data['email'],
@@ -348,7 +348,7 @@ class TeacherbyId(Resource):
         return "record successfully deleted" , 202
 
 api.add_resource(TeacherbyId, '/teachers/<int:id>')
-admin.add_views(Teachers(Teacher, db.session))
+# admin.add_views(Teachers(Teacher, db.session))
 api.add_resource(Teachers, '/teachers')
 
 class ParentSchema(mash.SQLAlchemySchema):
@@ -390,7 +390,7 @@ class Parents(Resource):
             lastname = parent_data['Lastname'],
             email = parent_data['Email'],
             password = parent_data['Password'],
-            image_url = parent_data['Image_url']
+            # image_url = parent_data['Image_url']
         )
         db.session.add(new_parent)
         db.session.commit()

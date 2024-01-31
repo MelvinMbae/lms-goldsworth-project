@@ -16,6 +16,7 @@ function StudentDash(){
                 <div className='top'>
                     <span className='data'><h2>Required Man-hours: </h2><h2>{"20"}</h2></span>
                     <span className='data'><h2><Link to={'/active-courses'}>Courses Enrolled: {user.courses.length}</Link></h2></span>
+                    <span className='title-child'><h2><Link to={`/enrollment`}>Student Form</Link></h2></span>
                 </div>
                 <div className='dash-message'>
                   <em><q>

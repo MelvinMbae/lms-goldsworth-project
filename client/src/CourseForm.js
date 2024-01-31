@@ -13,8 +13,10 @@ function handleChange(e) {
 const id = e.target.id;
 const value = e.target.value;
 
-setCourseData({ ...courseData, [id]: value })
+setCourseData({...courseData, [id]: value })
 }
+
+console.log(courseData)
 
 function handleSubmit(){
     fetch("/courses",{

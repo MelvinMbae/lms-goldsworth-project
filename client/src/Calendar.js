@@ -10,12 +10,17 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+import { useContext } from 'react';
+import { appContext } from './utils/appContext';
 
 function Calendar({ eventsList }) {
 
     const navigate = useNavigate();
-
-    const filteredEvents = eventsList.filter((event) => event.student_id === 2);
+    const { user , session} = useContext(appContext)
+    
+    const filteredEvents = session.user_type === "student" ? eventsList.filter((event) => event.student_id === user.id) : eventsList.filter((event) => event.teacher_id === user.id)
+    // const filteredEvents = ;
+    // console.log()
 
     const handleDateClick = () => {
         alert("Date Event clicked!")
