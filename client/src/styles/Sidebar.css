@@ -1,0 +1,29 @@
+.menu{
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    height: 94vh;
+    padding: 20px;
+    }
+    .menu-list{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    }
+    .item{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 10px;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    color: black;
+    }
+    .menu-list .item:hover{
+    background: #f98304;
+    color: black;
+    }

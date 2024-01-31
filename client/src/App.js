@@ -26,7 +26,6 @@ import StudentDash from './StudentDash';
 import TeacherHome from './TeacherHome';
 import AssignmentList from './AssignmentList'
 
-
 function App() {
   const [courses, setCourse] = useState([])
   const [user, setUser] = useState("")
@@ -130,6 +129,7 @@ function App() {
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
+
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>
                 <Route path='/dashboard' element={<SetPage />} />

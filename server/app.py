@@ -876,3 +876,19 @@ api.add_resource(Events, '/events')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+
+
+        #     student_data = request.get_json()
+        # # student_file = request.files['image_url']
+        # # student_file.save(student_file.filename)
+        # # print(request.files['image_url'].filename)
+
+        # new_student = Student(
+        #     firstname = student_data['firstname'],
+        #     lastname = student_data['lastname'],
+        #     image_url = student_data['image_url'],
+        #     personal_email = student_data['personal_email'],
+        #     password = student_data['password'],
+        #     email = student_data['email'],
+        #     parent_id = student_data['parent_id']
+        # )

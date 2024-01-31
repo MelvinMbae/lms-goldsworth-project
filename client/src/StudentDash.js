@@ -1,30 +1,82 @@
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext} from 'react';
 import { appContext } from './utils/appContext';
+import './StudentDash.css';
+import { Link } from "react-router-dom";
 
-function StudentDash(){
-
+function StudentDash() {
+  const [courses, setCourses] = useState([]);
+  const [teachers, setTeachers] = useState([]);
   const { user } = useContext(appContext)
 
 
-    return(
-            <div className='contents'>
-              <span className='title'>
-                <h1>Active Course</h1>
-              </span>
-                <span className='title-child'><h2><Link to={`/courses/${user.courses[0].id}`}>{user.courses[0].course_name}</Link></h2></span>
-                <div className='top'>
-                    <span className='data'><h2>Required Man-hours: </h2><h2>{"20"}</h2></span>
-                    <span className='data'><h2><Link to={'/active-courses'}>Courses Enrolled: {user.courses.length}</Link></h2></span>
-                    <span className='title-child'><h2><Link to={`/enrollment`}>Student Form</Link></h2></span>
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5555/courses');
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+    fetchCourses();
+  }, []); 
+
+  useEffect(() => {
+    const fetchTeachers = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5555/teachers');
+        const data = await response.json();
+        setTeachers(data);
+      } catch (error) {
+        console.error('Error fetching courses:', error);
+      }
+    };
+    fetchTeachers();
+  }, []);
+
+  return (
+    <div>
+      <div className='dashboard'>
+        <div className='dashboard-content'>
+          <h1 className='dash-header'>Welcome, {user.name}!</h1>
+          <h3>Courses enrolled:</h3>
+        <div className='card-container'>
+            {courses.slice(5, 8,).map((course) => (
+              <div className='card' key={course.id}>
+                <Link to={`/courses/${course.id}`}>
+                  
+                <div className='card-title'>
+                  <h2>{course.course_name}</h2>
                 </div>
-                <div className='dash-message'>
-                  <em><q>
-                  Any fool can write code that a computer can understand. Good programmers write code that humans can understand.
-                  </q></em>
-                  <p>~ Martin Fowler</p>
-                </div> 
-            </div> 
-    )
+                </Link>
+              </div>
+            ))}
+          </div>
+          
+          <div className='teacher-list'>
+            <div className='list-header'>
+              <h1 className='dash-header'>Teachers</h1>
+             
+            </div>
+            <div className='list-container'>
+              {teachers.slice(3, 8,).map((teacher)=>(
+                <div className='list' key={teacher.id}>
+                  <div className='teacher-details'>
+                  <img id='teacher-img'src='./images/user1.png' alt={teacher.firstname} />
+                  <h2>{`${teacher.firstname} ${teacher.lastname}`}</h2>
+                  </div>
+            <span >{teacher.expertise}</span>
+            <span>{teacher.department}</span>
+            <span className='teacher-todo'>:</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-export default StudentDash
+
+export default StudentDash;

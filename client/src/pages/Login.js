@@ -70,14 +70,14 @@ function Login({ session , setSession , setUser }) {
            <h1 id='login-header'>Start Your Journey!</h1>
            <div className='input'>
            <input className='input-text' name="email" type='text' value={loginData.email} placeholder='Email Address' onChange={handleChange} required /> 
-           <MdEmail id='icon-1'/> 
+           <MdEmail id='login-icon'/> 
            <input className='input-text' name="password" type='password' value={loginData.password} placeholder='Password' onChange={handleChange} required/>
-           <FaLock id='icon-2' />
+           <FaLock id='login-iconn' />
            </div>
-           <button className="btn" type="submit">
+           <button className="login-btn" type="submit">
            Log In
           </button>
-           <div style={{ position: 'absolute', bottom: '10px' }}>
+           <div className='centered-container'>
             <Link to="/">Back to home</Link>
           </div>
         </form>
