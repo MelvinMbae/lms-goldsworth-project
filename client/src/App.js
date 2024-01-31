@@ -1,38 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { appContext } from './utils/appContext';
-import Navbar from './Navbar';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import CoursesPage from './CoursesPage'
-import About from './pages/About';
-import Classes from './Classes';
-import Assignments from './Assignments';
-import ChatBox from './components/chatBox';
 import { Route, Routes } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
-import UserAuth from './pages/UserAuth';
-import TeacherDash from './TeacherDash';
-import ParentDash from './ParentDash'
 import ActiveCourse from './ActiveCourses';
-import StudentEnrollment from './components/StudentEnrollment';
-import AssignmentForm from './AssignmentCreation';
-import CourseForm from './CourseForm';
 import Assignment from './Assignment';
-import CoursePage from './CoursePage';
+import AssignmentForm from './AssignmentCreation';
+import AssignmentList from './AssignmentList';
+import Assignments from './Assignments';
 import Calendar from './Calendar';
+import Classes from './Classes';
+import CourseForm from './CourseForm';
+import CoursePage from './CoursePage';
+import CoursesPage from './CoursesPage';
 import CreateEvent from './CreateEvent';
+import Navbar from './Navbar';
+import ParentDash from './ParentDash';
 import ReportCard from './ReportCard';
 import StudentDash from './StudentDash';
+import TeacherDash from './TeacherDash';
 import TeacherHome from './TeacherHome';
-import AssignmentList from './AssignmentList'
+import StudentEnrollment from './components/StudentEnrollment';
+import ChatBox from './components/chatBox';
+import About from './pages/About';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import UserAuth from './pages/UserAuth';
+import { appContext } from './utils/appContext';
+import StudentList from './StudentList';
+import IndividualStudent from './IndividualStudent';
+
 
 function App() {
   const [courses, setCourse] = useState([])
   const [user, setUser] = useState("")
   const [session, setSession] = useState({"user_type":'', "user_details":''})
   const [coursesList, setCoursesList] = useState([]);
-  const [courseListDictionary, setCourseListDictionary] = useState({});  
+  const [courseListDictionary, setCourseListDictionary] = useState({});
   const [assignments, setAssignments] = useState([])
+  const [eventsList, setEventsList] = useState([])
+  const [eventsDictionary, setEventsDictionary] = useState({})
+  const [students, setStudents] = useState([]);
 
   useEffect(() => {
     fetch("/assignments").then((response) => {
@@ -45,8 +51,7 @@ function App() {
     })
   }, [])
 
-  const [eventsList, setEventsList] = useState([])
-  const [eventsDictionary, setEventsDictionary] = useState({})
+
 
   function fetchEventData() {
     fetch("/events")
@@ -116,11 +121,22 @@ function App() {
       return <ParentDash/> 
     }
   }
-  // console.log(assignments)
+  useEffect(() => {
+    const fetchStudents = async () => {
+    try {
+        const response = await fetch('http://127.0.0.1:5555/students');
+        const data = await response.json();
+        setStudents(data);
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+    }
+    };
+    fetchStudents();
+}, []);
 
   return (
 
-      <appContext.Provider value={{user , session , setSession , setUser , courses, coursesList }}>
+      <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList }}>
         <div className=''>
           <Navbar />
           <Routes>
@@ -129,7 +145,6 @@ function App() {
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/courses/:courseID' element={<CoursePage coursesList={coursesList} />} />
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
-
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>
                 <Route path='/dashboard' element={<SetPage />} />
@@ -147,6 +162,14 @@ function App() {
                 <Route path='/reportcard' element={<ReportCard />} />
               </Route>
             </Route>
+            <Route
+            path="/student-view"
+            element={<StudentList />}
+          />
+          <Route
+            path="/student-view/:studentID"
+            element={<IndividualStudent />}
+          />
           </Routes>
         </div>
       </appContext.Provider>
