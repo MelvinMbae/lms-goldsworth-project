@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
+
 function CoursesPage() {
   const [courseList, setCourseList] = useState([]);
  
@@ -31,7 +33,9 @@ function CoursesPage() {
             />
             <h3 id='course-header'>{course.course_name}</h3>
             <p>{course.description}</p>
-            <a href='/courses/course_id'><button className='courses-btn' >View Course</button></a>
+            <Link to='/course/courseID'>
+              <button className='courses-btn' >View Course</button>
+              </Link>
           </div>
         ))}
       </div>

@@ -11,7 +11,6 @@ import ChatBox from './components/chatBox';
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import UserAuth from './pages/UserAuth';
-import TeacherDash from './TeacherDash';
 import StudentDash from './StudentDash';
 import ActiveCourse from './ActiveCourses';
 import StudentEnrollment from './components/StudentEnrollment';
@@ -19,7 +18,6 @@ import AssignmentForm from './AssignmentCreation';
 import CourseForm from './CourseForm';
 import Assignment from './Assignment';
 import CoursePage from './CoursePage';
-import TheDash from './TheDash';
 
 
 function App() {
@@ -106,7 +104,6 @@ function App() {
             <Route path='/about' element={<About />} />
             <Route path='/courses' element={<CoursesPage coursesList={coursesList} />} />
             <Route path='/login' element={<Login setUser={setUser} setSession={setSession}/>} />
-            <Route path='/thedash' element={<TheDash />} />
 
             <Route  element={<UserAuth user={user} />}>
               <Route element={<Dashboard />}>

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { appContext } from './utils/appContext';
-import './TheDash.css';
-import SideBar from './components/SideBar';
-import { FaBook } from "react-icons/fa";
-import Profile from './pages/Profile';
+import './StudentDash.css';
+import { Link } from "react-router-dom";
 
 function StudentDash() {
   const [courses, setCourses] = useState([]);
@@ -41,17 +39,19 @@ function StudentDash() {
     <div>
       <div className='dashboard'>
         <div className='dashboard-content'>
-          <h1 className='dash-header'>Dashboard</h1>
-          <div className='card-container'>
+          <h1 className='dash-header'>Welcome, {user.name}!</h1>
+          <h3>Courses enrolled:</h3>
+        <div className='card-container'>
             {courses.slice(5, 8,).map((course) => (
               <div className='card'>
-                <div className='card-cover'><FaBook /></div>
-                <div className='card-title'>
+                <Link to='/course/courseID'><div className='card-title'>
                   <h2>{course.course_name}</h2>
-                </div>
+                </div></Link>
+
               </div>
             ))}
           </div>
+          
           <div className='teacher-list'>
             <div className='list-header'>
               <h1 className='dash-header'>Teachers</h1>

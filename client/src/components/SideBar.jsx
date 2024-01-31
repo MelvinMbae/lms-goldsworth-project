@@ -10,10 +10,10 @@ function SideBar() {
   return (
     <div className='menu'>
       <div className='menu-list'>
-        <a href="/thedash" className='item'><MdOutlineDashboard className='icon'/> Dashboard</a>
+        <a href="/dashboard" className='item'><MdOutlineDashboard className='icon'/> Dashboard</a>
         <a href="/courses" className='item'><PiBooks className='icon'/> Courses</a>
         <a href="/assignments" className='item'><MdOutlineLibraryBooks className='icon'/> Assignments</a>
-        <a href="" className='item'><TbReportAnalytics className='icon'/> Report Card</a>
+        <a href="/reportcard" className='item'><TbReportAnalytics className='icon'/> Report Card</a>
         <a href="/calendar" className='item'><FaRegCalendarAlt className='icon'/> Calendar</a>
         <a href="/forums" className='item'><GoCommentDiscussion className='icon'/> Discussion</a>
 </div>

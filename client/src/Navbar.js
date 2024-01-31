@@ -1,5 +1,5 @@
-import React, { Fragment, useContext } from 'react'
-import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import { appContext } from './utils/appContext';
 import { MdLogout } from 'react-icons/md';
 

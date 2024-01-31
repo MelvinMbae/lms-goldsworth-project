@@ -12,7 +12,7 @@ function Profile({ user }) {
                   <p className="info-title">Email Adress:</p>
                   <p>{user.email}</p>
               </div>
-              <div className='banner'>
+              <div className='profile-banner'>
                <p className='banner-text'>
                  <q>A programming language is for thinking about programs, not for expressing programs you’ve already thought of. 
                     It should be a pencil, not a pen
