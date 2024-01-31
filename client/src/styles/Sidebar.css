@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 35px;
     height: 94vh;
+    padding: 20px;
     }
     .menu-list{
     display: flex;
