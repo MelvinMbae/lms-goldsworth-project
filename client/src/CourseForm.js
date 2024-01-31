@@ -13,8 +13,10 @@ function handleChange(e) {
 const id = e.target.id;
 const value = e.target.value;
 
-setCourseData({ ...courseData, [id]: value })
+setCourseData({...courseData, [id]: value })
 }
+
+console.log(courseData)
 
 function handleSubmit(){
     fetch("/courses",{
@@ -31,7 +33,7 @@ function handleSubmit(){
             })
         }
         else{
-            throw new Error("error")
+            throw new Error('error')
         }
     })
     .catch((error)=>console.error(error))

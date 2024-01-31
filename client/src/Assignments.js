@@ -1,38 +1,39 @@
 import React from "react";
 import DownloadButton from "./components/DownloadComp";
 import { Link } from "react-router-dom";
+import { FaRegBookmark } from "react-icons/fa";
 
 function Assignments({ session , assignments }){
+    
 
     function UtilityMenu(){
         return (
             <div className="assignment-bar">
-                <div>
-                    <span>
-                        <button>Edit</button>
-                        <Link className="button" to={"/grading"}>Grade Assignment</Link>
-                        <Link className="button" to={"/new"}>Add Assignment</Link>
-                    </span>
-                    <button>Save</button>
-                </div>
+                <Link to={`/assignments`}>Edit Assignment</Link>
+                <Link to={"/grading"}>Grade Assignment</Link>
+                <Link to={"/new"}>Add Assignment</Link>
             </div>
         )
     }
 
     return(
           <div className="assignments">
-            {session.user_type === 'teacher' ? <UtilityMenu /> : null}
             <div>
-            <Link className="button" to={"/grading"}>Grade Assignment</Link>
-
             {assignments.map((assigno) => (
                 <div className="assignment-card" key={assigno.id}>
                     <Link to={`/assignments/${assigno.id}`}><h2>{assigno.assignment_name}</h2></Link>
                     <p>{assigno.content}</p>
-                    <div><span className="snippet">{assigno.due_date}</span>
-                    <span download><DownloadButton file={assigno.file}/></span></div>
+                    <div className="download-btns">
+                        <button className="save-btn">
+                            <FaRegBookmark style={{color:"004B5B",width:"30px", height:"25px", cursor:"pointer"}}/>
+                        </button>
+                        <DownloadButton file={assigno.file}/>
+                    </div>
                 </div>
-            ))}</div>                      
+                
+            ))} 
+            </div>      
+            {session.user_type === 'teacher' ? <UtilityMenu /> : null}
           </div>
     )
 }

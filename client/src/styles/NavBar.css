@@ -3,9 +3,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 30px;
-    height: 60px;
+    height: 45px;
     gap: 88px;
     align-self: stretch;
+    background-color: #fff;
+    margin-bottom: 40px;
+
 
     #header{
         margin: 0;
