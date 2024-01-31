@@ -6,7 +6,7 @@ function Profile({ user }) {
         <div className='profile-details'>
             <h2>Profile</h2>
             <div className="profile-info">
-                <img src={user.image_url} alt='user'/>
+                <img src="https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg" alt='user'/>
                 <p className="info-title">StudentID: </p>
                 <p>STU_{user.student_id}</p>
                 <p className="info-title">Email Adress:</p>

@@ -18,7 +18,9 @@ function Calendar({ eventsList }) {
     const navigate = useNavigate();
     const { user , session} = useContext(appContext)
     
-    const filteredEvents = session.user_type === "student" ? eventsList.filter((event) => event.student_id === user.id) : eventsList.filter((event) => event.teacher_id === user.id)
+    const filteredEvents = session.user_type === "student" ? eventsList.filter((event) => {return event.student_id === 2}) : eventsList.filter((event) => {return event.teacher_id === 2})
+    // const filteredEvents = eventsList.filter((event) => event.student_id === 2)
+
     // const filteredEvents = ;
     // console.log()
 

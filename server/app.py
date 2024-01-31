@@ -356,6 +356,8 @@ class ParentSchema(mash.SQLAlchemySchema):
     class Meta:
         model = Parent
     
+    load_instance = True
+    
     id = mash.auto_field()
     firstname = mash.auto_field()
     lastname = mash.auto_field()
