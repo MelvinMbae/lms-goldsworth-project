@@ -207,14 +207,14 @@ class Students(Resource):
     def post(self):
         student_image = request.files['image_url']
         student_img = secure_filename(student_image.filename)
-        student_image.save(os.path.join(app.config["IMAGE_UPLOADS"]),student_img)
+        student_image.save(os.path.join(app.config["UPLOAD_PATH"],student_img))
 
         # print(student_img)
     
         new_student = Student(
             firstname = request.form.get('firstname'),
             lastname = request.form.get('lastname'),
-            image_url = student_image.read(),
+            image_url = student_img,
             personal_email = request.form.get('personal_email'),
             password = request.form.get('password'),
             email = request.form.get('email'),
@@ -306,7 +306,7 @@ class Teachers(Resource):
         new_teacher = Teacher(
             firstname = teacher_data['firstname'],
             lastname = teacher_data['lastname'],
-            # image_url = teacher_data['image_url'],
+            image_url = teacher_data['image_url'],
             personal_email = teacher_data['personal_email'],
             password = teacher_data['password'],
             email = teacher_data['email'],
