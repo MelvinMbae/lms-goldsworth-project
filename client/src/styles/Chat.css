@@ -146,8 +146,8 @@
 }
 
 .sent-message {
-  background-color: #54dd90;
-  color: white;
+  background-color: #ecfdff;
+  color: rgb(75, 75, 75);
   border-radius: 12px;
   padding: 12px;
   margin-bottom: 12px;
@@ -158,7 +158,7 @@
 }
 
 .sent-message:hover {
-  background-color: #45a049;
+  background-color: #d8fefd;
 }
 
 .received-message {

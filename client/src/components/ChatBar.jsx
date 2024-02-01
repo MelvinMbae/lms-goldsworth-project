@@ -32,7 +32,7 @@ function ChatBar() {
     // Simulate receiving a new message
     // In a real application, you would update lastMessage when a new message is received
     setLastMessage("Hey, how are you?");
-  }, [isTyping]);
+  }, []);
 
   const fetchChatHistory = async (userName) => {
     // Simulate fetching data from an API or database
@@ -52,15 +52,27 @@ function ChatBar() {
     });
   };
 
-  const handleUserClick = async (userName) => {
+  const handleUserClick = async (userId) => {
+    const selectedUser = users.find(user => user.id === userId);
     try {
-      const userChatHistory = await fetchChatHistory(userName);
-      setSelectedUser(userName);
+      const userChatHistory = await fetchChatHistory(selectedUser.name);
+      setSelectedUser(selectedUser);
       setChatHistory(userChatHistory);
     } catch (error) {
       console.error('Error fetching chat history:', error.message);
     }
   };
+  
+
+  // const handleUserClick = async (userName) => {
+  //   try {
+  //     const userChatHistory = await fetchChatHistory(userName);
+  //     setSelectedUser(userName);
+  //     setChatHistory(userChatHistory);
+  //   } catch (error) {
+  //     console.error('Error fetching chat history:', error.message);
+  //   }
+  // };
 
   return (
     <section className="sidebar-section px-4 py-3">
