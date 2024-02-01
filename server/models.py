@@ -57,6 +57,8 @@ class Student(db.Model):
     report_card = db.relationship('Report_Card', backref='student', cascade="save-update , merge, delete, delete-orphan")
     courses = db.relationship('Course', secondary=course_student, back_populates='students', cascade="save-update , merge, delete")
     docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
+    saved_items = db.relationship('Saved_Content', cascade="save-update , merge, delete, delete-orphan")
+
 
     
     @hybrid_property
@@ -111,6 +113,8 @@ class Teacher(db.Model):
     docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
     user = db.relationship('User', backref='teacher', cascade="save-update , merge, delete, delete-orphan")
     courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers', cascade="save-update , merge, delete")
+    saved_items = db.relationship('Saved_Content', cascade="save-update , merge, delete, delete-orphan")
+
     
     @hybrid_property
     def password(self):
@@ -222,6 +226,19 @@ class Content(db.Model):
     content_name = db.Column(db.String, nullable = False)
     description = db.Column(db.String, nullable = False)
     content_file = db.Column(db.LargeBinary )
+    content_type = db.Column(db.String, nullable = False)
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+class Saved_Content(db.Model):
+    __tablename__ = 'saved-contents'
+
+    id = db.Column(db.Integer , primary_key = True)
+    content_name = db.Column(db.String, nullable = False)
     content_type = db.Column(db.String, nullable = False)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
