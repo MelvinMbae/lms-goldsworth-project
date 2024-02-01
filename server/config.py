@@ -6,11 +6,14 @@ from flask_cors import CORS
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
+import os
 # from flask_admin import Admin
 
 app = Flask(__name__)
 
 db = SQLAlchemy()
+
+app.config["IMAGE_UPLOADS"] = "image_uploads"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

@@ -1,10 +1,12 @@
-from flask import request, make_response, session
-from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event
+import os
+from flask import request, make_response, session, send_from_directory
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content
 from flask_restful import Resource
 from datetime import datetime
 from config import mash, db, api, app
 # from flask_admin.contrib.sqla import ModelView
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
+from werkzeug.utils import secure_filename
 
 @app.errorhandler(NotFound)
 def resource_missing(e):
@@ -68,6 +70,7 @@ def User_details(user):
             "parent_id": user.parent_id,
             "name" : f'{user.parent.firstname} {user.parent.lastname}',
             "email" : user.email,
+            "child": user.parent.child,
             "image_url": user.parent.image_url,
         }, 200
     )
@@ -203,8 +206,11 @@ class Students(Resource):
     
     def post(self):
         student_image = request.files['image_url']
-        student_image.save(student_image.filename)
+        student_img = secure_filename(student_image.filename)
+        student_image.save(os.path.join(app.config["IMAGE_UPLOADS"]),student_img)
 
+        # print(student_img)
+    
         new_student = Student(
             firstname = request.form.get('firstname'),
             lastname = request.form.get('lastname'),
@@ -531,15 +537,6 @@ class ContentSchema(mash.SQLAlchemySchema):
     content_type = mash.auto_field()
     description = mash.auto_field()
 
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "contentbyid",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("contents")
-
-        }
-    )
 
 content_schema = ContentSchema()
 contents_schema = ContentSchema(many=True)
@@ -555,9 +552,9 @@ class Contents(Resource):
     def post(self):
         content_data = request.get_json()
         new_content = Content(
-            doc_name = content_data['doc_name'],
+            content_name = content_data['content_name'],
             description = content_data['description'],
-            doc_type = content_data['doc_type'],
+            content_type = content_data['content_type'],
         )
         db.session.add(new_content)
         db.session.commit()
@@ -610,15 +607,6 @@ class ReportCardSchema(mash.SQLAlchemySchema):
     teacher_remarks = mash.auto_field()
     course_id = mash.auto_field()
 
-    url = mash.Hyperlinks(
-        {
-            "course_module":mash.URLFor(
-                "coursebyid",
-                values=dict(id="<course_id>")),
-            "collection":mash.URLFor("report_cards")
-
-        }
-    )
 
 report_card_schema = ReportCardSchema()
 report_cards_schema = ReportCardSchema(many=True)
@@ -764,6 +752,7 @@ class AssignmentbyId(Resource):
 
 api.add_resource(AssignmentbyId, '/assignments/<int:id>')
 api.add_resource(Assignments, '/assignments')
+
 class EventSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -783,15 +772,6 @@ class EventSchema(mash.SQLAlchemySchema):
     student_id = mash.auto_field()
     course_id = mash.auto_field()
     
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "events",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("events")
-
-        }
-    )
 
 event_schema = EventSchema()
 events_schema = EventSchema(many=True)
@@ -875,6 +855,54 @@ class EventbyId(Resource):
 
 api.add_resource(EventbyId, '/events/<int:id>')
 api.add_resource(Events, '/events')
+
+class SavedContentSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Saved_Content
+    
+    id = mash.auto_field()
+    content_name = mash.auto_field()
+    content_type = mash.auto_field()
+
+
+saved_content_schema = SavedContentSchema()
+saved_contents_schema = SavedContentSchema(many=True)
+
+class Saved_Contents(Resource):
+    def get(self):
+        saved_Contents = Saved_Content.query.all()
+
+        return make_response(
+            saved_contents_schema.dump(saved_Contents), 200
+        )
+    
+    def post(self):
+        saved_Content = request.get_json()
+        new_content = Saved_Content(
+            content_name = saved_Content['content_name'],
+            description = saved_Content['description'],
+            content_type = saved_Content['content_type'],
+        )
+        db.session.add(new_content)
+        db.session.commit()
+
+        return make_response(
+            saved_content_schema.dump(new_content), 201
+        )
+
+    
+class SavedContentById(Resource):
+    def delete(self,id):
+        saved_content = Saved_Content.query.filter_by(id=id).first()
+
+        db.session.delete(saved_content)
+        db.session.commit()
+
+        return "record successfully deleted" , 202
+
+api.add_resource(SavedContentById, '/saved_contents/<int:id>')
+api.add_resource(Saved_Contents, '/saved_contents')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

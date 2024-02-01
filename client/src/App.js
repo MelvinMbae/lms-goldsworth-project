@@ -27,6 +27,7 @@ import UserAuth from './pages/UserAuth';
 import { appContext } from './utils/appContext';
 import StudentList from './StudentList';
 import IndividualStudent from './IndividualStudent';
+import SavedDocs from './SavedDocs';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
   const [eventsList, setEventsList] = useState([])
   const [eventsDictionary, setEventsDictionary] = useState({})
   const [students, setStudents] = useState([]);
+  const [ savedDocs , setSaved ] = useState([])
 
   useEffect(() => {
     fetch("/assignments").then((response) => {
@@ -50,8 +52,6 @@ function App() {
       }
     })
   }, [])
-
-
 
   function fetchEventData() {
     fetch("/events")
@@ -67,7 +67,6 @@ function App() {
 
   }
   useEffect(() => fetchEventData(), []);
-  // console.log(eventsList)
 
   function fetchCoursesData() {
     fetch("/courses")
@@ -97,6 +96,7 @@ function App() {
     }
   }
 
+  
   useEffect(() => {
     fetch("/checksession").then((response) => {
       if (response.ok) {
@@ -121,6 +121,13 @@ function App() {
       return <ParentDash/> 
     }
   }
+
+  function handleSaved(id){
+    const saved = assignments.filter((assignment)=>assignment.id === parseInt(id))[0]
+    setSaved({...savedDocs, saved})
+    console.log(saved)
+  }
+
   useEffect(() => {
     const fetchStudents = async () => {
     try {
@@ -136,7 +143,7 @@ function App() {
 
   return (
 
-      <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList }}>
+      <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList , assignments }}>
         <div className=''>
           <Navbar />
           <Routes>
@@ -152,7 +159,7 @@ function App() {
                 <Route path="/create-event" element={<CreateEvent />} />
                 <Route path='/active-courses' element={<ActiveCourse />} />
                 <Route path='/classes' element={<Classes />} />
-                <Route path='/assignments' element={<Assignments session={session} assignments={assignments}/>}></Route>
+                <Route path='/assignments' element={<Assignments handleSaved={handleSaved} session={session} assignments={assignments}/>}></Route>
                 <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
                 <Route path='/forums' element={<ChatBox />} />
                 <Route path='/enrollment' element={<StudentEnrollment />} />
@@ -160,6 +167,7 @@ function App() {
                 <Route path='/new' element={<AssignmentForm/>} />
                 <Route path='/new-course' element={<CourseForm/>} />
                 <Route path='/reportcard' element={<ReportCard />} />
+                <Route path='/saved' element={<SavedDocs savedDocs={savedDocs}/>} />
               </Route>
             </Route>
             <Route

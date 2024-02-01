@@ -3,7 +3,7 @@ import DownloadButton from "./components/DownloadComp";
 import { Link } from "react-router-dom";
 import { FaRegBookmark } from "react-icons/fa";
 
-function Assignments({ session , assignments }){
+function Assignments({ session , assignments, handleSaved }){
     
 
     function UtilityMenu(){
@@ -24,7 +24,7 @@ function Assignments({ session , assignments }){
                     <Link to={`/assignments/${assigno.id}`}><h2>{assigno.assignment_name}</h2></Link>
                     <p>{assigno.content}</p>
                     <div className="download-btns">
-                        <button className="save-btn">
+                        <button className="save-btn" onClick={()=>handleSaved(assigno.id)}>
                             <FaRegBookmark style={{color:"004B5B",width:"30px", height:"25px", cursor:"pointer"}}/>
                         </button>
                         <DownloadButton file={assigno.file}/>
