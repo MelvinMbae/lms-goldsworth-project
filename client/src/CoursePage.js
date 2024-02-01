@@ -12,7 +12,6 @@ function CoursePage({ coursesList }) {
             <h1 className="course-page-header">{course.course_name}</h1>
             <div>
                 <p className="course-page-content">{course.description}</p>
-                
             </div>
         </div>
     </div>
