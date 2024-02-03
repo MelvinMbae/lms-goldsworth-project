@@ -1,8 +1,8 @@
 from flask import request, make_response, session
-from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event
-from flask_restful import Resource
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event,Message
+from flask_restful import Resource,reqparse
 from datetime import datetime
-from config import mash, db, api, app
+from config import mash, db, api, app,socketio,emit
 # from flask_admin.contrib.sqla import ModelView
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 
@@ -26,7 +26,16 @@ def service_error(e):
 def server_error(e):
     return "Sorry for the inconvenience, we are looking into the problem. Thankyou for your patience!"
 
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+    emit('server_message', {'message': 'Connected'})
 
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+    emit('server_message', {'message': 'Disconnected'})
+    
 class Index(Resource):
     def get(self):
         return make_response(
@@ -634,7 +643,7 @@ class Report_Cards(Resource):
     def post(self):
         reportcard_data = request.get_json()
         new_report = Report_Card(
-            topic = reportcard_data['topiic'],
+            topic = reportcard_data['topic'],
             grade = reportcard_data['grade'],
             teacher_remarks = reportcard_data['teacher_remarks'],
             student_id = reportcard_data['student_id'],
@@ -764,6 +773,7 @@ class AssignmentbyId(Resource):
 
 api.add_resource(AssignmentbyId, '/assignments/<int:id>')
 api.add_resource(Assignments, '/assignments')
+
 class EventSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -876,21 +886,82 @@ class EventbyId(Resource):
 api.add_resource(EventbyId, '/events/<int:id>')
 api.add_resource(Events, '/events')
 
+class MessageSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Message
+    
+    id = mash.auto_field()
+    content = mash.auto_field()
+    timestamp = mash.auto_field()
+    sender_id = mash.auto_field()
+    receiver_id = mash.auto_field()
+    
+    url = mash.Hyperlinks(
+        {
+            "self":mash.URLFor(
+                "messages",
+                values=dict(id="<id>")),
+            "collection":mash.URLFor("events")
+        }
+    )
+
+message_schema = MessageSchema()
+messages_schema = MessageSchema(many=True)
+
+class Messages(Resource):
+    def get(self):
+        messages = Message.query.all()
+        return make_response(messages_schema.dump(messages), 200)
+    
+    def post(self):
+        message_data = request.get_json()
+        new_message = Content(
+            content = message_data['content'],
+            timestamp = message_data['timestamp'],
+            sender_id = message_data['sender_id'],
+            receiver_id = message_data['receiver_id'],
+        )
+        db.session.add(new_message)
+        db.session.commit()
+
+        return make_response(
+            message_schema.dump(new_message), 201
+        )
+        
+class MessagebyId(Resource):
+    def get(self, id):
+        message = Message.query.filter_by(id=id).first()
+        return make_response(message_schema.dump(message), 200)
+
+    def patch(self, id):
+        data = request.get_json()
+        message = Message.query.filter_by(id=id).first()
+
+        if not message:
+            return make_response({"message": "Message not found"}, 404)
+
+        for attr in data:
+            if attr in ['timestamp']:
+                setattr(message, attr, datetime.strptime(data[attr], "%H:%M").time())
+            else:
+                setattr(message, attr, data[attr])
+
+        db.session.add(message)
+        db.session.commit()
+
+        return make_response(message_schema.dump(message), 200)
+
+    def delete(self, id):
+        message = Message.query.filter_by(id=id).first()
+
+        db.session.delete(message)
+        db.session.commit()
+
+        return make_response({"message": "Record successfully deleted"}, 200)
+
+api.add_resource(MessagebyId, '/messages/<int:id>')
+api.add_resource(Messages, '/messages')
+    
 if __name__ == '__main__':
-    app.run(port=5555, debug=True)
-
-
-        #     student_data = request.get_json()
-        # # student_file = request.files['image_url']
-        # # student_file.save(student_file.filename)
-        # # print(request.files['image_url'].filename)
-
-        # new_student = Student(
-        #     firstname = student_data['firstname'],
-        #     lastname = student_data['lastname'],
-        #     image_url = student_data['image_url'],
-        #     personal_email = student_data['personal_email'],
-        #     password = student_data['password'],
-        #     email = student_data['email'],
-        #     parent_id = student_data['parent_id']
-        # )
+    socketio.run(app, port=5555, debug=True)

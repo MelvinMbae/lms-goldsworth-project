@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import io from "socket.io-client";
 import user1 from "../assets/images/img1.jpg";
 import user2 from "../assets/images/img2.jpg";
 import user3 from "../assets/images/img3.jpg";
@@ -17,6 +18,27 @@ const users = [
 ];
 
 const ChatBox = () => {
+	useEffect(() => {
+		const socket = io("http://localhost:5555"); // Change the URL to match your Flask server
+
+		socket.on("connect", () => {
+			console.log("Connected to server");
+		});
+
+		socket.on("server_message", (data) => {
+			console.log("Message from server:", data.message);
+		});
+
+		socket.on("disconnect", () => {
+			console.log("Disconnected from server");
+		});
+
+		// Clean up the socket connection when the component is unmounted
+		return () => {
+			socket.disconnect();
+		};
+	}, []);
+
 	const [message, setMessage] = useState("");
 	const [allMessages, setAllMessages] = useState([]);
 	const [selectedUser, setSelectedUser] = useState(users[0]); // Default user
@@ -185,8 +207,12 @@ const ChatBox = () => {
 									<img
 										src={msg.image}
 										alt="captured"
-										style={{ maxWidth: "200px", maxHeight: "200px",objectFit: "cover" }} // Adjust these values as needed
-										/>
+										style={{
+											maxWidth: "200px",
+											maxHeight: "200px",
+											objectFit: "cover",
+										}} // Adjust these values as needed
+									/>
 								) : (
 									<p className="p-0 m-0">{msg.message}</p>
 								)}
@@ -210,6 +236,7 @@ const ChatBox = () => {
 									id="fileInput"
 									style={{ display: "none" }}
 									onChange={(e) => handleFileUpload(e.target.files)}
+									EncType=""
 								/>
 								📎
 							</label>

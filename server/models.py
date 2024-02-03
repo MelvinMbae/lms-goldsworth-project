@@ -2,6 +2,7 @@ from config import db, bcrypt
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 import re
+from datetime import datetime
 
 course_teacher = db.Table(
     'course_teacher',
@@ -21,8 +22,9 @@ course_student = db.Table(
 
 class User(db.Model):
     __tablename__ = 'users'
-
-    email = db.Column(db.String, nullable = False , unique = True, primary_key = True)
+    
+    id = db.Column(db.Integer , primary_key = True)
+    email = db.Column(db.String, nullable = False , unique = True)
     _password = db.Column(db.String, nullable = False , unique = True)
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
@@ -286,3 +288,16 @@ class Event(db.Model):
     course = db.relationship('Course')
     teacher = db.relationship('Teacher')
     
+    
+class Message(db.Model):
+    __tablename__='messages'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String(255), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    
+    # Relationships for sender and receiver
+    sender = db.relationship('User', foreign_keys=[sender_id], backref='sent_messages')
+    receiver = db.relationship('User', foreign_keys=[receiver_id], backref='received_messages')

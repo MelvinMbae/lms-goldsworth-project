@@ -6,6 +6,8 @@ from flask_cors import CORS
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_session import Session
+from flask_socketio import SocketIO, emit
+
 # from flask_admin import Admin
 
 app = Flask(__name__)
@@ -25,5 +27,6 @@ Session(app)
 bcrypt = Bcrypt(app)
 mash = Marshmallow(app)
 api = Api(app)
+socketio = SocketIO(app)
 db.init_app(app)
 # admin = Admin(app, name="GoldWorth")

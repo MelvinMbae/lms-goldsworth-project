@@ -1,4 +1,4 @@
-from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event
+from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event,Message
 import json
 import pytz
 import requests
@@ -17,7 +17,7 @@ image= requests.get(url).content
 #     print(image_data)
 # image = image_data.read()
 
-with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
+with open("C:/Users/Melvin Mbae/Development/Code/phase-5/phase5-project/goldworth-lms/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
 courses = data['courses']
@@ -34,7 +34,8 @@ with app.app_context():
     Assignment.query.delete()
     Report_Card.query.delete()
     Event.query.delete()
-
+    Message.query.delete()
+    
     departments = ['Networking','IT','CyberSecurity','Help Desk','Admin']
     expertise = ['engineering', 'software', 'networking', 'mobile-dev', 'web-dev']
     assignment_heads = ['web-Dev','Python','Data_Structures','Front-End','Back-End','Mobile-Dev','Machine_Learning','Cyber_Security','Data_Science']
@@ -47,6 +48,7 @@ with app.app_context():
     assignments = []
     report_cards = []
     events = []
+    users=[]
 
     for i in range(20):
         teacher = Teacher(
@@ -72,6 +74,7 @@ with app.app_context():
         db.session.commit()
 
         teachers.append(teacher)
+        users.append(user)
 
     for c in courses:
         start_time = fake.time_object()
@@ -114,6 +117,7 @@ with app.app_context():
         db.session.commit()
 
         content_list.append(content)
+        
 
 
     for i in range(10):
@@ -137,6 +141,7 @@ with app.app_context():
         db.session.commit()
 
         parents.append(parent)
+        users.append(user)        
     
     for i in range(10):
         student = Student(
@@ -161,6 +166,8 @@ with app.app_context():
         db.session.commit()
 
         students.append(student)
+        users.append(user)
+        
     
     for i in range(10):
         assignment = Assignment(
@@ -176,20 +183,23 @@ with app.app_context():
 
         assignments.append(assignment)
 
-    # for stude in students:
-    #     assigno = choice(assignments)
-    #     # print(assigno.assignment_name)
-    #     report_card = Report_Card(
-    #         topic = assigno.assignment_name,
-    #         grade = fake.random_int(0,100),
-    #         teacher_remarks = fake.sentence(),
-    #         student_id = choice(students).id,
-    #         course_id = assigno.course_id
-    #     )
-    #     db.session.add(report_card)
-    #     db.session.commit()
+    for _ in range(50):
+        assigno = choice(assignments)
+        # print(assigno.assignment_name)
 
-    #     assignments.append(report_card)
+        report_card = Report_Card(
+            topic=assigno.assignment_name,
+            grade=fake.random_int(0, 100),
+            teacher_remarks=fake.sentence(),
+            student_id=choice(students).id,
+            teacher_id=choice(teachers).id,
+            course_id=assigno.course_id
+        )
+        db.session.add(report_card)
+
+        report_cards.append(report_card)
+    db.session.commit()
+        
     courses=Course.query.all()
     student=Student.query.all()
     teacher=Teacher.query.all()
@@ -200,7 +210,7 @@ with app.app_context():
         student = choice(students)
         teacher = choice(teachers)
         
-        event=Event(
+        new_event=Event(
             groupId= fake.random_int(min=1, max=100),
             allDay= False,
             start= datetime.now(),
@@ -216,7 +226,25 @@ with app.app_context():
             teacher_id=teacher.id
                  
         )
-        db.session.add(event)
+        db.session.add(new_event)
         db.session.commit()
 
-        events.append(event)
+        events.append(new_event)
+        
+    for user in users:
+        for i in range(2):
+            content = fake.text()
+            timestamp = datetime.now() - timedelta(days=i)
+            sender_id = choice(users).id
+            receiver_id = choice(users).id
+
+            message = Message(content=content, timestamp=timestamp, sender_id=sender_id, receiver_id=receiver_id)
+            db.session.add(message)
+
+        db.session.commit()
+        
+
+            
+            
+            
+            
