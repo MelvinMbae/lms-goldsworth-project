@@ -171,8 +171,19 @@ class Users(Resource):
             users_schema.dump(users), 200
         )
 
-api.add_resource(Users, '/users')
 
+class UserById(Resource):
+    def get(self,id):
+        user = User.query.filter_by(id=id).first()
+            
+        return make_response(
+                user_schema.dump(user), 200
+            )
+        
+api.add_resource(Users, '/users')
+api.add_resource(UserById, '/users/<int:id>')
+
+# students api
 class StudentSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -267,6 +278,8 @@ class StudentbyId(Resource):
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
 
+
+# teachers api
 class TeacherSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -360,6 +373,7 @@ api.add_resource(TeacherbyId, '/teachers/<int:id>')
 # admin.add_views(Teachers(Teacher, db.session))
 api.add_resource(Teachers, '/teachers')
 
+# parents api
 class ParentSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -446,6 +460,7 @@ class ParentbyId(Resource):
 api.add_resource(ParentbyId, '/parents/<int:id>')
 api.add_resource(Parents, '/parents')
 
+# courses api
 class CourseSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -530,6 +545,7 @@ class CoursebyId(Resource):
 api.add_resource(CoursebyId, '/courses/<int:id>')
 api.add_resource(Courses, '/courses')
 
+# contents api
 class ContentSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -609,6 +625,7 @@ class ContentbyId(Resource):
 api.add_resource(ContentbyId, '/contents/<int:id>')
 api.add_resource(Contents, '/contents')
 
+# reportcards api
 class ReportCardSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -690,6 +707,7 @@ class Report_CardbyId(Resource):
 api.add_resource(Report_CardbyId, '/report_cards/<int:id>')
 api.add_resource(Report_Cards, '/report_cards')
 
+# assignments api
 class AssignmentSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -774,6 +792,7 @@ class AssignmentbyId(Resource):
 api.add_resource(AssignmentbyId, '/assignments/<int:id>')
 api.add_resource(Assignments, '/assignments')
 
+# events api
 class EventSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -886,6 +905,7 @@ class EventbyId(Resource):
 api.add_resource(EventbyId, '/events/<int:id>')
 api.add_resource(Events, '/events')
 
+# messages api
 class MessageSchema(mash.SQLAlchemySchema):
 
     class Meta:
