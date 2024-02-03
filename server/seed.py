@@ -17,6 +17,7 @@ image= requests.get(url).content
 #     print(image_data)
 # image = image_data.read()
 
+# get data for the courses from db.json
 with open("C:/Users/Melvin Mbae/Development/Code/phase-5/phase5-project/goldworth-lms/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
@@ -49,7 +50,8 @@ with app.app_context():
     report_cards = []
     events = []
     users=[]
-
+    
+    # seed data for teachers
     for i in range(20):
         teacher = Teacher(
             firstname = fake.first_name(),
@@ -75,7 +77,8 @@ with app.app_context():
 
         teachers.append(teacher)
         users.append(user)
-
+        
+    # seed data for courses
     for c in courses:
         start_time = fake.time_object()
         duration_hours = fake.random_int(min=1, max=5)
@@ -104,7 +107,8 @@ with app.app_context():
         db.session.commit()
 
         course_list.append(course)
-    
+        
+    # seed data for contents    
     for doc in course_content:
         content = Content(
             content_name = doc['content_name'],
@@ -119,7 +123,7 @@ with app.app_context():
         content_list.append(content)
         
 
-
+    # seed data for parents
     for i in range(10):
         parent = Parent(
             firstname = fake.first_name(),
@@ -141,8 +145,9 @@ with app.app_context():
         db.session.commit()
 
         parents.append(parent)
-        users.append(user)        
-    
+        users.append(user)
+        
+    # seed data for students    
     for i in range(10):
         student = Student(
             firstname = fake.first_name(),
@@ -168,7 +173,7 @@ with app.app_context():
         students.append(student)
         users.append(user)
         
-    
+    # seed data for assignments    
     for i in range(10):
         assignment = Assignment(
             assignment_name = f'{assignment_heads[choice(range(9))]} {fake.text(max_nb_chars=20)}',
@@ -183,6 +188,7 @@ with app.app_context():
 
         assignments.append(assignment)
 
+    # seed data for report card data
     for _ in range(50):
         assigno = choice(assignments)
         # print(assigno.assignment_name)
@@ -204,7 +210,7 @@ with app.app_context():
     student=Student.query.all()
     teacher=Teacher.query.all()
     
-            
+    # seed data for events            
     for event in range(50):
         course = choice(courses)
         student = choice(students)
@@ -230,7 +236,8 @@ with app.app_context():
         db.session.commit()
 
         events.append(new_event)
-        
+
+    # seed data for messages        
     for user in users:
         for i in range(2):
             content = fake.text()
@@ -242,9 +249,3 @@ with app.app_context():
             db.session.add(message)
 
         db.session.commit()
-        
-
-            
-            
-            
-            
