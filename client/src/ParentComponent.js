@@ -22,7 +22,7 @@ const ParentComponent = () => {
 
   return (
     <div>
-      <h1>Parent Component</h1>
+      <h1>Leave Comment:</h1>
       <CommentForm parentID={currentParentID} onCommentSubmit={handleCommentSubmit} />
       <div>
         <h2>Comments:</h2>
