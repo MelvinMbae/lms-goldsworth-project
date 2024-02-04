@@ -134,6 +134,7 @@ function App() {
         r.json()
         .then((data)=>{
           setStudents(data)
+          console.log(data)
         })
       }
       else{
