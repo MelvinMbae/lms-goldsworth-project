@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 const About = () => {
 const [data, setData] = useState({username:"", email:"", message:""})
@@ -66,7 +66,7 @@ Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricie
 <div className="team-member">
 <div className="team-images">
 <img src='./images/user1.png' alt="Isaac Kivuva" /></div>
-<h4>Michael Njogu</h4>
+<h4>Martin Wambugu</h4>
 <p className='role'>UI Developer</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
 Vivamus lacinia elit vel nisi mollis sagittis. 
@@ -75,7 +75,7 @@ Nulla eu tincidunt tortor. Morbi eu nulla malesuada, iaculis arcu quis, ultricie
 <div className="team-member">
 <div className="team-images">
 <img src='./images/user1.png' alt="Isaac Kivuva" /></div>
-<h4>Melvin Mbae</h4>
+<h4>Wilson Wanjiru</h4>
 <p className='role'>Marketing</p>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec ex enim. Suspendisse potenti. 
 Vivamus lacinia elit vel nisi mollis sagittis. 

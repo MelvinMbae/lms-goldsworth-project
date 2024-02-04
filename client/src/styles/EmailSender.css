@@ -1,0 +1,64 @@
+/* Add this CSS to your styles file or in a style tag in your component */
+.container {
+  width: 60%; /* Adjust the width as needed */
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  display: block;
+}
+
+textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.Container2{
+  width: 100%;
+  height: 300px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding-block:  10px;
+}
+.sub-cont{
+  width: auto; /* Adjust the width as needed */
+  height: 500px;
+  
+  margin: auto;
+  border: 1px;
+
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items:  center;
+}
+
+button:hover {
+  background-color: white
+}
+body{
+  background-color: whitesmoke
+}
+.btn{
+  display: inline-block;
+  align-items: flex-end;
+}

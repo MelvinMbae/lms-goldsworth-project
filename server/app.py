@@ -84,7 +84,7 @@ class Login(Resource):
                 return User_details(user)
 
             return "Invalid email or password" , 400
-        return "User does not exist" , 404       
+        return "User does not exist" , 404
 
 api.add_resource(Login, '/login')
 
