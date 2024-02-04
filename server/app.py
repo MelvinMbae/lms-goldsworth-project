@@ -115,6 +115,21 @@ class Logout(Resource):
 
 api.add_resource(Logout, '/logout')
 
+class FetchImage(Resource):
+    def get(self):
+        session_details = session.get('user')
+
+        user = User.query.filter_by(email=session_details).first()
+
+        if 'lecturer' in user.email:
+            photo = send_from_directory(app.config['UPLOAD_PATH'] , user.teacher.image_url)
+            return photo
+        elif 'student' in user.email:
+            photo = send_from_directory(app.config['UPLOAD_PATH'] , user.student.image_url)
+            return photo
+        return send_from_directory(app.config['UPLOAD_PATH'] , user.parent.image_url)
+
+api.add_resource(FetchImage, '/profile_image')
 
 class UserSchema(mash.SQLAlchemySchema):
 
@@ -208,8 +223,6 @@ class Students(Resource):
         student_image = request.files['image_url']
         student_img = secure_filename(student_image.filename)
         student_image.save(os.path.join(app.config["UPLOAD_PATH"],student_img))
-
-        # print(student_img)
     
         new_student = Student(
             firstname = request.form.get('firstname'),
@@ -771,6 +784,7 @@ class EventSchema(mash.SQLAlchemySchema):
     title = mash.auto_field()
     student_id = mash.auto_field()
     course_id = mash.auto_field()
+    teacher_id = mash.auto_field()
     
 
 event_schema = EventSchema()
@@ -785,6 +799,7 @@ class Events(Resource):
         data = request.get_json()
         
         course = Course.query.get(data['course_id'])
+        title = ''
         
         if course:
             title = f"{course.course_name} "
@@ -881,8 +896,10 @@ class Saved_Contents(Resource):
         saved_Content = request.get_json()
         new_content = Saved_Content(
             content_name = saved_Content['content_name'],
-            description = saved_Content['description'],
             content_type = saved_Content['content_type'],
+            course_id = saved_Content['course_id'],
+            student_id = saved_Content['student_id'],
+            teacher_id = saved_Content['teacher_id'],
         )
         db.session.add(new_content)
         db.session.commit()

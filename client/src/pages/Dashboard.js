@@ -23,7 +23,7 @@ function Dashboard() {
             <div className='dashboard'>  
                 {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
                                                                                             <Outlet />  
-                                                                                            <Profile user={user}/>
+                                                                                            <Profile user={user} session={session}/>
                                                                                         </DashPage>}
             </div>
         )

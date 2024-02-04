@@ -1,3 +1,4 @@
+import DownloadPDF from "./components/DownloadPDF";
 
 const ReportCard = () => {
   let studentReport = {
@@ -42,13 +43,15 @@ const ReportCard = () => {
       )
 
     })
+    const reportForm = document.getElementById('report-card')
 
   return (
     <div className='report-card'>
       <div className="header">
         <h1>Report Card</h1>
       </div>
-      <div className="student-info">
+      <div className="student-info" id="report-card">
+        <div>
         <p>Attendance: {studentReport.attendance}</p>
         <table className="report-card-table">
           <thead>
@@ -63,7 +66,9 @@ const ReportCard = () => {
             {coursework_report}
           </tbody>
         </table>
+        </div>
       </div>
+      <DownloadPDF downloadElement={reportForm}/>
     </div>
   );
 };

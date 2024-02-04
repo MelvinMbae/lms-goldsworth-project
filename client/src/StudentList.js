@@ -8,6 +8,7 @@ const StudentList = () => {
 const [searchTerm, setSearchTerm] = useState('');
 
 const { students } = useContext(appContext)
+console.log(students)
 
 const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);

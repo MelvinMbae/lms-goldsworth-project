@@ -24,6 +24,7 @@ function TeacherDash(){
                     </div>
                     <button className='button'><Link to={'/enrollment'}>Enroll Student</Link></button>
                     <button className='button'><Link to={'/new-course'}>Add Course</Link></button>
+                    <button className='button'><Link to={'/student-view'}>View Students</Link></button>
                 </div>
             </div>
     )

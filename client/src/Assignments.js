@@ -1,10 +1,8 @@
-import React from "react";
 import DownloadButton from "./components/DownloadComp";
 import { Link } from "react-router-dom";
-import { FaRegBookmark } from "react-icons/fa";
+import ContentManagement from "./components/ContentManagement";
 
-function Assignments({ session , assignments, handleSaved }){
-    
+function Assignments({ session , assignments }){
 
     function UtilityMenu(){
         return (
@@ -15,18 +13,21 @@ function Assignments({ session , assignments, handleSaved }){
             </div>
         )
     }
+    // console.log(session)
+
+    let student_id = session.user_type === 'student' ? session.user_details.student_id : null
+    let teacher_id = session.user_type === 'teacher' ? session.user_details.teacher_id : null
+
 
     return(
           <div className="assignments">
             <div>
             {assignments.map((assigno) => (
-                <div className="assignment-card" key={assigno.id}>
+                <div className="assignment-card" key={assigno.id} id={assigno.id}>
                     <Link to={`/assignments/${assigno.id}`}><h2>{assigno.assignment_name}</h2></Link>
                     <p>{assigno.content}</p>
                     <div className="download-btns">
-                        <button className="save-btn" onClick={()=>handleSaved(assigno.id)}>
-                            <FaRegBookmark style={{color:"004B5B",width:"30px", height:"25px", cursor:"pointer"}}/>
-                        </button>
+                        <ContentManagement content_name={assigno.assignment_name} content_type={'DOC'} course_id={assigno.course_id} student_id = {student_id} teacher_id = {teacher_id}/>
                         <DownloadButton file={assigno.file}/>
                     </div>
                 </div>

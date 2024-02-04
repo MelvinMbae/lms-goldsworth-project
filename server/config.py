@@ -13,13 +13,13 @@ app = Flask(__name__)
 
 db = SQLAlchemy()
 
-app.config["UPLOAD_PATH"] = "image_uploads"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE']='sqlalchemy'
 app.config['SESSION_SQLALCHEMY']=db
 app.config['SECRET_KEY'] = 'no_key'
+app.config["UPLOAD_PATH"] = "image_uploads"
 
 migrate = Migrate(app, db)
 CORS(app)

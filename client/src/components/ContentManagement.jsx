@@ -1,103 +1,47 @@
 import { useState } from "react";
-import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
-import StudentForm from "./StudentForm";
-import ParentForm from "./ParentForm";
+import { FaRegBookmark } from "react-icons/fa";
 
-function ContentManagement() {
-  const [student, setStudent] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    personal_email: "",
-    image_url: "",
-    password: "",
-    parent_id:"",
-  });
-  const [parent, setParent] = useState({
-    Firstname: "",
-    Lastname: "",
-    Email: "",
-    Image_url: "",
-    Password: "",
+
+function ContentManagement({ content_name, content_type, course_id, teacher_id, student_id }) {
+  const [content, setSavedContent] = useState({
+    "content_name":content_name,
+    "content_type":content_type,
+    "course_id":course_id,
+    "student_id":student_id,
+    "teacher_id":teacher_id,
   });
   
-  const [ tab, setTab ] = useState(1)
-
-  function onNext(){
-    setTab(2)
-  }
-  function onBack(){
-    setTab(1)
-  }
-
-  function handleParentChange(e) {
-   
-    const id = e.target.id;
-    const value = e.target.value;
-
-    setParent({ ...parent, [id]: value })
-  }
-  function handleStudentChange(e) {
-   
-    const id = e.target.id;
-    const value = e.target.value;
-
-    setStudent({ ...student, [id]: value }) 
-  }
-
+  
   function handleSubmit(e) {
     e.preventDefault();
+    
+    console.log(e)
 
-    fetch("/parents", {
+
+    fetch("/save_contents", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(parent),
+      body: JSON.stringify(content),
     })
       .then((r) => { 
         if(r.ok){
-          r.json().then((r) => {
-            
-            setStudent({...student , parent_id : r.id})
-            
-            return     fetch("/students", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(student),
-            })
-          })
-          .then((r) => { 
-
-            if(r.ok){
-              r.json().then((r) => {
-                console.log(r)
-              })
-            }
-            else {
-              throw new Error(`HTTP error ${r.status}`)
-            }
-          })
-          .catch((error) => {
-            console.error(error)
-          })
-        }
+          r.json().then((r) => console.log(r))
+        }        
         else {
           throw new Error(`HTTP error ${r.status}`)
-        }
-          })
+          }
+        })
       .catch((error) => {
         console.error(error)
       })
   }
-  console.log(student)
 
   return (
-    <div className="register" >
-
-    </div>
+    <button className="save-btn" onClick={handleSubmit}>
+      <FaRegBookmark style={{color:"004B5B",width:"30px", height:"25px", cursor:"pointer"}}/>
+    </button>
   );
 }
 
