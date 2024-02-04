@@ -12,9 +12,17 @@ const ParentComponent = () => {
     setCurrentParentID((prevID) => prevID + 1);
   };
 
+  const handleDeleteComment = (index) => {
+    setComments((prevComments) => {
+      const updatedComments = [...prevComments];
+      updatedComments.splice(index, 1);
+      return updatedComments;
+    });
+  };
+
   return (
     <div>
-      <h1>Leave Comment:</h1>
+      <h1>Parent Component</h1>
       <CommentForm parentID={currentParentID} onCommentSubmit={handleCommentSubmit} />
       <div>
         <h2>Comments:</h2>
@@ -23,6 +31,7 @@ const ParentComponent = () => {
             <li key={index}>
               <strong>Parent ID: {comment.parentID}</strong>
               <p>{comment.commentText}</p>
+              <button onClick={() => handleDeleteComment(index)}>Delete Comment</button>
             </li>
           ))}
         </ul>
@@ -32,3 +41,4 @@ const ParentComponent = () => {
 };
 
 export default ParentComponent;
+
