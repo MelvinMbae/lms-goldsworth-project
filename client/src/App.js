@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import ActiveCourse from './ActiveCourses';
 import Assignment from './Assignment';
 import AssignmentForm from './AssignmentCreation';
-import AssignmentList from './AssignmentList';
 import Assignments from './Assignments';
 import Calendar from './Calendar';
 import Classes from './Classes';
@@ -28,6 +27,7 @@ import { appContext } from './utils/appContext';
 import StudentList from './StudentList';
 import IndividualStudent from './IndividualStudent';
 import SavedDocs from './SavedDocs';
+import SubmittedAssignments from './SubmittedAssignments';
 
 
 function App() {
@@ -170,11 +170,11 @@ function App() {
                 <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
                 <Route path='/forums' element={<ChatBox />} />
                 <Route path='/enrollment' element={<StudentEnrollment />} />
-                <Route path='/grading' element={<AssignmentList />} />
+                <Route path='/grading' element={<SubmittedAssignments />} />
                 <Route path='/new' element={<AssignmentForm/>} />
                 <Route path='/new-course' element={<CourseForm/>} />
                 <Route path='/reportcard' element={<ReportCard />} />
-                <Route path='/saved' element={<SavedDocs savedDocs={savedDocs}/>} />
+                <Route path='/saved' element={<SavedDocs savedDocs={savedDocs} setDocs={setSaved}/>} />
               </Route>
             </Route>
             <Route

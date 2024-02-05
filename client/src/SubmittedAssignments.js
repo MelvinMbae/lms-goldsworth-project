@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 // import './App.css';
 
-const AssignmentList = () => {
+const SubmittedAssignments = () => {
   const [assignments, setAssignments] = useState([
     { id: 1, student: 'Michael Njogu', grade: '', comments: '' },
     { id: 2, student: 'Wilson Wanjiru', grade: '', comments: '' },
@@ -99,4 +99,4 @@ const AssignmentList = () => {
   );
 };
 
-export default AssignmentList;
+export default SubmittedAssignments;

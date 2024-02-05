@@ -5,7 +5,12 @@ function CourseForm() {
   const [courseData, setCourseData] = useState({
     course_name: "",
     description: "",
-    teacher_id: "",
+    image_url: "",
+    daysOfWeek: "",
+    startRecur: "",
+    endRecur: "",
+    startTime: "",
+    endTime: "",
   });
 
 function handleChange(e) {
@@ -39,7 +44,7 @@ function handleSubmit(){
     .catch((error)=>console.error(error))
 }
   return (
-    <form id='course-form' className="course-dialogue" onSubmit={handleSubmit}>
+    <form id='course-form' className="contents course-dialogue" onSubmit={handleSubmit}>
     <div className="form-item">
         <label htmlFor="course_name"> Course name: </label>
         <input
@@ -61,9 +66,66 @@ function handleSubmit(){
         />
     </div>
     <div className="form-item">
-        <label htmlFor="teacher"> Teacher: </label>
+        <label htmlFor="teacher"> Course Image: </label>
         <input
             type="select"
+            id="teacher"
+            autoComplete="off"
+            value={courseData.teacher_id}
+            onChange={handleChange}
+        />
+    </div>
+    <div className="form-item">
+        <label htmlFor="description"> Learning Days: </label>
+            <select name="days" form="carform" multiple>
+                <option value={1} >Monday</option>
+                <option value={2} >Tuesday</option>
+                <option value={3} >Wednesday</option>
+                <option value={4} >Thursday</option>
+                <option value={5} >Friday</option>
+            </select>
+        <input
+            type="select"
+            id="description"
+            value={courseData.description}
+            autoComplete="off"
+            onChange={handleChange}
+        />
+    </div>
+    <div className="form-item">
+        <label htmlFor="teacher"> Course Start Date: </label>
+        <input
+            type="date"
+            id="teacher"
+            autoComplete="off"
+            value={courseData.teacher_id}
+            onChange={handleChange}
+        />
+    </div>
+    <div className="form-item">
+        <label htmlFor="description"> Course End Date: </label>
+        <input
+            type="date"
+            id="description"
+            value={courseData.description}
+            autoComplete="off"
+            onChange={handleChange}
+        />
+    </div>
+    <div className="form-item">
+        <label htmlFor="teacher"> Course Start Time: </label>
+        <input
+            type="time"
+            id="teacher"
+            autoComplete="off"
+            value={courseData.teacher_id}
+            onChange={handleChange}
+        />
+    </div>
+    <div className="form-item">
+        <label htmlFor="teacher"> Course End Time: </label>
+        <input
+            type="time"
             id="teacher"
             autoComplete="off"
             value={courseData.teacher_id}

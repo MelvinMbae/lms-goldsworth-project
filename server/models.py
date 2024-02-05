@@ -215,7 +215,7 @@ class Course(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    content = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
+    content = db.relationship('Content', back_populates='course', cascade="save-update , merge, delete, delete-orphan")
     students = db.relationship('Student', secondary=course_student, back_populates='courses', cascade="save-update , merge, delete")
     teachers = db.relationship('Teacher', secondary=course_teacher, back_populates='courses', cascade="save-update , merge, delete")
 
@@ -233,6 +233,9 @@ class Content(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+    course = db.relationship('Course', back_populates='content', cascade="save-update , merge, delete")
+
 
 class Saved_Content(db.Model):
     __tablename__ = 'saved-contents'
