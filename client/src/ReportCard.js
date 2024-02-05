@@ -1,7 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DownloadPDF from "./components/DownloadPDF";
 
 const ReportCard = () => {
+
+  const [reportData, setReportData] = useState([]);
+
 
   useEffect(()=>{
     fetch('/report_cards')
@@ -10,7 +13,7 @@ const ReportCard = () => {
         r.json()
         .then((reportcard)=>{
           console.log(reportcard)
-          // setReportCard(reportcard)
+          setReportData(reportcard)
         })
       }
       else{
