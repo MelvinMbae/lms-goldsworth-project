@@ -1,6 +1,6 @@
 import os
 from flask import request, make_response, session, send_from_directory
-from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content, Comment
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content, Comment, Submitted_Assignment
 from flask_restful import Resource
 from datetime import datetime
 from config import mash, db, api, app
@@ -221,6 +221,7 @@ class Students(Resource):
         student_img = secure_filename(student_image.filename)
         student_image.save(os.path.join(app.config["UPLOAD_PATH"],student_img))
     
+        # print(type(student_img))
         new_student = Student(
             firstname = request.form.get('firstname'),
             lastname = request.form.get('lastname'),
@@ -763,6 +764,83 @@ class AssignmentbyId(Resource):
 api.add_resource(AssignmentbyId, '/assignments/<int:id>')
 api.add_resource(Assignments, '/assignments')
 
+class Submitted_AssignmentSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Submitted_Assignment
+    
+    id = mash.auto_field()
+    assignment_name = mash.auto_field()
+    grade = mash.auto_field()
+    content = mash.auto_field()
+    assignment_file = mash.auto_field()
+    remarks = mash.auto_field()
+    course_id = mash.auto_field()
+
+
+submitted_assignment_schema = Submitted_AssignmentSchema()
+submitted_assignments_schema = Submitted_AssignmentSchema(many=True)
+
+class Submitted_Assignments(Resource):
+    def get(self):
+        assignments = Submitted_Assignment.query.all()
+
+        return make_response(
+            submitted_assignments_schema.dump(assignments), 200
+        )
+    
+    def post(self):
+        assignment_data = request.get_json()
+        new_assignment = Content(
+            assignment_name = assignment_data['assignment_name'],
+            grade = assignment_data['grade'],
+            content = assignment_data['content'],
+            assignment_file = assignment_data['assignment_file'],
+            remarks = assignment_data['remarks'],
+            course_id = assignment_data['course_id'],
+            student_id = assignment_data['student_id'],
+        )
+        db.session.add(new_assignment)
+        db.session.commit()
+
+        return make_response(
+            submitted_assignment_schema.dump(new_assignment), 201
+        )
+
+    
+class Submitted_AssignmentbyId(Resource):
+    def get(self,id):
+        assignment = Submitted_Assignment.query.filter_by(id=id).first()
+
+        return make_response(
+            submitted_assignment_schema.dump(assignment), 200
+        )
+        
+    def patch(self,id):
+        assignment_data = request.get_json()
+        assignment = Submitted_Assignment.query.filter_by(id=id).first()
+
+        for attr in assignment_data:
+            setattr(assignment, attr, assignment_data[attr])
+        
+        db.session.add(assignment)
+        db.session.commit()
+
+        return make_response(
+            submitted_assignment_schema.dump(assignment), 202
+        )
+
+    def delete(self,id):
+        assignment = Submitted_Assignment.query.filter_by(id=id).first()
+
+        db.session.delete(assignment)
+        db.session.commit()
+
+        return "record successfully deleted" , 202
+
+api.add_resource(Submitted_AssignmentbyId, '/submitted_assignments/<int:id>')
+api.add_resource(Submitted_Assignments, '/submitted_assignments')
+
 class EventSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -824,7 +902,9 @@ class Events(Resource):
         db.session.add(new_event)
         db.session.commit()
 
-        return make_response(event_schema.dump(new_event), 200)
+        events = Event.query.all()
+
+        return make_response(event_schema.dump(events), 200)
 
 class EventbyId(Resource):
     def get(self, id):
@@ -994,18 +1074,3 @@ api.add_resource(Comments, '/comments')
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
 
-
-        #     student_data = request.get_json()
-        # # student_file = request.files['image_url']
-        # # student_file.save(student_file.filename)
-        # # print(request.files['image_url'].filename)
-
-        # new_student = Student(
-        #     firstname = student_data['firstname'],
-        #     lastname = student_data['lastname'],
-        #     image_url = student_data['image_url'],
-        #     personal_email = student_data['personal_email'],
-        #     password = student_data['password'],
-        #     email = student_data['email'],
-        #     parent_id = student_data['parent_id']
-        # )
