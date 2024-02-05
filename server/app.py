@@ -3,7 +3,7 @@ from flask import request, make_response, session, send_from_directory
 from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content, Comment, Submitted_Assignment
 from flask_restful import Resource
 from datetime import datetime
-from config import mash, db, api, app
+from config import mash, db, api, app, fields
 # from flask_admin.contrib.sqla import ModelView
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 from werkzeug.utils import secure_filename
@@ -454,90 +454,6 @@ class ParentbyId(Resource):
 api.add_resource(ParentbyId, '/parents/<int:id>')
 api.add_resource(Parents, '/parents')
 
-class CourseSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Course
-    
-    id = mash.auto_field()
-    course_name = mash.auto_field()
-    description = mash.auto_field()
-
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "coursebyid",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("courses")
-
-        }
-    )
-
-course_schema = CourseSchema()
-courses_schema = CourseSchema(many=True)
-
-class Courses(Resource):
-    def get(self):
-        course = Course.query.all()
-
-        return make_response(
-            courses_schema.dump(course), 200
-        )
-    
-    def post(self):
-        course_data = request.get_json()
-        new_course = Course(
-            course_name = course_data['course_name'],
-            description = course_data['description'],
-            student_id = course_data['student_id'],
-            teacher_id = course_data['teacher_id'],
-            daysOfWeek=course_data['daysOfWeek'],
-            startTime=datetime.strptime(course_data['startTime'],"%H:%M").time(),
-            endTime=datetime.strptime(course_data['endTime'],"%H:%M").time(),
-            startRecur=course_data['startRecur'],
-            endRecur=course_data['endRecur'],
-        )
-        db.session.add(new_course)
-        db.session.commit()
-
-        return make_response(
-            course_schema.dump(new_course), 201
-        )
-
-    
-class CoursebyId(Resource):
-    def get(self,id):
-        course = Course.query.filter_by(id=id).first()
-
-        return make_response(
-            course_schema.dump(course), 200
-        )
-        
-    def patch(self,id):
-        course_data = request.get_json()
-        course = Course.query.filter_by(id=id).first()
-
-        for attr in course_data:
-            setattr(course, attr, course_data[attr])
-        
-        db.session.add(course)
-        db.session.commit()
-
-        return make_response(
-            course_schema.dump(course), 202
-        )
-
-    def delete(self,id):
-        course = Course.query.filter_by(id=id).first()
-
-        db.session.delete(course)
-        db.session.commit()
-
-        return "record successfully deleted" , 202
-
-api.add_resource(CoursebyId, '/courses/<int:id>')
-api.add_resource(Courses, '/courses')
-
 class ContentSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -607,6 +523,98 @@ class ContentbyId(Resource):
 
 api.add_resource(ContentbyId, '/contents/<int:id>')
 api.add_resource(Contents, '/contents')
+
+class CourseSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Course
+    
+    id = mash.auto_field()
+    course_name = mash.auto_field()
+    description = mash.auto_field()
+    content = mash.List(mash.Nested(ContentSchema))
+
+    url = mash.Hyperlinks(
+        {
+            "self":mash.URLFor(
+                "coursebyid",
+                values=dict(id="<id>")),
+            "collection":mash.URLFor("courses")
+
+        }
+    )
+
+course_schema = CourseSchema()
+courses_schema = CourseSchema(many=True)
+
+class Courses(Resource):
+    def get(self):
+        course = Course.query.all()
+
+        # course_details = {
+        #     "course":course,
+        #     # "course_students":course.students,
+        #     # "course_teachers":course.teachers,
+        #     "course_content":course.content,
+        # }
+
+        return make_response(
+            courses_schema.dump(course), 200
+        )
+    
+    def post(self):
+        course_data = request.get_json()
+        new_course = Course(
+            course_name = course_data['course_name'],
+            description = course_data['description'],
+            student_id = course_data['student_id'],
+            teacher_id = course_data['teacher_id'],
+            daysOfWeek=course_data['daysOfWeek'],
+            startTime=datetime.strptime(course_data['startTime'],"%H:%M").time(),
+            endTime=datetime.strptime(course_data['endTime'],"%H:%M").time(),
+            startRecur=course_data['startRecur'],
+            endRecur=course_data['endRecur'],
+        )
+        db.session.add(new_course)
+        db.session.commit()
+
+        return make_response(
+            course_schema.dump(new_course), 201
+        )
+
+    
+class CoursebyId(Resource):
+    def get(self,id):
+        course = Course.query.filter_by(id=id).first()
+
+        return make_response(
+            course_schema.dump(course), 200
+        )
+        
+    def patch(self,id):
+        course_data = request.get_json()
+        course = Course.query.filter_by(id=id).first()
+
+        for attr in course_data:
+            setattr(course, attr, course_data[attr])
+        
+        db.session.add(course)
+        db.session.commit()
+
+        return make_response(
+            course_schema.dump(course), 202
+        )
+
+    def delete(self,id):
+        course = Course.query.filter_by(id=id).first()
+
+        db.session.delete(course)
+        db.session.commit()
+
+        return "record successfully deleted" , 202
+
+api.add_resource(CoursebyId, '/courses/<int:id>')
+api.add_resource(Courses, '/courses')
 
 class ReportCardSchema(mash.SQLAlchemySchema):
 

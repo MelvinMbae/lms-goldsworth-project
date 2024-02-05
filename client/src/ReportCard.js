@@ -9,7 +9,7 @@ const ReportCard = () => {
       if(r.ok){
         r.json()
         .then((reportcard)=>{
-          console.log(reportcard)
+          // console.log(reportcard)
           // setReportCard(reportcard)
         })
       }

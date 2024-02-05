@@ -1,6 +1,9 @@
+import { useState } from "react"
 
 
-function SavedDocs({ savedDocs }) {
+function SavedDocs({ savedDocs , setDocs }) {
+
+    const [ toSave, setData ] = useState({})
 
     console.log(savedDocs)
 
