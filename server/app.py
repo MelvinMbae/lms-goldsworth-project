@@ -616,6 +616,8 @@ class ReportCardSchema(mash.SQLAlchemySchema):
     id = mash.auto_field()
     topic = mash.auto_field()
     teacher_remarks = mash.auto_field()
+    grade = mash.auto_field()
+    
     course_id = mash.auto_field()
 
 

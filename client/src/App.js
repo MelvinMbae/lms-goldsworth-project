@@ -173,7 +173,7 @@ function App() {
                 <Route path='/grading' element={<AssignmentList />} />
                 <Route path='/new' element={<AssignmentForm/>} />
                 <Route path='/new-course' element={<CourseForm/>} />
-                <Route path='/reportcard' element={<ReportCard />} />
+                <Route path='/reportcard' element={<ReportCard coursesList={coursesList} />} />
                 <Route path='/saved' element={<SavedDocs savedDocs={savedDocs}/>} />
               </Route>
             </Route>
