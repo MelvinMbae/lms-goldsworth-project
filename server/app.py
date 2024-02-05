@@ -1,6 +1,6 @@
 import os
 from flask import request, make_response, session, send_from_directory
-from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content
+from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content, Comment
 from flask_restful import Resource
 from datetime import datetime
 from config import mash, db, api, app
@@ -186,8 +186,6 @@ class StudentSchema(mash.SQLAlchemySchema):
 
     class Meta:
         model = Student
-
-        # load_instance = True
     
     id = mash.auto_field()
     firstname = mash.auto_field()
@@ -209,7 +207,6 @@ class StudentSchema(mash.SQLAlchemySchema):
 
 student_schema = StudentSchema()
 students_schema = StudentSchema(many=True)
-
 
 class Students(Resource):
     def get(self):
@@ -920,6 +917,79 @@ class SavedContentById(Resource):
 
 api.add_resource(SavedContentById, '/saved_contents/<int:id>')
 api.add_resource(Saved_Contents, '/saved_contents')
+
+class CommentsSchema(mash.SQLAlchemySchema):
+    class Meta:
+        model = Comment
+
+    id = mash.auto_field()
+    title = mash.auto_field()
+    subject = mash.auto_field()
+    content = mash.auto_field()
+    parent_id = mash.auto_field()
+    student_id = mash.auto_field()
+    teacher_id = mash.auto_field()
+
+comment_schema = CommentsSchema()
+comments_schema = CommentsSchema(many=True)
+
+class Comments(Resource):
+    def get(self):
+        comments = Comment.query.all()
+
+        return make_response(
+            comments_schema.dump(comments), 200
+        )
+    
+    def post(self):
+        comment_data = request.get_json()
+        new_comment = Comment(
+            title = comment_data['title'],
+            subject = comment_data['subject'],
+            content = comment_data['content'],
+            parent_id = comment_data['parent_id'],
+            student_id = comment_data['student_id'],
+            teacher_id = comment_data['teacher_id'],
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+
+        return make_response(
+            comment_schema.dump(new_comment), 201
+        )
+    
+class CommentById(Resource):
+    def get(self,id):
+        comment = Comment.query.filter_by(id=id).first()
+
+        return make_response(
+            comment.dump(comment), 200
+        )
+        
+    def patch(self,id):
+        comment_data = request.get_json()
+        comment = Comment.query.filter_by(id=id).first()
+
+        for attr in comment_data:
+            setattr(comment, attr, comment_data[attr])
+        
+        db.session.add(comment)
+        db.session.commit()
+
+        return make_response(
+            comment_schema.dump(comment), 202
+        )
+
+    def delete(self,id):
+        comment = Comment.query.filter_by(id=id).first()
+
+        db.session.delete(comment)
+        db.session.commit()
+
+        return "record successfully deleted" , 202
+
+api.add_resource(CommentById, '/comments/<int:id>')
+api.add_resource(Comments, '/comments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
