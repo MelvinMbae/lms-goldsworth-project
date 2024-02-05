@@ -1,8 +1,8 @@
 """Recreated Models
 
-Revision ID: 786a4acf4acc
+Revision ID: ffb7752c2557
 Revises: 
-Create Date: 2024-02-01 20:10:49.817879
+Create Date: 2024-02-05 13:00:20.593625
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '786a4acf4acc'
+revision = 'ffb7752c2557'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -71,6 +71,21 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('personal_email')
     )
+    op.create_table('assignments',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('assignment_name', sa.String(), nullable=False),
+    sa.Column('topic', sa.String(), nullable=False),
+    sa.Column('content', sa.String(), nullable=False),
+    sa.Column('assignment_file', sa.String(), nullable=True),
+    sa.Column('due_date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.Column('teacher_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('course_teacher',
     sa.Column('teacher_id', sa.Integer(), nullable=False),
     sa.Column('course_id', sa.Integer(), nullable=False),
@@ -95,19 +110,19 @@ def upgrade():
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('personal_email')
     )
-    op.create_table('assignments',
+    op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('assignment_name', sa.String(), nullable=False),
-    sa.Column('topic', sa.String(), nullable=False),
-    sa.Column('content', sa.String(), nullable=False),
-    sa.Column('assignment_file', sa.String(), nullable=True),
-    sa.Column('due_date', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('title', sa.String(), nullable=True),
+    sa.Column('subject', sa.String(), nullable=True),
+    sa.Column('content', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.Column('teacher_id', sa.Integer(), nullable=True),
     sa.Column('student_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.Column('parent_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['parent_id'], ['parents.id'], ),
     sa.ForeignKeyConstraint(['student_id'], ['students.id'], ),
+    sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('contents',
@@ -145,9 +160,9 @@ def upgrade():
     sa.Column('startRecur', sa.Date(), nullable=True),
     sa.Column('endRecur', sa.Date(), nullable=True),
     sa.Column('title', sa.String(), nullable=False),
-    sa.Column('course_id', sa.Integer(), nullable=False),
-    sa.Column('student_id', sa.Integer(), nullable=False),
-    sa.Column('teacher_id', sa.Integer(), nullable=False),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.Column('student_id', sa.Integer(), nullable=True),
+    sa.Column('teacher_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.ForeignKeyConstraint(['student_id'], ['students.id'], ),
     sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], ),
@@ -182,6 +197,21 @@ def upgrade():
     sa.ForeignKeyConstraint(['teacher_id'], ['teachers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('submitted_assignments',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('assignment_name', sa.String(), nullable=False),
+    sa.Column('content', sa.String(), nullable=True),
+    sa.Column('grade', sa.Integer(), nullable=False),
+    sa.Column('assignment_file', sa.String(), nullable=True),
+    sa.Column('remarks', sa.String(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('course_id', sa.Integer(), nullable=True),
+    sa.Column('student_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.ForeignKeyConstraint(['student_id'], ['students.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('users',
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('_password', sa.String(), nullable=False),
@@ -201,14 +231,16 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('users')
+    op.drop_table('submitted_assignments')
     op.drop_table('saved-contents')
     op.drop_table('report_cards')
     op.drop_table('events')
     op.drop_table('course_student')
     op.drop_table('contents')
-    op.drop_table('assignments')
+    op.drop_table('comments')
     op.drop_table('students')
     op.drop_table('course_teacher')
+    op.drop_table('assignments')
     op.drop_table('teachers')
     op.drop_table('sessions')
     op.drop_table('parents')

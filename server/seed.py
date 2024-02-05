@@ -1,4 +1,4 @@
-from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event
+from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event, Submitted_Assignment, Saved_Content
 import json
 import pytz
 import requests
@@ -9,13 +9,6 @@ from datetime import datetime, timedelta
 
 fake = Faker()
 
-# url = fake.image_url(width=300, height=300)
-# image= null
-# print(image.decode("ISO-8859-1"))
-
-# with open(image_url , encoding="binary", mode="rb") as image_data:
-#     print(image_data)
-# image = image_data.read()
 
 with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
@@ -32,6 +25,8 @@ with app.app_context():
     User.query.delete()
     Content.query.delete()
     Assignment.query.delete()
+    Submitted_Assignment.query.delete()
+    Saved_Content.query.delete()
     Report_Card.query.delete()
     Event.query.delete()
 
@@ -111,9 +106,10 @@ with app.app_context():
             teacher_id = choice(teachers).id
         )
         db.session.add(content)
-        db.session.commit()
-
         content_list.append(content)
+
+    db.session.commit()
+
 
 
     for i in range(10):
@@ -168,33 +164,63 @@ with app.app_context():
             topic = fake.text(),
             content = fake.paragraph(),
             due_date = fake.future_date(),
-            course_id = choice(course_list).id
+            course_id = choice(course_list).id,
+            teacher_id = choice(teachers).id,
         )
 
         db.session.add(assignment)
-        db.session.commit()
-
         assignments.append(assignment)
 
-    # for stude in students:
-    #     assigno = choice(assignments)
-    #     # print(assigno.assignment_name)
-    #     report_card = Report_Card(
-    #         topic = assigno.assignment_name,
-    #         grade = fake.random_int(0,100),
-    #         teacher_remarks = fake.sentence(),
-    #         student_id = choice(students).id,
-    #         course_id = assigno.course_id
-    #     )
-    #     db.session.add(report_card)
-    #     db.session.commit()
+    db.session.commit()
 
-    #     assignments.append(report_card)
+
+    for _ in range(50):
+        assigno = choice(assignments)
+        # print(assigno.assignment_name)
+
+        report_card = Report_Card(
+            topic=assigno.assignment_name,
+            grade=fake.random_int(0, 100),
+            teacher_remarks=fake.sentence(),
+            student_id=choice(students).id,
+            teacher_id=choice(teachers).id,
+            course_id=assigno.course_id
+        )
+        db.session.add(report_card)
+        report_cards.append(report_card)
+    db.session.commit()
+
+
+    for a in assignments:
+        submitted = Submitted_Assignment(
+            assignment_name = a.assignment_name,
+            content = a.content,
+            grade = fake.random_int(0, 100),
+            remarks =fake.sentence(),
+            assignment_file = a.assignment_file,
+            course_id = a.course_id,
+            student_id = choice(students).id,
+        )
+
+        db.session.add(submitted)
+    db.session.commit()
+
+    for doc in content_list:
+        content = Saved_Content(
+            content_name = doc.content_name,
+            content_type = doc.content_type,
+            course_id = choice(course_list).id,
+            teacher_id = choice(teachers).id
+        )
+        db.session.add(content)
+        # content_list.append(content)
+    db.session.commit()
+
     courses=Course.query.all()
     student=Student.query.all()
     teacher=Teacher.query.all()
     
-            
+
     for event in range(50):
         course = choice(courses)
         student = choice(students)
