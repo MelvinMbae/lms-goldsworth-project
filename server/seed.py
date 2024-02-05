@@ -7,7 +7,7 @@ from config import app, db
 
 fake = Faker()
 
-with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
+with open("/home/laleti/MORINGA/Group projects/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
 courses = data['courses']
