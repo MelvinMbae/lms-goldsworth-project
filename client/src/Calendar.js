@@ -4,11 +4,8 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
 import multiMonthPlugin from '@fullcalendar/multimonth'
-
 import Swal from "sweetalert2";
-
 import { useNavigate } from "react-router-dom";
-
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 import { useContext } from 'react';
 import { appContext } from './utils/appContext';
@@ -17,12 +14,8 @@ function Calendar({ eventsList }) {
 
     const navigate = useNavigate();
     const { user , session} = useContext(appContext)
-    
-    const filteredEvents = session.user_type === "student" ? eventsList.filter((event) => {return event.student_id === 2}) : eventsList.filter((event) => {return event.teacher_id === 2})
-    // const filteredEvents = eventsList.filter((event) => event.student_id === 2)
-
-    // const filteredEvents = ;
-    // console.log()
+    // console.log(user)
+    const filteredEvents = session.user_type === "student" ? eventsList.filter((event) => {return event.student_id === user.student_id}) : eventsList.filter((event) => {return event.teacher_id === user.teacher_id})
 
     const handleDateClick = () => {
         alert("Date Event clicked!")

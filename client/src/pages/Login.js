@@ -41,15 +41,24 @@ function Login({ session , setSession , setUser }) {
     })
       .then((r) => {
         if (r.ok){
-          r.json().then((user) => {
-            setUser(user)
-            handleUser(user)
+          r.json().then((r) => {
+            setUser(r)
+            handleUser(r)
           navigate("/dashboard", { replace: true });
-        });
+
+          return fetch('/profile_image').then((r)=>{
+            if(r.ok){
+              r.json()
+              .then((image)=>{
+                // console.log(image)
+                setSession({...session, user_image:image})
+              })
+            }
+          })
+        })
         }
         else {
           throw new Error(`HTTP error ${r}`)
-          console.log(r)
         }
       })
       .catch((error)=>console.error(error))

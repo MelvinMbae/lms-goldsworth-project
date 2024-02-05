@@ -11,12 +11,14 @@ import CourseForm from './CourseForm';
 import CoursePage from './CoursePage';
 import CoursesPage from './CoursesPage';
 import CreateEvent from './CreateEvent';
+import IndividualStudent from './IndividualStudent';
 import Navbar from './Navbar';
 import ParentDash from './ParentDash';
 import ReportCard from './ReportCard';
+import SavedDocs from './SavedDocs';
 import StudentDash from './StudentDash';
+import StudentList from './StudentList';
 import TeacherDash from './TeacherDash';
-import TeacherHome from './TeacherHome';
 import StudentEnrollment from './components/StudentEnrollment';
 import ChatBox from './components/chatBox';
 import About from './pages/About';
@@ -25,15 +27,12 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import UserAuth from './pages/UserAuth';
 import { appContext } from './utils/appContext';
-import StudentList from './StudentList';
-import IndividualStudent from './IndividualStudent';
-import SavedDocs from './SavedDocs';
 
 
 function App() {
   const [courses, setCourse] = useState([])
   const [user, setUser] = useState("")
-  const [session, setSession] = useState({"user_type":'', "user_details":''})
+  const [session, setSession] = useState({"user_type":'', "user_details":'', 'user_image':''})
   const [coursesList, setCoursesList] = useState([]);
   const [courseListDictionary, setCourseListDictionary] = useState({});
   const [assignments, setAssignments] = useState([])
@@ -118,28 +117,35 @@ function App() {
       return <TeacherDash />
     }
     else if(session.user_type === "parent"){
-      return <ParentDash/> 
+      return <ParentDash/>
     }
   }
 
   function handleSaved(id){
     const saved = assignments.filter((assignment)=>assignment.id === parseInt(id))[0]
     setSaved({...savedDocs, saved})
-    console.log(saved)
   }
 
   useEffect(() => {
-    const fetchStudents = async () => {
-    try {
-        const response = await fetch('http://127.0.0.1:5555/students');
-        const data = await response.json();
-        setStudents(data);
-    } catch (error) {
-        console.error('Error fetching courses:', error);
-    }
-    };
-    fetchStudents();
+    fetch('/students')
+    .then((r)=>{
+      if(r.ok){
+        r.json()
+        .then((data)=>{
+          setStudents(data)
+          console.log(data)
+        })
+      }
+      else{
+        throw new Error('error')
+      }
+    })
+    .catch((e)=>{
+      return e
+    })
 }, []);
+
+
 
   return (
 
@@ -156,7 +162,7 @@ function App() {
               <Route element={<Dashboard />}>
                 <Route path='/dashboard' element={<SetPage />} />
                 <Route path='/calendar' element={<Calendar eventsList={eventsList}/>} />
-                <Route path="/create-event" element={<CreateEvent />} />
+                <Route path="/create-event" element={<CreateEvent user={user} />} />
                 <Route path='/active-courses' element={<ActiveCourse />} />
                 <Route path='/classes' element={<Classes />} />
                 <Route path='/assignments' element={<Assignments handleSaved={handleSaved} session={session} assignments={assignments}/>}></Route>

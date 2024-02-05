@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-export default function CreateEvent() {
+export default function CreateEvent({ user }) {
     const [formData, setFormData] = useState({
         allDay: 0,
         groupId: 40,
@@ -14,9 +14,9 @@ export default function CreateEvent() {
         startRecur: new Date(),
         endRecur: new Date(),
         title: "",
-        student_id: 2,
-        course_id: 2,
-        teacher_id: 3,
+        student_id: user.student_id,
+        course_id: 3,
+        teacher_id: user.teacher_id,
     });
 
     const navigate = useNavigate();
@@ -42,24 +42,25 @@ export default function CreateEvent() {
             end: formData.end,
             startTime: formData.startTime,
             endTime: formData.endTime,
-
+            student_id: user.student_id ? user.student_id : null,
+            teacher_id: user.teacher_id ? user.teacher_id : null,
             endRecur: formData.endRecur ? formData.endRecur : null,
             startRecur: formData.startRecur ? formData.startRecur : null,
         };
 
-        const emptyField = Object.keys(formattedFormData).find(
-            (key) => !formattedFormData[key].toString().trim()
-        );
+        // const emptyField = Object.keys(formattedFormData).find(
+        //     (key) => !formattedFormData[key].toString().trim()
+        // );
 
-        if (emptyField) {
-            Swal.fire({
-                title: "Invalid!",
-                text: `Please enter a valid ${emptyField}`,
-                icon: "error",
-                confirmButtonText: "Okay",
-            });
-            return;
-        }
+        // if (emptyField) {
+        //     Swal.fire({
+        //         title: "Invalid!",
+        //         text: `Please enter a valid ${emptyField}`,
+        //         icon: "error",
+        //         confirmButtonText: "Okay",
+        //     });
+        //     return;
+        // }
 
         fetch("/events", {
             method: "POST",

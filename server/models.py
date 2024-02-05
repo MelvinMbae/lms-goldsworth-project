@@ -294,9 +294,9 @@ class Event(db.Model):
     def __repr__(self):
         return f"Event(id={self.id}, title={self.title}, start={self.start}, end={self.end})"
     
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=False)
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'), nullable=False)
-    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     
     
     student = db.relationship('Student')

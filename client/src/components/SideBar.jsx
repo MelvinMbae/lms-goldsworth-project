@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom'
-
 import React from 'react';
 import '../styles/Sidebar.css';
 import { GoCommentDiscussion } from "react-icons/go";
 import { TbReportAnalytics } from "react-icons/tb";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { MdOutlineLibraryBooks,MdOutlineDashboard } from "react-icons/md";
-import { PiBooks } from "react-icons/pi";
+import { MdOutlineLibraryBooks } from "react-icons/md";
 
 function SideBar() {
   return (

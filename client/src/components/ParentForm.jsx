@@ -37,7 +37,7 @@ function ParentForm() {
     .then((r) => { 
         if(r.ok){
             r.json().then((r) => {
-                console.log(r)
+                // console.log(r)
             })
         }
         else {

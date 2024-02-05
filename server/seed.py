@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 
 fake = Faker()
 
-url = fake.image_url(width=300, height=300)
-image= requests.get(url).content
+# url = fake.image_url(width=300, height=300)
+# image= null
 # print(image.decode("ISO-8859-1"))
 
 # with open(image_url , encoding="binary", mode="rb") as image_data:
@@ -54,7 +54,7 @@ with app.app_context():
             lastname = fake.last_name(),
             personal_email = fake.email(),
             email = f'{fake.last_name()}.{fake.first_name()}@lecturer.goldworth.com',
-            image_url = image,
+            # image_url = image,
             password = fake.password(),
             expertise = choice(expertise),
             department = choice(departments)
@@ -88,7 +88,7 @@ with app.app_context():
         course = Course(
             course_name = c['course_name'],
             description = c['description'],
-            image_url = image,
+            # image_url = image,
             startTime= start_datetime.time(),
             endTime = end_datetime.time(),
             daysOfWeek= ','.join(map(str, days_of_week)) ,
@@ -122,7 +122,7 @@ with app.app_context():
             lastname = fake.last_name(),
             email = fake.email(),
             password = fake.password(),
-            image_url = image,
+            # image_url = image,
         )
         db.session.add(parent)
         db.session.commit()
@@ -146,7 +146,7 @@ with app.app_context():
             email = f'{fake.last_name()}.{fake.first_name()}@student.goldworth.com',
             password = fake.password(),
             parent_id = choice(parents).id,
-            image_url = image,
+            # image_url = image,
         )
         db.session.add(student)
         db.session.commit()
