@@ -303,3 +303,16 @@ class Event(db.Model):
     course = db.relationship('Course')
     teacher = db.relationship('Teacher')
     
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    
+    id = db.Column(db.Integer , primary_key = True)
+    title = db.Column(db.String)
+    subject = db.Column(db.String)
+    content = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
