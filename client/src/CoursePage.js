@@ -39,7 +39,7 @@ function CoursePage({ coursesList }) {
             </div> 
             </div>
         </div>
-    </div>
+      </div>
   )
 }
 export default CoursePage;
