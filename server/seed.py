@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 fake = Faker()
 
 
-with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
+with open("C:/Users/Melvin Mbae/Development/Code/phase-5/phase5-project/goldworth-lms/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
 courses = data['courses']
