@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-export default function CreateEvent({ user }) {
+export default function CreateEvent({ user , setEvents}) {
     const [formData, setFormData] = useState({
         allDay: 0,
         groupId: 40,
@@ -71,7 +71,7 @@ export default function CreateEvent({ user }) {
         })
             .then((r) => r.json())
             .then((r) => {
-                // alert(`Welcome ${r.firstname}`);
+                setEvents(r)
                 navigate("/calendar", { replace: true });
             })
             .catch((error) => {

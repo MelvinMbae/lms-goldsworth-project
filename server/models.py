@@ -53,7 +53,7 @@ class Student(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
     user = db.relationship('User', backref='student', cascade="save-update , merge, delete, delete-orphan")
-    assignments = db.relationship('Assignment', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    assignments = db.relationship('Submitted_Assignment', backref='student', cascade="save-update , merge, delete, delete-orphan")
     report_card = db.relationship('Report_Card', backref='student', cascade="save-update , merge, delete, delete-orphan")
     courses = db.relationship('Course', secondary=course_student, back_populates='students', cascade="save-update , merge, delete")
     docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
@@ -274,7 +274,23 @@ class Assignment(db.Model):
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
+
+class Submitted_Assignment(db.Model):
+    __tablename__ = 'submitted_assignments'
+    
+    id = db.Column(db.Integer , primary_key = True)
+    assignment_name = db.Column(db.String, nullable = False)
+    content = db.Column(db.String)
+    grade = db.Column(db.Integer, nullable = False)
+    assignment_file = db.Column(db.String)
+    remarks = db.Column(db.String)
+    created_at = db.Column(db.DateTime, server_default = db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate = db.func.now())
+
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    
     
 class Event(db.Model):
     __tablename__ = 'events'
