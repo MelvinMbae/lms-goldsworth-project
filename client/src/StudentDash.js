@@ -40,10 +40,10 @@ function StudentDash() {
       <div className='dashboard'>
         <div className='dashboard-content'>
           <h1 className='dash-header'>Welcome, {user.name}!</h1>
-          <h3>Courses enrolled:</h3>
+          <h3>Your Courses:</h3>
         <div className='card-container'>
-            {courses.slice(5, 8,).map((course) => (
-              <div className='card' key={course.id}>
+            {courses.slice(6, 9,).map((course) => (
+              <div className='card'>
                 <Link to={`/courses/${course.id}`}>
                   
                 <div className='card-title'>
