@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 db = SQLAlchemy()
 
-
+app.config['FLASK_ADMIN_SWATCH'] = 'darkly'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///lms.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SESSION_TYPE']='sqlalchemy'
@@ -30,4 +30,4 @@ bcrypt = Bcrypt(app)
 mash = Marshmallow(app)
 api = Api(app)
 db.init_app(app)
-admin = Admin(app, name="GoldWorth")
+admin = Admin(app, name="GoldWorth", template_mode='bootstrap3')
