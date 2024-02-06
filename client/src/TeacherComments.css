@@ -1,0 +1,15 @@
+.teacher-comments-container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .comment-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .comment-list li {
+    margin-bottom: 10px;
+  }
+  
