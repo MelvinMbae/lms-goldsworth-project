@@ -56,7 +56,7 @@ function ParentForm() {
                 <label htmlFor="firstname"> First Name: </label>
                 <input
                     type="text"
-                    id="Firstname"
+                    id="firstname"
                     value={parent.Firstname}
                     autoComplete="off"
                     onChange={handleChange}
@@ -66,7 +66,7 @@ function ParentForm() {
                 <label htmlFor="lastname"> Last Name: </label>
                 <input
                     type="text"
-                    id="Lastname"
+                    id="lastname"
                     value={parent.Lastname}
                     autoComplete="off"
                     onChange={handleChange}
@@ -76,7 +76,7 @@ function ParentForm() {
                 <label htmlFor="email"> Email: </label>
                 <input
                     type="email"
-                    id="Email"
+                    id="email"
                     autoComplete="off"
                     value={parent.Email}
                     onChange={handleChange}
@@ -86,7 +86,7 @@ function ParentForm() {
                 <label htmlFor="address"> Passport Photo: </label>
                 <input
                     type='file'
-                    id="Image_url"
+                    id="image_url"
                     value={parent.Image_url}
                     onChange={handleChange}
                 />
@@ -95,7 +95,7 @@ function ParentForm() {
                 <label htmlFor="password"> Password: </label>
                 <input
                     type="password"
-                    id="Password"
+                    id="password"
                     autoComplete="off"
                     value={parent.Password}
                     onChange={handleChange}

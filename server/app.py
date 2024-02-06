@@ -3,8 +3,8 @@ from flask import request, make_response, session, send_from_directory
 from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content, Comment, Submitted_Assignment
 from flask_restful import Resource
 from datetime import datetime
-from config import mash, db, api, app, fields
-# from flask_admin.contrib.sqla import ModelView
+from config import mash, db, api, app, admin
+from flask_admin.contrib.sqla import ModelView
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 from werkzeug.utils import secure_filename
 
@@ -181,6 +181,10 @@ class Users(Resource):
         )
 
 api.add_resource(Users, '/users')
+class UserView(ModelView):
+    form_columns = ['email', 'password', 'student', 'teacher', 'parent']
+
+admin.add_views(UserView(User, db.session))
 
 class StudentSchema(mash.SQLAlchemySchema):
 
@@ -219,7 +223,7 @@ class Students(Resource):
     def post(self):
         student_image = request.files['image_url']
         student_img = secure_filename(student_image.filename)
-        student_image.save(os.path.join(app.config["UPLOAD_PATH"],student_img))
+        student_image.save(os.path.join(app.config["IMAGE_UPLOAD_PATH"],student_img))
     
         # print(type(student_img))
         new_student = Student(
@@ -271,9 +275,24 @@ class StudentbyId(Resource):
 
         return "Record successfully deleted" , 202
 
-# admin.add_views(Students(Student, db.session))
 api.add_resource(StudentbyId, '/students/<int:id>')
 api.add_resource(Students, '/students')
+
+class StudentView(ModelView):
+    form_columns = ['firstname', 'lastname', 'password', 'email', 'personal_email', 'parent', 'image_url']
+
+
+class TeacherView(ModelView):
+    form_columns = ['firstname', 'lastname', 'password', 'email', 'personal_email', 'expertise', 'image_url', 'department']
+
+
+class ParentView(ModelView):
+    form_columns = ['firstname', 'lastname', 'password', 'email', 'child', 'image_url']
+
+admin.add_views(StudentView(Student, db.session))
+admin.add_views(TeacherView(Teacher, db.session))
+admin.add_views(ParentView(Parent, db.session))
+
 
 class TeacherSchema(mash.SQLAlchemySchema):
 
@@ -365,7 +384,7 @@ class TeacherbyId(Resource):
         return "record successfully deleted" , 202
 
 api.add_resource(TeacherbyId, '/teachers/<int:id>')
-# admin.add_views(Teachers(Teacher, db.session))
+# admin.add_views(ModelView(Teacher, db.session))
 api.add_resource(Teachers, '/teachers')
 
 class ParentSchema(mash.SQLAlchemySchema):
@@ -405,10 +424,10 @@ class Parents(Resource):
     def post(self):
         parent_data = request.get_json()
         new_parent = Parent(
-            firstname = parent_data['Firstname'],
-            lastname = parent_data['Lastname'],
-            email = parent_data['Email'],
-            password = parent_data['Password'],
+            firstname = parent_data['firstname'],
+            lastname = parent_data['lastname'],
+            email = parent_data['email'],
+            password = parent_data['password'],
             # image_url = parent_data['Image_url']
         )
         db.session.add(new_parent)
@@ -451,6 +470,7 @@ class ParentbyId(Resource):
 
         return "record successfully deleted" , 202
 
+# admin.add_views(ModelView(Parent, db.session))
 api.add_resource(ParentbyId, '/parents/<int:id>')
 api.add_resource(Parents, '/parents')
 
@@ -489,7 +509,6 @@ class Contents(Resource):
         return make_response(
             content_schema.dump(new_content), 201
         )
-
     
 class ContentbyId(Resource):
     def get(self,id):
@@ -521,6 +540,7 @@ class ContentbyId(Resource):
 
         return "record successfully deleted" , 202
 
+admin.add_views(ModelView(Content, db.session))
 api.add_resource(ContentbyId, '/contents/<int:id>')
 api.add_resource(Contents, '/contents')
 
@@ -613,6 +633,7 @@ class CoursebyId(Resource):
 
         return "record successfully deleted" , 202
 
+admin.add_views(ModelView(Course, db.session))
 api.add_resource(CoursebyId, '/courses/<int:id>')
 api.add_resource(Courses, '/courses')
 
@@ -624,6 +645,8 @@ class ReportCardSchema(mash.SQLAlchemySchema):
     id = mash.auto_field()
     topic = mash.auto_field()
     teacher_remarks = mash.auto_field()
+    grade = mash.auto_field()
+    
     course_id = mash.auto_field()
 
 
@@ -728,8 +751,10 @@ class Assignments(Resource):
             assignment_name = assignment_data['assignment_name'],
             topic = assignment_data['topic'],
             content = assignment_data['content'],
+            assignment_file = assignment_data['assignment_file'],
             due_date = assignment_data['due_date'],
             course_id = assignment_data['course_id'],
+            teacher_id = assignment_data['teacher_id'],
         )
         db.session.add(new_assignment)
         db.session.commit()
@@ -953,6 +978,7 @@ class EventbyId(Resource):
 
         return make_response({"message": "Record successfully deleted"}, 200)
 
+admin.add_views(ModelView(Event, db.session))
 api.add_resource(EventbyId, '/events/<int:id>')
 api.add_resource(Events, '/events')
 

@@ -93,7 +93,7 @@ function StudentForm() {
             />
             </div>
             <div className="form-item">
-                <label htmlFor="address"> Passport Photo: </label>
+                <label htmlFor="image_url"> Passport Photo: </label>
                 <input
                     type='file'
                     id="image_url"
