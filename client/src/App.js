@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Route, Routes } from 'react-router-dom';
 import ActiveCourse from './ActiveCourses';
 import Assignment from './Assignment';
@@ -27,7 +29,7 @@ import { appContext } from './utils/appContext';
 import StudentList from './StudentList';
 import IndividualStudent from './IndividualStudent';
 import SavedDocs from './SavedDocs';
-import SubmittedAssignments from './SubmittedAssignments';
+import SubmittedAssignments from './AssignmentList';
 
 
 function App() {
@@ -134,7 +136,7 @@ function App() {
         r.json()
         .then((data)=>{
           setStudents(data)
-          console.log(data)
+          // console.log(data)
         })
       }
       else{
@@ -153,6 +155,7 @@ function App() {
       <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList , assignments }}>
         <div className=''>
           <Navbar />
+          <ToastContainer />
           <Routes>
             <Route path='/' element={<Home courses={courses}/>}/>
             <Route path='/about' element={<About />} />

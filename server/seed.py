@@ -1,4 +1,4 @@
-from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event, Submitted_Assignment, Saved_Content
+from models import Student, Teacher, Parent, Course, Content, User, Assignment, Report_Card,Event, Submitted_Assignment, Saved_Content, course_student, course_teacher
 import json
 import pytz
 import requests
@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 fake = Faker()
 
 
-with open("C:/Users/Melvin Mbae/Development/Code/phase-5/phase5-project/goldworth-lms/server/db.json" , mode='r') as course_data:
+with open("/home/mwagash/Development/code/Phase5/lms-goldsworth-project/server/db.json" , mode='r') as course_data:
     data = json.load(course_data)
 
 courses = data['courses']
@@ -190,6 +190,23 @@ with app.app_context():
         report_cards.append(report_card)
     db.session.commit()
 
+    # for stu in students:
+    #     student_course = course_student(
+    #         student_id = stu.id,
+    #         course_id = choice(course_list).id,
+    #     )
+
+    #     db.session.add(student_course)
+    # db.session.commit()
+    
+    # for tr in teachers:
+    #     teacher_course = course_teacher(
+    #         student_id = tr.id,
+    #         course_id = choice(course_list).id,
+    #     )
+
+    #     db.session.add(teacher_course)
+    # db.session.commit()
 
     for a in assignments:
         submitted = Submitted_Assignment(
