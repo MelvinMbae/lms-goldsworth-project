@@ -4,6 +4,9 @@
     gap: 35px;
     height: 94vh;
     padding: 20px;
+    background: whitesmoke;
+    margin-left: 20px;
+    width: 24rem;
     }
     .menu-list{
     display: flex;

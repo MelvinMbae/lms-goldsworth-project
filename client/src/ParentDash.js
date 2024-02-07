@@ -55,15 +55,20 @@ function ParentDash() {
 
     return (
         <div className="parentdash-contents">
-            <div className="parent-section">
-                <h2>Name: {user.name}</h2>
-                <h3>Email: {user.email}</h3>
-                <h3>Parent_ID: PTID_{user.parent_id}</h3>
+            <h1>Parent Dashboard</h1>
+            <div className="parentdash-banner">
+                <div className="parentdash-message">
+                    <h2>Welcome to Goldworth</h2>
+                    <h3>Learn more about your child's learning and progress</h3>
+                    <a href="https://www.youtube.com/watch?v=ezbJwaLmOeM&ab_channel=iSpring" ><b>Watch the video</b></a>
+                </div>
+               
+
             </div>
+
             <div className="announcement-title">
                 <u><h3>Announcements</h3></u>
             </div>
-
             <div className="announcement-section">
 
                 {announcements.map((announcement) => (
@@ -113,7 +118,15 @@ function ParentDash() {
                         ))}
                     </div>
                 )}
+
+
             </div>
+            <div className="parent-section">
+                <h2>Name: {user.name}</h2>
+                <h3>Email: {user.email}</h3>
+                <h3>Parent_ID: PTID_{user.parent_id}</h3>
+            </div>
+
         </div>
     );
 }
