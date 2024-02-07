@@ -121,11 +121,11 @@ function ParentDash() {
 
 
             </div>
-            <div className="parent-section">
+            {/* <div className="parent-section">
                 <h2>Name: {user.name}</h2>
                 <h3>Email: {user.email}</h3>
                 <h3>Parent_ID: PTID_{user.parent_id}</h3>
-            </div>
+            </div> */}
 
         </div>
     );
