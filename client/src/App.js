@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ActiveCourse from './ActiveCourses';
 import Assignment from './Assignment';
 import AssignmentForm from './AssignmentCreation';
+import SubmittedAssignments from './AssignmentList';
 import Assignments from './Assignments';
 import Calendar from './Calendar';
 import Classes from './Classes';
@@ -28,13 +29,6 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import UserAuth from './pages/UserAuth';
 import { appContext } from './utils/appContext';
-<<<<<<< HEAD
-=======
-import StudentList from './StudentList';
-import IndividualStudent from './IndividualStudent';
-import SavedDocs from './SavedDocs';
-import SubmittedAssignments from './AssignmentList';
->>>>>>> b3daa4a173fe6e822ed2d86496f63e2e3b9de04d
 
 
 function App() {
@@ -135,23 +129,22 @@ function App() {
   }
 
   useEffect(() => {
+    // Fetching student data from server
     fetch('/students')
-    .then((r)=>{
-      if(r.ok){
-        r.json()
-        .then((data)=>{
-          setStudents(data)
-          // console.log(data)
-        })
-      }
-      else{
-        throw new Error('error')
-      }
-    })
-    .catch((e)=>{
-      return e
-    })
-}, []);
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error fetching students');
+        }
+      })
+      .then((data) => {
+        setStudents(data);
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+      });
+  }, []);
 
 
 

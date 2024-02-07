@@ -58,5 +58,41 @@ body {
   .status-container .detail-container {
     width: 100%; /* Ensure the detail container takes full width */
   }
+  /*student card css*/
+  .student-list {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    justify-content: left; /* Space cards evenly across the page */
+    gap: 20px; /* Adjust the gap between cards */
+    padding: 20px; /* Add padding to the container */
+}
+
+.student-card {
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: calc(16.666% - 20px); /* Set the width for 6 cards per line with a gap */
+    max-width: 200px; /* Set a maximum width for each card */
+    margin-bottom: 20px; /* Add some space below each card */
+}
+
+  
+  .student-card:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .student-card h3 {
+    margin: 20;
+    padding: 10;
+    font-size: 18px;
+  }
+  
+  .student-card p {
+    margin: 5px 0;
+  }
+  
   
   

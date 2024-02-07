@@ -1,27 +1,43 @@
-import React, { Fragment, useContext } from 'react';
-import './IndividualStudent.css'; // Import the new CSS file
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import './IndividualStudent.css'; // Import the new CSS file
 import { appContext } from './utils/appContext';
 
 const IndividualStudent = () => {
+  const { studentID } = useParams();
+  const { students } = useContext(appContext);
+  const [parentDetails, setParentDetails] = useState(null);
 
+  useEffect(() => {
+    if (studentID) {
+      // Fetch parent details for the selected student from the backend
+      fetchParentDetails(studentID);
+    }
+  }, [studentID]);
 
-  const { studentID } = useParams()
-  const { students } = useContext(appContext)
+  const fetchParentDetails = async (studentID) => {
+    try {
+      const response = await fetch(`/api/students/${studentID}/parent`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch parent details');
+      }
+      const parentDetails = await response.json();
+      setParentDetails(parentDetails);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  const selectedStudent = students.filter((student)=>{
-    return student.id === parseInt(studentID)
-  })[0]
-  // console.log(students)
+  const selectedStudent = students.find(student => student.id === parseInt(studentID));
 
   return (
     <div className="indiv-student">
       <div className="user-profile">
         <h2>User Profile</h2>
       </div>
-      {studentID ? (
+      {selectedStudent ? (
         <Fragment>
-          <div className='student-avator'>
+          <div className='student-avatar'>
             {/* Your content for the student avatar */}
           </div>
           <div className="details-container">
@@ -65,9 +81,15 @@ const IndividualStudent = () => {
             </div>
             <div className='details-column'>
               <h3>Parent Details:</h3>
-              <div className="detail-container">
-                <p>{selectedStudent.parentDetails}</p>
-              </div>
+              {parentDetails ? (
+                <div className="detail-container">
+                  <p>Name: {parentDetails.name}</p>
+                  <p>Email: {parentDetails.email}</p>
+                  {/* Add other parent details as needed */}
+                </div>
+              ) : (
+                <p>Loading parent details...</p>
+              )}
             </div>
           </div>
         </Fragment>
