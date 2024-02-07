@@ -1,8 +1,12 @@
+import { useState } from "react"
+
 import {Link} from 'react-router-dom'
 import { FaRegBookmark } from "react-icons/fa"
 import DownloadButton from './components/DownloadComp.jsx'
 
-function SavedDocs({ savedDocs }) {
+function SavedDocs({ savedDocs , setDocs }) {
+
+    const [ toSave, setData ] = useState({})
 
     console.log(savedDocs)
 

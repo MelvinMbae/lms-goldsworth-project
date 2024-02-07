@@ -5,80 +5,41 @@ import './styles/Courses.css';
 function CoursePage({ coursesList }) {
     const { courseID } = useParams()
     const course = coursesList.filter((course)=> course.id == parseInt(courseID))[0]
-    console.log(course)
-    console.log(coursesList)
+    let course_content = course.content
     const [isExpanded, setIsExpanded] = useState(false);
-
+    console.log(course_content )
   const toggleContent = () => {
     setIsExpanded(!isExpanded);
   };
-
 
   return (
     <div className='contents'>
         <div className='course-container'>
             <div>
             <div className="course-units">
-            <table>
-              <tr>
-                 <th><h1 className="course-page-header">{course.course_name}</h1>
-                <p className="course-page-content">{course.description}</p></th>
-              </tr>
-<tr>    <td>  <span onClick={toggleContent}>Week 1: Introduction to {course.course_name}</span>
-            {isExpanded && (
-              <div className="unit-content">
-     <p>Topic 1</p>
-                <p>Topic 2</p>
-                <p>Topic 3</p>
-                <p>Topic 4</p>
-              </div>
-            )}
-          </td>
-  </tr>
-  <tr>
-    <td> <span onClick={toggleContent}>Week 2: {course.course_name} Basics</span>
-            {isExpanded && (
-              <div className="unit-content">
-     <p>Topic 1</p>
-                <p>Topic 2</p>
-                <p>Topic 3</p>
-                <p>Topic 4</p>
-              </div>
-            )}
-          </td>
-  </tr>
-  <tr>
-    <td><span onClick={toggleContent}>Week 3: {course.course_name} codde challenge</span>
-            {isExpanded && (
-              <div className="unit-content">
-     <p>cod challenge instructions</p>
-                <p>code challenge submission</p>
-              </div>
-            )}
-          </td>
-  </tr>
-  <tr>
-    <td><span onClick={toggleContent}>Week 4:{course.course_name} project</span>
-            {isExpanded && (
-              <div className="unit-content">
-     <p>project instructions</p>
-                <p>Topic submission</p>
-              </div>
-            )}
-          </td>
-  </tr>
-  <tr>
-    <td>Week 5 :Conclusion to {course.course_name}</td>
-  </tr>
-</table>
-
-            
-            </div>
-            
-                
+              <table>
+                <tr>
+                  <th><h1 className="course-page-header">{course.course_name}</h1>
+                  <p className="course-page-content">{course.description}</p></th>
+                </tr>
+                <tr>    
+                <td> <span onClick={toggleContent}>Introduction to {course.course_name}</span>
+                  {isExpanded && (
+                    <div className="unit-content">
+                      {course_content.length !== 0 ? 
+                        course_content.map((content)=>{
+                        return <ol key={content.id}><h4>{content.content_name}</h4><p>{content.description}</p></ol>
+                      })
+                    : <div><p>No Available Content</p></div> }
+                    </div>
+                  )}
+                </td>
+                </tr>
+              </table>
+            </div> 
             </div>
         </div>
-    </div>
+      </div>
   )
 }
 export default CoursePage;

@@ -71,7 +71,7 @@ export default function CreateEvent({ user , setEvents}) {
         })
             .then((r) => r.json())
             .then((r) => {
-                setEvents(r)
+                // setEvents(r)
                 navigate("/calendar", { replace: true });
             })
             .catch((error) => {

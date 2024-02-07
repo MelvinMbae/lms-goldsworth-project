@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ActiveCourse from './ActiveCourses';
 import Assignment from './Assignment';
 import AssignmentForm from './AssignmentCreation';
-import AssignmentList from './AssignmentList';
 import Assignments from './Assignments';
 import Calendar from './Calendar';
 import Classes from './Classes';
@@ -27,6 +28,13 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import UserAuth from './pages/UserAuth';
 import { appContext } from './utils/appContext';
+<<<<<<< HEAD
+=======
+import StudentList from './StudentList';
+import IndividualStudent from './IndividualStudent';
+import SavedDocs from './SavedDocs';
+import SubmittedAssignments from './AssignmentList';
+>>>>>>> b3daa4a173fe6e822ed2d86496f63e2e3b9de04d
 
 
 function App() {
@@ -133,7 +141,7 @@ function App() {
         r.json()
         .then((data)=>{
           setStudents(data)
-          console.log(data)
+          // console.log(data)
         })
       }
       else{
@@ -152,6 +160,7 @@ function App() {
       <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList , assignments }}>
         <div className=''>
           <Navbar />
+          <ToastContainer />
           <Routes>
             <Route path='/' element={<Home courses={courses}/>}/>
             <Route path='/about' element={<About />} />
@@ -169,11 +178,11 @@ function App() {
                 <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
                 <Route path='/forums' element={<ChatBox />} />
                 <Route path='/enrollment' element={<StudentEnrollment />} />
-                <Route path='/grading' element={<AssignmentList />} />
+                <Route path='/grading' element={<SubmittedAssignments />} />
                 <Route path='/new' element={<AssignmentForm/>} />
                 <Route path='/new-course' element={<CourseForm/>} />
                 <Route path='/reportcard' element={<ReportCard />} />
-                <Route path='/saved' element={<SavedDocs savedDocs={savedDocs}/>} />
+                <Route path='/saved' element={<SavedDocs savedDocs={savedDocs} setDocs={setSaved}/>} />
               </Route>
             </Route>
             <Route

@@ -2,21 +2,18 @@ import { useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 
 
-function ContentManagement({ content_name, content_type, course_id, teacher_id, student_id }) {
+function ContentManagement({ assignment }) {
   const [content, setSavedContent] = useState({
-    "content_name":content_name,
-    "content_type":content_type,
-    "course_id":course_id,
-    "student_id":student_id,
-    "teacher_id":teacher_id,
+    // "content_name":assignment.content_name,
+    // "content_type":assignment.content_type,
+    // "course_id":assignment.course_id,
+    // "student_id":assignment.student_id,
+    // "teacher_id":assignment.teacher_id,
   });
   
   
   function handleSubmit(e) {
     e.preventDefault();
-    
-    console.log(e)
-
 
     fetch("/save_contents", {
       method: "POST",
