@@ -1,4 +1,4 @@
-.dashboard{
+.dashboard {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -6,13 +6,29 @@
   width: 100%;
   height: 100%;
   column-gap: 40px;
-  align-items: center;
+  /* align-items: center; */
 
-  .contents{
+  .parentdash-contents {
+    display: flex;
+    flex-direction: column;
+    background: #bdd6e0;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    padding: 20px;
+
+
+
+
+  }
+
+
+
+  .contents {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    background: #bdd6e0; 
+    background: #bdd6e0;
     width: 100%;
     height: 650px;
     border-radius: 5px;
@@ -20,14 +36,14 @@
 
     .title {
       width: 18%;
-      margin-left: -1.7rem ;
+      margin-left: -1.7rem;
       border-radius: 4px;
       position: relative;
       background-color: #45A5A1;
       padding: 10px 20px;
       color: #fff;
 
-      h1{
+      h1 {
         font-size: 1.4rem;
         color: #fff;
       }
@@ -48,7 +64,7 @@
 
 
 
-    .top{
+    .top {
       display: flex;
       flex-direction: row;
       /* flex-wrap: wrap; */
@@ -56,20 +72,20 @@
       justify-content: flex-end;
       margin-top: 4rem;
 
-      .data{
+      .data {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: flex-end;
-         background-color: #45A5A1;
+        background-color: #45A5A1;
         width: 150px;
         height: 90px;
         color: #fff;
         border-radius: 5px;
         padding: 10px 20px;
         margin-top: 1.2rem;
-        
-        h2{
+
+        h2 {
           font-size: 20px;
         }
 
@@ -77,52 +93,154 @@
           color: #fff;
         }
       }
+
     }
 
-    .dash-message{
-      margin-left: 5%;
-      margin-bottom: -35px;
-      color: #fff;
-      border-radius: 5px;
-      background-color: #00A8A2;
-      padding: 30px;
-      width: 400px;
-    }
+  }
 
-    .active-course{
+  .student-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-bottom: 20px; */
+    border-radius: 10px;
+  }
+
+  .student-dropdown label {
+    margin-right: 10px;
+    font-weight: bold;
+    
+
+  }
+
+  .student-dropdown select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .student-dropdown select option {
+    padding: 8px;
+    font-size: 16px;
+    background-color: #fff;
+  }
+
+  .student-dropdown select option:checked {
+    background-color: #f0f0f0;
+  }
+
+  .parent-student-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    width: auto;
+    height: auto;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 1.2rem;
+  }
+
+  .dash-message {
+    margin-left: 5%;
+    margin-bottom: -35px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #00A8A2;
+    padding: 30px;
+    width: 400px;
+  }
+
+  .active-course {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 30px;
+
+    h2 {
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      height: 15px;
+      position: relative;
+      top: -36.8%;
+      left: 2%;
+      background-color: #00A8A2;
+      color: #fff;
+      padding: 20px;
+      border-radius: 0 0 24px 24px;
+      font-size: 0.9rem;
+    }
+
+    div {
+      display: flex;
+      flex-direction: row;
       justify-content: space-between;
-      align-items: flex-start;
-      padding: 30px;
-
-
-      h2{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        height: 15px;
-        position: relative;
-        top: -36.8%;
-        left: 2%;
-        background-color: #00A8A2;
-        color: #fff;
-        padding: 20px;
-        border-radius: 0 0 24px 24px;
-        font-size: 0.9rem;
-      }
-
-      div{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        column-gap: 20px;
-      }
+      column-gap: 20px;
     }
   }
 }
 
-.logo{
+.parent-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(251, 238, 214);
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 10px;
+
+}
+
+.announcement-section {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.announcement-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.announcement-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.announcement-title {
+  display: flex;
+  justify-content: center;
+}
+
+.announcement {
+  flex: 1;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.announcement:last-child {
+  margin-right: 0;
+}
+
+.announcement h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.announcement p {
+  font-size: 16px;
+  color: #555555;
+}
+
+.logo {
   color: #00A8A2;
   font-family: Lexend Mega;
   font-size: 20px;
@@ -131,7 +249,7 @@
   line-height: normal;
 }
 
-.sidebar{
+.sidebar {
   position: sticky;
   background-color: #00A8A2;
   font-size: small;
@@ -150,7 +268,7 @@
     transition: 0.4s;
     padding: 20px 15px;
     margin-left: 0;
-  
+
     a {
       width: 65%;
       padding: 20px 20px;
@@ -169,10 +287,10 @@
   }
 }
 
-.teacherContents{
+.teacherContents {
   display: flex;
   flex-direction: column;
-  background: #bdd6e0; 
+  background: #bdd6e0;
   width: 1145px;
   height: 425px;
   border-radius: 5px;
@@ -181,13 +299,13 @@
 
 
 
-.teachersTop{
+.teachersTop {
   display: flex;
   justify-content: space-around;
 }
 
 
-.graphs{
+.graphs {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-evenly;
@@ -202,7 +320,7 @@
   padding: 5%;
 }
 
-.footer{
+.footer {
   width: 100%;
   height: 148px;
   margin-bottom: 0;
@@ -213,4 +331,4 @@
   background: #45A5A1;
 }
 
-  /* border-radius: 25px; */
+/* border-radius: 25px; */

@@ -26,26 +26,6 @@ function ReportCard() {
 
   console.log(user)
 
-  useEffect(() => {
-    fetch('/report_cards')
-      .then((r) => {
-        if (r.ok) {
-          r.json()
-            .then((reportcard) => {
-              console.log(reportcard)
-              setReportData(reportcard)
-            })
-        }
-        else {
-          throw new Error('error')
-        }
-      })
-      .catch((error) => console.error(error))
-  }, [])
-
-  console.log(reportData)
-
-
   return (
     <div className='report-card'>
       <div className="header">

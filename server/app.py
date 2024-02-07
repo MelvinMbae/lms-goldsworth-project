@@ -288,6 +288,7 @@ class TeacherView(ModelView):
 
 class ParentView(ModelView):
     form_columns = ['firstname', 'lastname', 'password', 'email', 'child', 'image_url']
+    column_details_exclude_list=['child']
 
 admin.add_views(StudentView(Student, db.session))
 admin.add_views(TeacherView(Teacher, db.session))
