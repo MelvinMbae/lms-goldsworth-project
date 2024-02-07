@@ -32,7 +32,7 @@ function CoursesPage() {
               alt="image"
             />
             <h3 id='course-header'>{course.course_name}</h3>
-            <p>{course.description}</p>
+            {/* <p>{course.description}</p> */}
             <Link to={`/courses/${course.id}`}>
               <button className='courses-btn' >View Course</button>
               </Link>

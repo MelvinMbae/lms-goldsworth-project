@@ -27,26 +27,29 @@
   margin: auto;
   text-align: center;
   display: flex;
-  flex-wrap: wrap; 
-  justify-content: space-evenly;
-  padding: 70px;
-  gap: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  /* justify-content: space-evenly;
+  padding: 10px;
+  /* gap: 20px; */
 }
 
 .course-list > div {
-  width: 30%; 
-  margin: 10px; 
+  width: 400px; 
+  height: 400px;
+  margin: 10px;
 }
 .course-card-content{
   background: #ddded8;
-  height: fit-content;
   color: black;
+
 }
 .courses-btn{
   border: none;
   outline: 0;
   display: inline-block;
-  padding: 8px;
+  padding: 6px;
   color: white;
   background-color: #000;
   text-align: center;
