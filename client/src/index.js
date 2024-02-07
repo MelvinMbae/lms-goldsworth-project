@@ -10,7 +10,7 @@ import './styles/Chat.css'
 import './styles/Courses.css'
 import './styles/About.css';
 import './styles/CreateEvent.css'
-import App from './App';
+import TeacherComment from './TeacherComments.js';
 import { BrowserRouter } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -21,7 +21,7 @@ root.render(
 
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        <TeacherComment />
       </BrowserRouter>
     </React.StrictMode>
 
