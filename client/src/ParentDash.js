@@ -7,7 +7,7 @@ function ParentDash() {
     const announcements = [
         { id: 1, title: "Important Notice", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
         { id: 2, title: "Upcoming Event", content: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-        { id: 3, title: "Holiday Closure", content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris." },
+        { id: 3, title: "Holiday Closure", content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.Ut enim ad minim veniam, quis nostrud exercitation ullamco laborisUt enim ad minim veniam, quis nostrud exercitation ullamco laboris..." },
     ];
 
 
