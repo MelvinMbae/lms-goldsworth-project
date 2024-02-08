@@ -1,31 +1,38 @@
-import { appBarClasses } from "@mui/material"
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { appContext } from "./utils/appContext"
-
+import { MdLibraryBooks } from "react-icons/md";
+import { PiStudentBold } from "react-icons/pi";
 
 function TeacherDash(){
 
     const { user } = useContext(appContext)
     
     return(
-            <div className='contents'>
-                <div className=''>
-                    <div className='top'>
-                        <div>
-                            <span className='data'><h2>Number of courses assigned :</h2><h3>{user.courses.length}</h3></span>
+            <div className='teacher-dash'>
+             <h2>Department: <span>{user.department}</span></h2>
+
+                 <div className='teacher-card-container'>
+
+                        <div className="teacher-card">
+                            <h2 className="card-title"><MdLibraryBooks className="teacher-icon" />
+                                Courses assigned :{user.courses.length}</h2>
                         </div>
-                        <div>
-                            <span className='data'>Number of students</span>
+                        <div className="teacher-card">
+                            <h2 className="card-title"><PiStudentBold className="teacher-icon" />
+                                Students Assigned:{user.students}</h2>
                         </div>
-                        <div>
-                            <span className='data'><h2>Department Role</h2><h3>{user.department}</h3></span>
-                        </div>
-                    </div>
-                    <button className='button'><Link to={'/enrollment'}>Enroll Student</Link></button>
-                    <button className='button'><Link to={'/new-course'}>Add Course</Link></button>
-                    <button className='button'><Link to={'/student-view'}>View Students</Link></button>
-                </div>
+                         </div>
+                         <div className="dash-list">
+                            <ul>
+                                <h3>To do:</h3>
+                                <li><Link to={'/new-course'}>Add Courses</Link></li>
+                                <li><Link to={'/student-view'}>View Students</Link></li>
+                                <li><Link to={`/assignments`}>Edit Assignments</Link></li>
+                                <li><Link to={"/grading"}>Grade Assignments</Link></li>
+                                <li><Link to={"/new"}>Add Assignments</Link></li>
+                            </ul>
+                   </div>
             </div>
     )
 }
