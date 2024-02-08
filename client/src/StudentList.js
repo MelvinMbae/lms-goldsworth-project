@@ -1,7 +1,7 @@
 // src/components/StudentList.js
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './IndividualStudent.css'; // Import the new CSS file
+import './StudentList.css'; 
 import { appContext } from './utils/appContext';
 
 const StudentList = () => {
@@ -19,22 +19,25 @@ const filteredStudents = students.filter((student) =>
 );
 
 return (
-    <div>
-        <div className="student-container">
+    <div className="student-container">
+
             <h1 className="student-list-header">ENROLLED STUDENTS</h1>
-        </div>
         <input
         type="text"
         placeholder="Search by name"
         value={searchTerm}
         onChange={handleSearchChange}
         />
-        <div className='student-list'>
+        <div className='ag-courses_box'>
             {filteredStudents.map((student) => (
-            <div className="student-info" key={student.id}>
-                <Link to={`/student-view/${student.id}`}>
-                    <h3>{`${student.firstname} ${student.lastname}`}</h3>
+            <div className="ag-courses_item" key={student.id}>
+                <Link className='ag-courses-item_link' to={`/student-view/${student.id}`}>
+                <div class="ag-courses-item_bg"></div>
+                    <h3 className='ag-courses-item_title'>{`${student.firstname} ${student.lastname}`}</h3>
                 </Link>
+                <div className='ag-courses-item_date-box'>
+                    <span className='ag-courses-item_date'>Start:04.11.2022</span>
+                </div>
             </div>
             ))}
         </div>
