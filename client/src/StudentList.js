@@ -20,23 +20,24 @@ const filteredStudents = students.filter((student) =>
 
 return (
     <div className="student-container">
-
-            <h1 className="student-list-header">ENROLLED STUDENTS</h1>
+     <h1 className="student-list-header">ENROLLED STUDENTS</h1>
+     <div className='search-container'>
         <input
         type="text"
-        placeholder="Search by name"
+        placeholder="Search Students"
         value={searchTerm}
         onChange={handleSearchChange}
-        />
-        <div className='ag-courses_box'>
+        /></div>
+        
+        <div className='students-courses_box'>
             {filteredStudents.map((student) => (
-            <div className="ag-courses_item" key={student.id}>
-                <Link className='ag-courses-item_link' to={`/student-view/${student.id}`}>
-                <div class="ag-courses-item_bg"></div>
-                    <h3 className='ag-courses-item_title'>{`${student.firstname} ${student.lastname}`}</h3>
+            <div className="students-courses_item" key={student.id}>
+                <Link className='students-courses-item_link' to={`/student-view/${student.id}`}>
+                <div class="students-courses-item_bg"></div>
+                    <h3 className='students-courses-item_title'>{`${student.firstname} ${student.lastname}`}</h3>
                 </Link>
-                <div className='ag-courses-item_date-box'>
-                    <span className='ag-courses-item_date'>Start:04.11.2022</span>
+                <div className='students-courses-item_date-box'>
+                    <span className='students-courses-item_date'>Enrolled:04.02.2024</span>
                 </div>
             </div>
             ))}
