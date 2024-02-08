@@ -58,6 +58,7 @@ class Student(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
     user = db.relationship('User', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    parent = db.relationship('Parent', back_populates='child', cascade="save-update , merge, delete")
     assignments = db.relationship('Submitted_Assignment', backref='student', cascade="save-update , merge, delete, delete-orphan")
     report_card = db.relationship('Report_Card', backref='student', cascade="save-update , merge, delete, delete-orphan")
     courses = db.relationship('Course', secondary=course_student, back_populates='students', cascade="save-update , merge, delete")
@@ -170,7 +171,7 @@ class Parent(db.Model):
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 
-    child = db.relationship('Student', backref='parent', cascade="save-update , merge, delete, delete-orphan")
+    child = db.relationship('Student', back_populates='parent', cascade="save-update , merge, delete, delete-orphan")
     user = db.relationship('User', backref='parent', cascade="save-update , merge, delete, delete-orphan")
 
     def __repr__(self):
@@ -308,9 +309,10 @@ class Submitted_Assignment(db.Model):
     id = db.Column(db.Integer , primary_key = True)
     assignment_name = db.Column(db.String, nullable = False)
     content = db.Column(db.String)
-    grade = db.Column(db.Integer, nullable = False)
+    grade = db.Column(db.Integer)
     assignment_file = db.Column(db.String)
     remarks = db.Column(db.String)
+    is_graded = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, server_default = db.func.now())
     updated_at = db.Column(db.DateTime, onupdate = db.func.now())
 

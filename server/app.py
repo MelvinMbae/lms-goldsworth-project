@@ -1,5 +1,5 @@
 import os
-from flask import request, make_response, session, send_from_directory
+from flask import request, make_response, session, send_from_directory, render_template
 from models import Teacher, Student, Parent, Course, Content, User, Report_Card, Assignment, Event, Saved_Content, Comment, Submitted_Assignment
 from flask_restful import Resource
 from datetime import datetime
@@ -31,10 +31,9 @@ def server_error(e):
 
 class Index(Resource):
     def get(self):
-        return make_response(
-            "Welcome to the LMS API", 200
-        )
-
+        message = "Hello, World"
+        return render_template('index.html',  
+                           message=message)
 
 api.add_resource(Index, '/')
 
@@ -131,6 +130,9 @@ class FetchImage(Resource):
 
 api.add_resource(FetchImage, '/profile_image')
 
+
+#Marshmallow API Endpoints
+
 class UserSchema(mash.SQLAlchemySchema):
 
     class Meta:
@@ -169,22 +171,55 @@ class UserSchema(mash.SQLAlchemySchema):
         }
     )
 
-user_schema = UserSchema()
-users_schema = UserSchema(many=True)
+class ContentSchema(mash.SQLAlchemySchema):
 
-class Users(Resource):
-    def get(self):
-        users = User.query.all()
-        
-        return make_response(
-            users_schema.dump(users), 200
-        )
+    class Meta:
+        model = Content
+    
+    id = mash.auto_field()
+    content_name = mash.auto_field()
+    content_type = mash.auto_field()
+    description = mash.auto_field()
 
-api.add_resource(Users, '/users')
-class UserView(ModelView):
-    form_columns = ['email', 'password', 'student', 'teacher', 'parent']
+class CourseSchema(mash.SQLAlchemySchema):
 
-admin.add_views(UserView(User, db.session))
+    class Meta:
+        model = Course
+    
+    id = mash.auto_field()
+    course_name = mash.auto_field()
+    description = mash.auto_field()
+    content = mash.List(mash.Nested(ContentSchema))
+
+
+class TeacherSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Teacher
+    
+    id = mash.auto_field()
+    firstname = mash.auto_field()
+    lastname = mash.auto_field()
+    email = mash.auto_field()
+    expertise = mash.auto_field()
+    department = mash.auto_field()
+    courses= mash.List(mash.Nested(CourseSchema))
+    docs = mash.List(mash.Nested(ContentSchema))
+
+
+class ParentSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Parent
+    
+    load_instance = True
+    
+    id = mash.auto_field()
+    firstname = mash.auto_field()
+    lastname = mash.auto_field()
+    email = mash.auto_field()
+    child = mash.List(mash.Nested(lambda: StudentSchema(only=('id','firstname','lastname'))))
+
 
 class StudentSchema(mash.SQLAlchemySchema):
 
@@ -195,9 +230,9 @@ class StudentSchema(mash.SQLAlchemySchema):
     firstname = mash.auto_field()
     lastname = mash.auto_field()
     email = mash.auto_field()
-    parent_id = mash.auto_field()
-    courses = mash.auto_field()
-    docs = mash.auto_field()
+    courses = mash.List(mash.Nested(CourseSchema))
+    parent = mash.Nested(ParentSchema)
+    docs = mash.List(mash.Nested(ContentSchema))
 
     url = mash.Hyperlinks(
         {
@@ -209,8 +244,155 @@ class StudentSchema(mash.SQLAlchemySchema):
         }
     )
 
+
+class ReportCardSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Report_Card
+    
+    id = mash.auto_field()
+    topic = mash.auto_field()
+    teacher_remarks = mash.auto_field()
+    grade = mash.auto_field()
+    
+    course_id = mash.auto_field()
+
+class AssignmentSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Assignment
+    
+    id = mash.auto_field()
+    assignment_name = mash.auto_field()
+    topic = mash.auto_field()
+    content = mash.auto_field()
+    due_date = mash.auto_field()
+    course_id = mash.auto_field()
+
+
+    url = mash.Hyperlinks(
+        {
+            "self":mash.URLFor(
+                "assignmentbyid",
+                values=dict(id="<id>")),
+            "collection":mash.URLFor("assignments")
+
+        }
+    )
+
+class Submitted_AssignmentSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Submitted_Assignment
+    
+    id = mash.auto_field()
+    assignment_name = mash.auto_field()
+    grade = mash.auto_field()
+    content = mash.auto_field()
+    assignment_file = mash.auto_field()
+    remarks = mash.auto_field()
+    course_id = mash.auto_field()
+    student_id = mash.auto_field()
+    is_graded = mash.auto_field()
+
+class EventSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Event
+    
+    id = mash.auto_field()
+    groupId = mash.auto_field()
+    allDay = mash.auto_field()
+    start = mash.auto_field()
+    end = mash.auto_field()
+    daysOfWeek = mash.auto_field()
+    startTime = mash.auto_field()
+    endTime = mash.auto_field()
+    startRecur = mash.auto_field()
+    endRecur = mash.auto_field()
+    title = mash.auto_field()
+    student_id = mash.auto_field()
+    course_id = mash.auto_field()
+    teacher_id = mash.auto_field()
+
+class SavedContentSchema(mash.SQLAlchemySchema):
+
+    class Meta:
+        model = Saved_Content
+    
+    id = mash.auto_field()
+    content_name = mash.auto_field()
+    content_type = mash.auto_field()
+
+class CommentsSchema(mash.SQLAlchemySchema):
+    class Meta:
+        model = Comment
+
+    id = mash.auto_field()
+    title = mash.auto_field()
+    subject = mash.auto_field()
+    content = mash.auto_field()
+    parent_id = mash.auto_field()
+    student_id = mash.auto_field()
+    teacher_id = mash.auto_field()
+
+comment_schema = CommentsSchema()
+comments_schema = CommentsSchema(many=True)
+saved_content_schema = SavedContentSchema()
+saved_contents_schema = SavedContentSchema(many=True)   
+event_schema = EventSchema()
+events_schema = EventSchema(many=True)
+submitted_assignment_schema = Submitted_AssignmentSchema()
+submitted_assignments_schema = Submitted_AssignmentSchema(many=True)
+assignment_schema = AssignmentSchema()
+assignments_schema = AssignmentSchema(many=True)
+report_card_schema = ReportCardSchema()
+report_cards_schema = ReportCardSchema(many=True)
+course_schema = CourseSchema()
+courses_schema = CourseSchema(many=True)
+content_schema = ContentSchema()
+contents_schema = ContentSchema(many=True)
+parent_schema = ParentSchema()
+parents_schema = ParentSchema(many=True)
+teacher_schema = TeacherSchema()
+teachers_schema = TeacherSchema(many=True)
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 student_schema = StudentSchema()
 students_schema = StudentSchema(many=True)
+
+#Flask-Admin Views
+
+class UserView(ModelView):
+    form_columns = ['email', 'password', 'student', 'teacher', 'parent']
+
+class StudentView(ModelView):
+    form_columns = ['firstname', 'lastname', 'password', 'email', 'personal_email', 'parent', 'image_url']
+
+class TeacherView(ModelView):
+    form_columns = ['firstname', 'lastname', 'password', 'email', 'personal_email', 'expertise', 'image_url', 'department']
+
+class ParentView(ModelView):
+    form_columns = ['firstname', 'lastname', 'password', 'email', 'child', 'image_url']
+
+admin.add_views(UserView(User, db.session))
+admin.add_views(StudentView(Student, db.session))
+admin.add_views(TeacherView(Teacher, db.session))
+admin.add_views(ParentView(Parent, db.session))
+admin.add_views(ModelView(Content, db.session))
+admin.add_views(ModelView(Course, db.session))
+admin.add_views(ModelView(Event, db.session))
+
+
+#API Views
+
+class Users(Resource):
+    def get(self):
+        users = User.query.all()
+        
+        return make_response(
+            users_schema.dump(users), 200
+        )
 
 class Students(Resource):
     def get(self):
@@ -243,7 +425,6 @@ class Students(Resource):
         return make_response(
             student_schema.dump(new_student), 201
         )
-
     
 class StudentbyId(Resource):
     def get(self,id):
@@ -275,52 +456,6 @@ class StudentbyId(Resource):
 
         return "Record successfully deleted" , 202
 
-api.add_resource(StudentbyId, '/students/<int:id>')
-api.add_resource(Students, '/students')
-
-class StudentView(ModelView):
-    form_columns = ['firstname', 'lastname', 'password', 'email', 'personal_email', 'parent', 'image_url']
-
-
-class TeacherView(ModelView):
-    form_columns = ['firstname', 'lastname', 'password', 'email', 'personal_email', 'expertise', 'image_url', 'department']
-
-
-class ParentView(ModelView):
-    form_columns = ['firstname', 'lastname', 'password', 'email', 'child', 'image_url']
-
-admin.add_views(StudentView(Student, db.session))
-admin.add_views(TeacherView(Teacher, db.session))
-admin.add_views(ParentView(Parent, db.session))
-
-
-class TeacherSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Teacher
-    
-    id = mash.auto_field()
-    firstname = mash.auto_field()
-    lastname = mash.auto_field()
-    email = mash.auto_field()
-    expertise = mash.auto_field()
-    department = mash.auto_field()
-    courses= mash.auto_field()
-    docs = mash.auto_field()
-
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "teacherbyid",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("teachers")
-
-        }
-    )
-
-teacher_schema = TeacherSchema()
-teachers_schema = TeacherSchema(many=True)
-
 class Teachers(Resource):
     
     column_searchable_list = ('firstname', 'lastname' ,'email')
@@ -351,8 +486,7 @@ class Teachers(Resource):
         return make_response(
             teacher_schema.dump(new_teacher), 201
         )
-
-    
+   
 class TeacherbyId(Resource):
     def get(self,id):
         teacher = Teacher.query.filter_by(id=id).first()
@@ -383,36 +517,6 @@ class TeacherbyId(Resource):
 
         return "record successfully deleted" , 202
 
-api.add_resource(TeacherbyId, '/teachers/<int:id>')
-# admin.add_views(ModelView(Teacher, db.session))
-api.add_resource(Teachers, '/teachers')
-
-class ParentSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Parent
-    
-    load_instance = True
-    
-    id = mash.auto_field()
-    firstname = mash.auto_field()
-    lastname = mash.auto_field()
-    email = mash.auto_field()
-    child = mash.auto_field()
-
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "parentbyid",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("parents")
-
-        }
-    )
-
-parent_schema = ParentSchema()
-parents_schema = ParentSchema(many=True)
-
 class Parents(Resource):
     def get(self):
         parents = Parent.query.all()
@@ -438,7 +542,6 @@ class Parents(Resource):
         return make_response(
             parent_schema.dump(new_parent), 201
         )
-
     
 class ParentbyId(Resource):
     def get(self,id):
@@ -469,24 +572,6 @@ class ParentbyId(Resource):
         db.session.commit()
 
         return "record successfully deleted" , 202
-
-# admin.add_views(ModelView(Parent, db.session))
-api.add_resource(ParentbyId, '/parents/<int:id>')
-api.add_resource(Parents, '/parents')
-
-class ContentSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Content
-    
-    id = mash.auto_field()
-    content_name = mash.auto_field()
-    content_type = mash.auto_field()
-    description = mash.auto_field()
-
-
-content_schema = ContentSchema()
-contents_schema = ContentSchema(many=True)
 
 class Contents(Resource):
     def get(self):
@@ -540,43 +625,9 @@ class ContentbyId(Resource):
 
         return "record successfully deleted" , 202
 
-admin.add_views(ModelView(Content, db.session))
-api.add_resource(ContentbyId, '/contents/<int:id>')
-api.add_resource(Contents, '/contents')
-
-class CourseSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Course
-    
-    id = mash.auto_field()
-    course_name = mash.auto_field()
-    description = mash.auto_field()
-    content = mash.List(mash.Nested(ContentSchema))
-
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "coursebyid",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("courses")
-
-        }
-    )
-
-course_schema = CourseSchema()
-courses_schema = CourseSchema(many=True)
-
 class Courses(Resource):
     def get(self):
         course = Course.query.all()
-
-        # course_details = {
-        #     "course":course,
-        #     # "course_students":course.students,
-        #     # "course_teachers":course.teachers,
-        #     "course_content":course.content,
-        # }
 
         return make_response(
             courses_schema.dump(course), 200
@@ -602,7 +653,6 @@ class Courses(Resource):
             course_schema.dump(new_course), 201
         )
 
-    
 class CoursebyId(Resource):
     def get(self,id):
         course = Course.query.filter_by(id=id).first()
@@ -633,26 +683,6 @@ class CoursebyId(Resource):
 
         return "record successfully deleted" , 202
 
-admin.add_views(ModelView(Course, db.session))
-api.add_resource(CoursebyId, '/courses/<int:id>')
-api.add_resource(Courses, '/courses')
-
-class ReportCardSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Report_Card
-    
-    id = mash.auto_field()
-    topic = mash.auto_field()
-    teacher_remarks = mash.auto_field()
-    grade = mash.auto_field()
-    
-    course_id = mash.auto_field()
-
-
-report_card_schema = ReportCardSchema()
-report_cards_schema = ReportCardSchema(many=True)
-
 class Report_Cards(Resource):
     def get(self):
         report_card = Report_Card.query.all()
@@ -676,7 +706,6 @@ class Report_Cards(Resource):
         return make_response(
             report_card_schema.dump(new_report), 201
         )
-
     
 class Report_CardbyId(Resource):
     def get(self,id):
@@ -708,35 +737,6 @@ class Report_CardbyId(Resource):
 
         return "record successfully deleted" , 202
 
-api.add_resource(Report_CardbyId, '/report_cards/<int:id>')
-api.add_resource(Report_Cards, '/report_cards')
-
-class AssignmentSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Assignment
-    
-    id = mash.auto_field()
-    assignment_name = mash.auto_field()
-    topic = mash.auto_field()
-    content = mash.auto_field()
-    due_date = mash.auto_field()
-    course_id = mash.auto_field()
-
-
-    url = mash.Hyperlinks(
-        {
-            "self":mash.URLFor(
-                "assignmentbyid",
-                values=dict(id="<id>")),
-            "collection":mash.URLFor("assignments")
-
-        }
-    )
-
-assignment_schema = AssignmentSchema()
-assignments_schema = AssignmentSchema(many=True)
-
 class Assignments(Resource):
     def get(self):
         assignments = Assignment.query.all()
@@ -762,7 +762,6 @@ class Assignments(Resource):
         return make_response(
             assignment_schema.dump(new_assignment), 201
         )
-
     
 class AssignmentbyId(Resource):
     def get(self,id):
@@ -794,26 +793,6 @@ class AssignmentbyId(Resource):
 
         return "record successfully deleted" , 202
 
-api.add_resource(AssignmentbyId, '/assignments/<int:id>')
-api.add_resource(Assignments, '/assignments')
-
-class Submitted_AssignmentSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Submitted_Assignment
-    
-    id = mash.auto_field()
-    assignment_name = mash.auto_field()
-    grade = mash.auto_field()
-    content = mash.auto_field()
-    assignment_file = mash.auto_field()
-    remarks = mash.auto_field()
-    course_id = mash.auto_field()
-
-
-submitted_assignment_schema = Submitted_AssignmentSchema()
-submitted_assignments_schema = Submitted_AssignmentSchema(many=True)
-
 class Submitted_Assignments(Resource):
     def get(self):
         assignments = Submitted_Assignment.query.all()
@@ -839,8 +818,7 @@ class Submitted_Assignments(Resource):
         return make_response(
             submitted_assignment_schema.dump(new_assignment), 201
         )
-
-    
+   
 class Submitted_AssignmentbyId(Resource):
     def get(self,id):
         assignment = Submitted_Assignment.query.filter_by(id=id).first()
@@ -870,33 +848,6 @@ class Submitted_AssignmentbyId(Resource):
         db.session.commit()
 
         return "record successfully deleted" , 202
-
-api.add_resource(Submitted_AssignmentbyId, '/submitted_assignments/<int:id>')
-api.add_resource(Submitted_Assignments, '/submitted_assignments')
-
-class EventSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Event
-    
-    id = mash.auto_field()
-    groupId = mash.auto_field()
-    allDay = mash.auto_field()
-    start = mash.auto_field()
-    end = mash.auto_field()
-    daysOfWeek = mash.auto_field()
-    startTime = mash.auto_field()
-    endTime = mash.auto_field()
-    startRecur = mash.auto_field()
-    endRecur = mash.auto_field()
-    title = mash.auto_field()
-    student_id = mash.auto_field()
-    course_id = mash.auto_field()
-    teacher_id = mash.auto_field()
-    
-
-event_schema = EventSchema()
-events_schema = EventSchema(many=True)
 
 class Events(Resource):
     def get(self):
@@ -978,23 +929,6 @@ class EventbyId(Resource):
 
         return make_response({"message": "Record successfully deleted"}, 200)
 
-admin.add_views(ModelView(Event, db.session))
-api.add_resource(EventbyId, '/events/<int:id>')
-api.add_resource(Events, '/events')
-
-class SavedContentSchema(mash.SQLAlchemySchema):
-
-    class Meta:
-        model = Saved_Content
-    
-    id = mash.auto_field()
-    content_name = mash.auto_field()
-    content_type = mash.auto_field()
-
-
-saved_content_schema = SavedContentSchema()
-saved_contents_schema = SavedContentSchema(many=True)
-
 class Saved_Contents(Resource):
     def get(self):
         saved_Contents = Saved_Content.query.all()
@@ -1018,7 +952,6 @@ class Saved_Contents(Resource):
         return make_response(
             saved_content_schema.dump(new_content), 201
         )
-
     
 class SavedContentById(Resource):
     def delete(self,id):
@@ -1028,24 +961,6 @@ class SavedContentById(Resource):
         db.session.commit()
 
         return "record successfully deleted" , 202
-
-api.add_resource(SavedContentById, '/saved_contents/<int:id>')
-api.add_resource(Saved_Contents, '/saved_contents')
-
-class CommentsSchema(mash.SQLAlchemySchema):
-    class Meta:
-        model = Comment
-
-    id = mash.auto_field()
-    title = mash.auto_field()
-    subject = mash.auto_field()
-    content = mash.auto_field()
-    parent_id = mash.auto_field()
-    student_id = mash.auto_field()
-    teacher_id = mash.auto_field()
-
-comment_schema = CommentsSchema()
-comments_schema = CommentsSchema(many=True)
 
 class Comments(Resource):
     def get(self):
@@ -1102,6 +1017,27 @@ class CommentById(Resource):
 
         return "record successfully deleted" , 202
 
+api.add_resource(Users, '/users')
+api.add_resource(StudentbyId, '/students/<int:id>')
+api.add_resource(Students, '/students')
+api.add_resource(TeacherbyId, '/teachers/<int:id>')
+api.add_resource(Teachers, '/teachers')
+api.add_resource(ParentbyId, '/parents/<int:id>')
+api.add_resource(Parents, '/parents')
+api.add_resource(ContentbyId, '/contents/<int:id>')
+api.add_resource(Contents, '/contents')
+api.add_resource(CoursebyId, '/courses/<int:id>')
+api.add_resource(Courses, '/courses')
+api.add_resource(Report_CardbyId, '/report-cards/<int:id>')
+api.add_resource(Report_Cards, '/report-cards')
+api.add_resource(AssignmentbyId, '/assignments/<int:id>')
+api.add_resource(Assignments, '/assignments')
+api.add_resource(Submitted_AssignmentbyId, '/submitted-assignments/<int:id>')
+api.add_resource(Submitted_Assignments, '/submitted-assignments')
+api.add_resource(EventbyId, '/events/<int:id>')
+api.add_resource(Events, '/events')
+api.add_resource(SavedContentById, '/saved_contents/<int:id>')
+api.add_resource(Saved_Contents, '/saved_contents')
 api.add_resource(CommentById, '/comments/<int:id>')
 api.add_resource(Comments, '/comments')
 
