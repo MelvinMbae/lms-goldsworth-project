@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify';
-
+import './CourseForm.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 function CourseForm() {
@@ -54,7 +54,7 @@ function handleSubmit(e){
     )
 }
   return (
-    <form id='course-form' className="contents course-dialogue" onSubmit={handleSubmit}>
+    <form id='course-form' className="course-dialogue" onSubmit={handleSubmit}>
         <div className="form-item">
             <label htmlFor="course_name"> Course name: </label>
             <input
@@ -135,7 +135,8 @@ function handleSubmit(e){
                 onChange={handleChange}
             />
         </div>
-        <button className="btn" type="submit">Add Course</button>
+        <div><button className="course-form-btn" type="submit">Add Course</button></div>
+        
     </form>
   )
 }

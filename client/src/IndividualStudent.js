@@ -17,7 +17,7 @@ const IndividualStudent = () => {
   return (
     <div className="indiv-student">
       <div className="user-profile">
-        <h2>User Profile</h2>
+        <h2>Student Profile</h2>
       </div>
       {studentID ? (
         <Fragment>
@@ -26,7 +26,7 @@ const IndividualStudent = () => {
           </div>
           <div className="details-container">
             <div className='details-column'>
-              <h3>{selectedStudent.firstname}</h3>
+              <h3>{`${selectedStudent.firstname} ${selectedStudent.lastname}`}</h3>
               <div className="detail-container">
                 <p>Email:</p>
                 <p>{selectedStudent.email}</p>
