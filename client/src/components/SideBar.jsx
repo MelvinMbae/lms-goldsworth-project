@@ -15,7 +15,7 @@ function SideBar() {
     <div className='menu'>
       <div className='menu-list'>
         <Link to={'/assignments'} className='item'><MdOutlineLibraryBooks className='icon'/> Assignments</Link>
-        {session.user_type === 'student' ? <Link to={'/reportcard'} className='item'><TbReportAnalytics className='icon'/> ReportCard</Link> : null}
+        {session.user_type === 'student' || 'parent' ? <Link to={'/reportcard'} className='item'><TbReportAnalytics className='icon'/> ReportCard</Link> : null}
         <Link to={'/calendar'} className='item'><FaRegCalendarAlt className='icon'/> Calendar</Link>
         <Link to={'/forums'} className='item'><GoCommentDiscussion className='icon'/> Forums</Link>
       </div>

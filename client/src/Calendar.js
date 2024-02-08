@@ -13,9 +13,9 @@ import { appContext } from './utils/appContext';
 function Calendar({ eventsList }) {
 
     const navigate = useNavigate();
-    const { user , session} = useContext(appContext)
+    const { user, session } = useContext(appContext)
     // console.log(user)
-    const filteredEvents = session.user_type === "student" ? eventsList.filter((event) => {return event.student_id === user.student_id}) : eventsList.filter((event) => {return event.teacher_id === user.teacher_id})
+    const filteredEvents = session.user_type === "teacher" ? eventsList.filter((event) => { return event.teacher_id === user.teacher_id }) : eventsList.filter((event) => { return event.student_id === user.student_id })
 
     const handleDateClick = () => {
         alert("Date Event clicked!")

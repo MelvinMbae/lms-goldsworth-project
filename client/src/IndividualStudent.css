@@ -1,62 +1,68 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #d8e4e4; /* Turquoise Blue */
-  }
-  
-  .indiv-student {
-    max-width: 600px; /* Adjust the maximum width as needed */
-    margin: 0 auto; /* Center the content on the page */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 20px; /* Add padding to the entire component */
-    background-color: white; /* Set background color for the container */
-    border: 10px solid black; /* Add a big black border */
-  }
-  
-  .user-profile {
-    text-align: center;
-  }
-  
-  .student-avator {
-    background-color: grey;
-    padding: 15px; /* Adjust the padding as needed */
-    margin-right: 20px; /* Add margin to separate from details */
-  }
-  
-  .student-avator img {
-    height: 150px; /* Adjust the height of the image */
-    width: 150px; /* Adjust the width of the image */
-    border-radius: 50%;
-  }
-  
-  .details-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align details to the left */
-    width: 100%;
-    margin-top: 20px;
-    max-width: 500px; /* Adjust the maximum width as needed */
-  }
-  
-  .details-column {
-    flex: 1;
-    text-align: left;
-    padding: 10px;
-    width: 100%; /* Ensure the details column takes full width */
-  }
-  
-  .detail-container {
-    border: 1px solid black;
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 100%; /* Ensure the detail container takes full width */
-  }
-  
-  .status-container .detail-container {
-    width: 100%; /* Ensure the detail container takes full width */
-  }
-  
-  
+.indiv-student {
+  max-width: 600px;
+  /* Adjust the maximum width as needed */
+  margin: 0 auto;
+  /* Center the content on the page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  /* Add padding to the entire component */
+  background-color: white;
+  /* Set background color for the container */
+  border: 10px solid black;
+  /* Add a big black border */
+}
+
+.user-profile {
+  text-align: center;
+}
+
+.student-avator {
+  background-color: grey;
+  padding: 15px;
+  /* Adjust the padding as needed */
+  margin-right: 20px;
+  /* Add margin to separate from details */
+}
+
+.student-avator img {
+  height: 150px;
+  /* Adjust the height of the image */
+  width: 150px;
+  /* Adjust the width of the image */
+  border-radius: 50%;
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Align details to the left */
+  width: 100%;
+  margin-top: 20px;
+  max-width: 500px;
+  /* Adjust the maximum width as needed */
+}
+
+.details-column {
+  flex: 1;
+  text-align: left;
+  padding: 10px;
+  width: 100%;
+  /* Ensure the details column takes full width */
+}
+
+.detail-container {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  /* Ensure the detail container takes full width */
+}
+
+.status-container .detail-container {
+  width: 100%;
+  /* Ensure the detail container takes full width */
+}

@@ -2,12 +2,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 30px;
+    padding: 10px;
     height: 45px;
     gap: 88px;
     align-self: stretch;
     background-color: #fff;
-    margin-bottom: 40px;
+    margin: 20px;
+
 
 
     #header{

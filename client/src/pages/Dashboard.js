@@ -7,25 +7,25 @@ import { Fragment } from 'react';
 import CoursesPage from '../CoursesPage';
 
 function Dashboard() {
-    
-    const location = useLocation()
-    const { user , session } = useContext(appContext)
 
-    function DashPage({ children }){
-        return(
+    const location = useLocation()
+    const { user, session } = useContext(appContext)
+
+    function DashPage({ children }) {
+        return (
             <Fragment>
-                { session.user_type === 'parent' ? null : <SideBar />}
+                {<SideBar />}
                 {children}
             </Fragment>
         )
     }
-        return(
-            <div className='dashboard'>  
-                {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
-                                                                                            <Outlet />  
-                                                                                            <Profile user={user} session={session}/>
-                                                                                        </DashPage>}
-            </div>
-        )
-    }
+    return (
+        <div className='dashboard'>
+            {location.pathname === '/courses' ? <DashPage><CoursesPage /></DashPage> : <DashPage>
+                <Outlet />
+                <Profile user={user} session={session} />
+            </DashPage>}
+        </div>
+    )
+}
 export default Dashboard;
