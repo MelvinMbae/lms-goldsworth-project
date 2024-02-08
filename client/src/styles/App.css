@@ -7,7 +7,6 @@ li, a{
 #root{
   color: #004B5B;
   box-sizing: border-box;
-  --fc-button-bg-color: #45A5A1 ;
 
   .fc-button{
     border: none;
