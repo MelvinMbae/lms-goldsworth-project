@@ -19,6 +19,7 @@ const filteredStudents = students.filter((student) =>
 );
 
 return (
+
     <div className="student-container">
      <h1 className="student-list-header">ENROLLED STUDENTS</h1>
      <div className='search-container'>
