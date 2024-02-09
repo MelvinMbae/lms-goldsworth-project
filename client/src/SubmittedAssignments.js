@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import './App.css';
 
 const SubmittedAssignments = () => {
   const [assignments, setAssignments] = useState([
@@ -55,7 +54,8 @@ const SubmittedAssignments = () => {
 
   return (
     <div>
-      <h1>Grade List</h1>
+      <div >     
+        <h1>Grades List</h1>
       {formVisible && (
         <div>
           <button onClick={handleCreateAssignment}>Create Grades</button>
@@ -95,6 +95,7 @@ const SubmittedAssignments = () => {
           <button onClick={handleSubmit}>Submit</button>
         </div>
       )}
+      </div>  
     </div>
   );
 };

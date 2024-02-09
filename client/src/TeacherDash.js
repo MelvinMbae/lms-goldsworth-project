@@ -26,7 +26,6 @@ function TeacherDash(){
                          <div className="dash-list">
                             <ul>
                                 <h3>To do:</h3>
-                                <li><Link to={'/new-course'}>Add Courses</Link></li>
                                 <li><Link to={'/student-view'}>View Students</Link></li>
                                 <li><Link to={`/assignments`}>Edit Assignments</Link></li>
                                 <li><Link to={"/grading"}>Grade Assignments</Link></li>
