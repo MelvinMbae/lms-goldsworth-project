@@ -1,39 +1,17 @@
 import React, { useState, useEffect, useContext} from 'react';
 import { appContext } from '../../utils/appContext';
-// import './StudentDash.css';
 import { Link } from "react-router-dom";
+import { Coronavirus } from '@mui/icons-material';
 
 function StudentDash() {
-  const [courses, setCourses] = useState([]);
-  const [teachers, setTeachers] = useState([]);
+
   const { user } = useContext(appContext)
 
+  const course = user.courses === undefined ? 'No Course assigned' : user.courses[0]
+  const courseTeachers = user.courses === undefined ? 'No Teacher assigned' : user.courses[0].teachers
+  console.log(user)
+  // console.log(courses)
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5555/courses');
-        const data = await response.json();
-        setCourses(data);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      }
-    };
-    fetchCourses();
-  }, []); 
-
-  useEffect(() => {
-    const fetchTeachers = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:5555/teachers');
-        const data = await response.json();
-        setTeachers(data);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      }
-    };
-    fetchTeachers();
-  }, []);
 
   return (
     <div>
@@ -41,8 +19,7 @@ function StudentDash() {
         <div className='dashboard-content'>
           <h1 className='dash-header'>Welcome, {user.name}!</h1>
           <h3>Your Courses:</h3>
-        <div className='card-container'>
-            {courses.slice(6, 9,).map((course) => (
+          <div className='card-container'>
               <div className='card'>
                 <Link to={`/courses/${course.id}`}>
                   
@@ -51,16 +28,22 @@ function StudentDash() {
                 </div>
                 </Link>
               </div>
-            ))}
+              <div className='card'>
+              <Link to={`/courses/${course.id}`}>
+                
+              <div className='card-title'>
+                <h2>{course.course_name}</h2>
+              </div>
+              </Link>
+            </div>
           </div>
-          
           <div className='teacher-list'>
             <div className='list-header'>
               <h1 className='dash-header'>Teachers</h1>
              
             </div>
             <div className='list-container'>
-              {teachers.slice(3, 8,).map((teacher)=>(
+              {courseTeachers.map((teacher)=>(
                 <div className='list' key={teacher.id}>
                   <div className='teacher-details'>
                   <img id='teacher-img'src='./images/user1.png' alt={teacher.firstname} />

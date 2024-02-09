@@ -59,9 +59,10 @@ def User_details(user):
                 "email" : user.email,
                 "image_url": user.student.image_url,
                 "report_card": report_cards_schema.dump(user.student.report_card),
-                "assignments": assignments_schema.dump(user.student.assignments),
+                "assignments": submitted_assignments_schema.dump(user.student.assignments),
                 "docs": contents_schema.dump(user.student.docs),
                 "courses": courses_schema.dump(user.student.courses),
+                "event": events_schema.dump(user.student.event)
             }, 200
         )
     return make_response(
@@ -189,6 +190,7 @@ class CourseSchema(mash.SQLAlchemySchema):
     id = mash.auto_field()
     course_name = mash.auto_field()
     description = mash.auto_field()
+    teachers = mash.List(mash.Nested(lambda: TeacherSchema( only=('firstname','lastname','expertise'))))
     content = mash.List(mash.Nested(ContentSchema))
 
 
@@ -230,9 +232,14 @@ class StudentSchema(mash.SQLAlchemySchema):
     firstname = mash.auto_field()
     lastname = mash.auto_field()
     email = mash.auto_field()
+    created_at = mash.auto_field()
     courses = mash.List(mash.Nested(CourseSchema))
     parent = mash.Nested(ParentSchema)
     docs = mash.List(mash.Nested(ContentSchema))
+    event = mash.auto_field()
+    report_card = mash.List(mash.Nested(lambda: ReportCardSchema(only=('id','topic','grade', 'teacher_remarks', 'course_id'))))
+    assignments = mash.List(mash.Nested(lambda: Submitted_AssignmentSchema(only=('id','assignment_name','content', 'remarks', 'grade', 'course_id'))))
+
 
     url = mash.Hyperlinks(
         {

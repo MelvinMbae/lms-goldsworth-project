@@ -1,1 +1,3 @@
 /lms-env
+/server/instance
+/server/migrations
