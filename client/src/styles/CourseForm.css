@@ -32,9 +32,8 @@
     color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
     font-size: medium;
-    margin-top: 60px;
+    margin-top: 30px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
