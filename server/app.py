@@ -76,7 +76,7 @@ def User_details(user):
             "parent_id": user.parent_id,
             "name": f'{user.parent.firstname} {user.parent.lastname}',
             "email": user.email,
-            "child": user.parent.child,
+            "child": students_schema.dump(user.parent.child),
             "image_url": user.parent.image_url,
         }, 200
     )

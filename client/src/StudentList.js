@@ -1,7 +1,7 @@
 // src/components/StudentList.js
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import './StudentList.css'; 
+import './styles/StudentList.css'; 
 import { appContext } from './utils/appContext';
 
 const StudentList = () => {
