@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 function AssignmentModule({ assignments }){
 
-
     return(
         <div>
             {assignments.map((assigno) => (

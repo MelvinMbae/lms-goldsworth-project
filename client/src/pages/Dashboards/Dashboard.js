@@ -1,10 +1,10 @@
 import { useLocation, Outlet } from 'react-router-dom';
 import React, { useContext } from 'react';
-import { appContext } from '../utils/appContext';
-import Profile from '../components/Profile';
-import SideBar from '../components/SideBar';
+import { appContext } from '../../utils/appContext';
+import Profile from '../../components/Profile';
+import SideBar from '../../components/SideBar';
 import { Fragment } from 'react';
-import CoursesPage from '../CoursesPage';
+import CoursesPage from '../Courses/CoursesPage';
 
 function Dashboard() {
 

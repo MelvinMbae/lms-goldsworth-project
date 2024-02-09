@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext} from 'react';
-import { appContext } from './utils/appContext';
-import './StudentDash.css';
+import { appContext } from '../../utils/appContext';
+// import './StudentDash.css';
 import { Link } from "react-router-dom";
 
 function StudentDash() {

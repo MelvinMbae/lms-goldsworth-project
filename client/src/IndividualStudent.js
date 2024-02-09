@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react';
-import './IndividualStudent.css'; // Import the new CSS file
+// import './IndividualStudent.css'; // Import the new CSS file
 import { useParams } from 'react-router-dom';
 import { appContext } from './utils/appContext';
 

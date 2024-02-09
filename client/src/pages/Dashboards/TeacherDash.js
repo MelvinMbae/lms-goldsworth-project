@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
-import { appContext } from "./utils/appContext"
+import { appContext } from "../../utils/appContext"
 import { MdLibraryBooks } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
 

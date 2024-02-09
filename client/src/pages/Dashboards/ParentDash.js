@@ -1,6 +1,6 @@
 import { useContext, Fragment, useState } from "react"
 import { Link } from "react-router-dom"
-import { appContext } from "./utils/appContext"
+import { appContext } from "../../utils/appContext"
 
 function ParentDash() {
 

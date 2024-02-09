@@ -8,6 +8,7 @@ import './styles/Dashboard.css'
 import './styles/Reportcard.css'; 
 import './styles/Chat.css'
 import './styles/Courses.css'
+import './styles/CourseForm.css';
 import './styles/About.css';
 import './styles/CreateEvent.css'
 import App from './App';

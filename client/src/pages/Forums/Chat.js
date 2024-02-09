@@ -1,6 +1,5 @@
-import React from "react";
-import ChatBox from "../components/chatBox";
-import ChatBar from "../components/ChatBar";
+import ChatBox from "../../components/chatBox";
+import ChatBar from "../../components/ChatBar";
 
 function Chat() {
   let closed = false;

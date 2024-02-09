@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify';
-import './CourseForm.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 function CourseForm() {
