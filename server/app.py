@@ -115,6 +115,15 @@ class Logout(Resource):
 
 api.add_resource(Logout, '/logout')
 
+class FetchFile(Resource):
+    def get(self,id):
+        assignment = Assignment.query.filter_by(id=id).first()
+
+        assignment_file = send_from_directory(app.config['FILE_UPLOAD_PATH'] , assignment.assignment_file , as_attachment=True)
+        return assignment_file
+
+api.add_resource(FetchFile, '/assignment-file/<int:id>')
+
 class FetchImage(Resource):
     def get(self):
         session_details = session.get('user')
@@ -122,12 +131,12 @@ class FetchImage(Resource):
         user = User.query.filter_by(email=session_details).first()
 
         if 'lecturer' in user.email:
-            photo = send_from_directory(app.config['UPLOAD_PATH'] , user.teacher.image_url)
+            photo = send_from_directory(app.config['IMAGE_UPLOAD_PATH'] , user.teacher.image_url)
             return photo
         elif 'student' in user.email:
-            photo = send_from_directory(app.config['UPLOAD_PATH'] , user.student.image_url)
+            photo = send_from_directory(app.config['IMAGE_UPLOAD_PATH'] , user.student.image_url)
             return photo
-        return send_from_directory(app.config['UPLOAD_PATH'] , user.parent.image_url)
+        return send_from_directory(app.config['IMAGE_UPLOAD_PATH'] , user.parent.image_url)
 
 api.add_resource(FetchImage, '/profile_image')
 
@@ -273,6 +282,7 @@ class AssignmentSchema(mash.SQLAlchemySchema):
     assignment_name = mash.auto_field()
     topic = mash.auto_field()
     content = mash.auto_field()
+    assignment_file = mash.auto_field()
     due_date = mash.auto_field()
     course_id = mash.auto_field()
 
@@ -463,6 +473,68 @@ class StudentbyId(Resource):
 
         return "Record successfully deleted" , 202
 
+class Assignments(Resource):
+    def get(self):
+        assignments = Assignment.query.all()
+
+        return make_response(
+            assignments_schema.dump(assignments), 200
+        )
+    
+    def post(self):
+        assignment_file = request.files['assignment_file']
+        assignment = secure_filename(assignment_file.filename)
+        assignment_file.save(os.path.join(app.config["FILE_UPLOAD_PATH"],assignment))
+    
+        assignment_data = request.form
+        # print(assignment_data['assignment_file'])
+        new_assignment = Assignment(
+            assignment_name = assignment_data.get('assignment_name'),
+            topic = assignment_data.get('topic'),
+            content = assignment_data.get('content'),
+            assignment_file = assignment_data.get('assignment_file'),
+            due_date = datetime.strptime(assignment_data.get('due_date'), "%Y-%m-%d").date(),
+            course_id = assignment_data.get('course_id'),
+            teacher_id = assignment_data.get('teacher_id'),
+        )
+        db.session.add(new_assignment)
+        db.session.commit()
+
+        return make_response(
+            assignment_schema.dump(new_assignment), 201
+        )
+    
+class AssignmentbyId(Resource):
+    def get(self,id):
+        assignment = Assignment.query.filter_by(id=id).first()
+
+        return make_response(
+            assignment_schema.dump(assignment), 200
+        )
+        
+    def patch(self,id):
+        assignment_data = request.get_json()
+        assignment = Assignment.query.filter_by(id=id).first()
+
+        for attr in assignment_data:
+            setattr(assignment, attr, assignment_data[attr])
+        
+        db.session.add(assignment)
+        db.session.commit()
+
+        return make_response(
+            assignment_schema.dump(assignment), 202
+        )
+
+    def delete(self,id):
+        assignment = Assignment.query.filter_by(id=id).first()
+
+        db.session.delete(assignment)
+        db.session.commit()
+
+        return "record successfully deleted" , 202
+    
+    
 class Teachers(Resource):
     
     column_searchable_list = ('firstname', 'lastname' ,'email')
@@ -740,62 +812,6 @@ class Report_CardbyId(Resource):
         content = Report_Card.query.filter_by(id=id).first()
 
         db.session.delete(content)
-        db.session.commit()
-
-        return "record successfully deleted" , 202
-
-class Assignments(Resource):
-    def get(self):
-        assignments = Assignment.query.all()
-
-        return make_response(
-            assignments_schema.dump(assignments), 200
-        )
-    
-    def post(self):
-        assignment_data = request.get_json()
-        new_assignment = Content(
-            assignment_name = assignment_data['assignment_name'],
-            topic = assignment_data['topic'],
-            content = assignment_data['content'],
-            assignment_file = assignment_data['assignment_file'],
-            due_date = assignment_data['due_date'],
-            course_id = assignment_data['course_id'],
-            teacher_id = assignment_data['teacher_id'],
-        )
-        db.session.add(new_assignment)
-        db.session.commit()
-
-        return make_response(
-            assignment_schema.dump(new_assignment), 201
-        )
-    
-class AssignmentbyId(Resource):
-    def get(self,id):
-        assignment = Assignment.query.filter_by(id=id).first()
-
-        return make_response(
-            assignment_schema.dump(assignment), 200
-        )
-        
-    def patch(self,id):
-        assignment_data = request.get_json()
-        assignment = Assignment.query.filter_by(id=id).first()
-
-        for attr in assignment_data:
-            setattr(assignment, attr, assignment_data[attr])
-        
-        db.session.add(assignment)
-        db.session.commit()
-
-        return make_response(
-            assignment_schema.dump(assignment), 202
-        )
-
-    def delete(self,id):
-        assignment = Assignment.query.filter_by(id=id).first()
-
-        db.session.delete(assignment)
         db.session.commit()
 
         return "record successfully deleted" , 202

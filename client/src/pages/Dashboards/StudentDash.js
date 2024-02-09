@@ -22,20 +22,19 @@ function StudentDash() {
           <div className='card-container'>
               <div className='card'>
                 <Link to={`/courses/${course.id}`}>
-                  
-                <div className='card-title'>
-                  <h2>{course.course_name}</h2>
-                </div>
+                  <div className='card-title'>
+                    <h2>{course.course_name}</h2>
+                  </div>
                 </Link>
               </div>
+
               <div className='card'>
-              <Link to={`/courses/${course.id}`}>
-                
-              <div className='card-title'>
-                <h2>{course.course_name}</h2>
+                <Link to={`/courses/${course.id}`}>
+                  <div className='card-title'>
+                    <h2>{course.course_name}</h2>
+                  </div>
+                </Link>
               </div>
-              </Link>
-            </div>
           </div>
           <div className='teacher-list'>
             <div className='list-header'>
