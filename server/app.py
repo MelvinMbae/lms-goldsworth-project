@@ -8,21 +8,26 @@ from flask_admin.contrib.sqla import ModelView
 from werkzeug.exceptions import NotFound, MethodNotAllowed, ServiceUnavailable, BadRequest, InternalServerError
 from werkzeug.utils import secure_filename
 
+
 @app.errorhandler(NotFound)
 def resource_missing(e):
     return "Sorry the requested resource does not exist!"
+
 
 @app.errorhandler(MethodNotAllowed)
 def wrong_method(e):
     return "The request made is not allowed!"
 
+
 @app.errorhandler(BadRequest)
 def bad_request(e):
     return "You have made an invalid request, try again with the correct details."
 
+
 @app.errorhandler(ServiceUnavailable)
 def service_error(e):
     return "Sorry for the inconvenience, the service is not available at the moment! Please try again later. Thankyou for your patience!"
+
 
 @app.errorhandler(InternalServerError)
 def server_error(e):
@@ -37,13 +42,14 @@ class Index(Resource):
 
 api.add_resource(Index, '/')
 
+
 def User_details(user):
     if 'lecturer' in user.email:
         return make_response(
             {
                 "teacher_id": user.teacher_id,
-                "name" : f'{user.teacher.firstname} {user.teacher.lastname}',
-                "email" : user.email,
+                "name": f'{user.teacher.firstname} {user.teacher.lastname}',
+                "email": user.email,
                 "image_url": user.teacher.image_url,
                 "expertise": user.teacher.expertise,
                 "department": user.teacher.department,
@@ -55,8 +61,8 @@ def User_details(user):
         return make_response(
             {
                 "student_id": user.student_id,
-                "name" : f'{user.student.firstname} {user.student.lastname}',
-                "email" : user.email,
+                "name": f'{user.student.firstname} {user.student.lastname}',
+                "email": user.email,
                 "image_url": user.student.image_url,
                 "report_card": report_cards_schema.dump(user.student.report_card),
                 "assignments": submitted_assignments_schema.dump(user.student.assignments),
@@ -68,12 +74,13 @@ def User_details(user):
     return make_response(
         {
             "parent_id": user.parent_id,
-            "name" : f'{user.parent.firstname} {user.parent.lastname}',
-            "email" : user.email,
+            "name": f'{user.parent.firstname} {user.parent.lastname}',
+            "email": user.email,
             "child": user.parent.child,
             "image_url": user.parent.image_url,
         }, 200
     )
+
 
 class Login(Resource):
     def post(self):
@@ -86,10 +93,12 @@ class Login(Resource):
                 session['user'] = user.email
                 return User_details(user)
 
-            return "Invalid email or password" , 400
-        return "User does not exist" , 404       
+            return "Invalid email or password", 400
+        return "User does not exist", 404
+
 
 api.add_resource(Login, '/login')
+
 
 class CheckSession(Resource):
     def get(self):
@@ -101,7 +110,9 @@ class CheckSession(Resource):
 
         return "Please login to continue", 401
 
+
 api.add_resource(CheckSession, '/checksession')
+
 
 class Logout(Resource):
     def delete(self):
@@ -112,6 +123,7 @@ class Logout(Resource):
 
             return "You have been logged out successfully", 200
         return make_response("You are not allowed to access this method", 401)
+
 
 api.add_resource(Logout, '/logout')
 
@@ -155,28 +167,28 @@ class UserSchema(mash.SQLAlchemySchema):
 
     student_url = mash.Hyperlinks(
         {
-            "student":mash.URLFor(
+            "student": mash.URLFor(
                 "studentbyid",
                 values=dict(id="<student_id>")),
-            "students_list":mash.URLFor("students")
+            "students_list": mash.URLFor("students")
 
         }
     )
     parent_url = mash.Hyperlinks(
         {
-            "parent":mash.URLFor(
+            "parent": mash.URLFor(
                 "parentbyid",
                 values=dict(id="<parent_id>")),
-            "parents_list":mash.URLFor("parents")
+            "parents_list": mash.URLFor("parents")
 
         }
     )
     teacher_url = mash.Hyperlinks(
         {
-            "teacher":mash.URLFor(
+            "teacher": mash.URLFor(
                 "teacherbyid",
                 values=dict(id="<teacher_id>")),
-            "teachers_list":mash.URLFor("teachers")
+            "teachers_list": mash.URLFor("teachers")
 
         }
     )
@@ -232,11 +244,12 @@ class ParentSchema(mash.SQLAlchemySchema):
     child = mash.List(mash.Nested(lambda: StudentSchema(only=('id','firstname','lastname'))))
 
 
+
 class StudentSchema(mash.SQLAlchemySchema):
 
     class Meta:
         model = Student
-    
+
     id = mash.auto_field()
     firstname = mash.auto_field()
     lastname = mash.auto_field()
@@ -252,10 +265,10 @@ class StudentSchema(mash.SQLAlchemySchema):
 
     url = mash.Hyperlinks(
         {
-            "self":mash.URLFor(
+            "self": mash.URLFor(
                 "studentbyid",
                 values=dict(id="<id>")),
-            "collection":mash.URLFor("students")
+            "collection": mash.URLFor("students")
 
         }
     )
@@ -418,21 +431,22 @@ class Students(Resource):
         return make_response(
             students_schema.dump(students), 200
         )
-    
+
     def post(self):
         student_image = request.files['image_url']
         student_img = secure_filename(student_image.filename)
-        student_image.save(os.path.join(app.config["IMAGE_UPLOAD_PATH"],student_img))
-    
+        student_image.save(os.path.join(
+            app.config["IMAGE_UPLOAD_PATH"], student_img))
+
         # print(type(student_img))
         new_student = Student(
-            firstname = request.form.get('firstname'),
-            lastname = request.form.get('lastname'),
-            image_url = student_img,
-            personal_email = request.form.get('personal_email'),
-            password = request.form.get('password'),
-            email = request.form.get('email'),
-            parent_id = request.form.get('parent_id')
+            firstname=request.form.get('firstname'),
+            lastname=request.form.get('lastname'),
+            image_url=student_img,
+            personal_email=request.form.get('personal_email'),
+            password=request.form.get('password'),
+            email=request.form.get('email'),
+            parent_id=request.form.get('parent_id')
         )
         db.session.add(new_student)
         db.session.commit()
@@ -444,20 +458,20 @@ class Students(Resource):
         )
     
 class StudentbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         student = Student.query.filter_by(id=id).first()
 
         return make_response(
             student_schema.dump(student), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         student_data = request.get_json()
         student = Student.query.filter_by(id=id).first()
 
         for attr in student_data:
-            setattr(student,attr, student_data[attr])
-        
+            setattr(student, attr, student_data[attr])
+
         db.session.add(student)
         db.session.commit()
 
@@ -465,13 +479,14 @@ class StudentbyId(Resource):
             student_schema.dump(student), 202
         )
 
-    def delete(self,id):
+    def delete(self, id):
         student = Student.query.filter_by(id=id).first()
 
         db.session.delete(student)
         db.session.commit()
 
-        return "Record successfully deleted" , 202
+        return "Record successfully deleted", 202
+
 
 class Assignments(Resource):
     def get(self):
@@ -536,26 +551,27 @@ class AssignmentbyId(Resource):
     
     
 class Teachers(Resource):
-    
-    column_searchable_list = ('firstname', 'lastname' ,'email')
+
+    column_searchable_list = ('firstname', 'lastname', 'email')
+
     def get(self):
         teachers = Teacher.query.all()
 
         return make_response(
             teachers_schema.dump(teachers), 200
         )
-    
+
     def post(self):
         teacher_data = request.get_json()
         new_teacher = Teacher(
-            firstname = teacher_data['firstname'],
-            lastname = teacher_data['lastname'],
-            image_url = teacher_data['image_url'],
-            personal_email = teacher_data['personal_email'],
-            password = teacher_data['password'],
-            email = teacher_data['email'],
-            expertise = teacher_data['expertise'],
-            department = teacher_data['department']
+            firstname=teacher_data['firstname'],
+            lastname=teacher_data['lastname'],
+            image_url=teacher_data['image_url'],
+            personal_email=teacher_data['personal_email'],
+            password=teacher_data['password'],
+            email=teacher_data['email'],
+            expertise=teacher_data['expertise'],
+            department=teacher_data['department']
         )
         db.session.add(new_teacher)
         db.session.commit()
@@ -567,20 +583,20 @@ class Teachers(Resource):
         )
    
 class TeacherbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         teacher = Teacher.query.filter_by(id=id).first()
 
         return make_response(
             teacher_schema.dump(teacher), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         teacher_data = request.get_json()
         teacher = Teacher.query.filter_by(id=id).first()
 
         for attr in teacher_data:
-            setattr(teacher,attr, teacher_data[attr])
-        
+            setattr(teacher, attr, teacher_data[attr])
+
         db.session.add(teacher)
         db.session.commit()
 
@@ -588,13 +604,14 @@ class TeacherbyId(Resource):
             teacher_schema.dump(teacher), 202
         )
 
-    def delete(self,id):
+    def delete(self, id):
         teacher = Teacher.query.filter_by(id=id).first()
 
         db.session.delete(teacher)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Parents(Resource):
     def get(self):
@@ -603,14 +620,14 @@ class Parents(Resource):
         return make_response(
             parents_schema.dump(parents), 200
         )
-    
+
     def post(self):
         parent_data = request.get_json()
         new_parent = Parent(
-            firstname = parent_data['firstname'],
-            lastname = parent_data['lastname'],
-            email = parent_data['email'],
-            password = parent_data['password'],
+            firstname=parent_data['firstname'],
+            lastname=parent_data['lastname'],
+            email=parent_data['email'],
+            password=parent_data['password'],
             # image_url = parent_data['Image_url']
         )
         db.session.add(new_parent)
@@ -623,20 +640,20 @@ class Parents(Resource):
         )
     
 class ParentbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         parent = Parent.query.filter_by(id=id).first()
 
         return make_response(
             parent_schema.dump(parent), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         parent_data = request.get_json()
         parent = Parent.query.filter_by(id=id).first()
 
         for attr in parent_data:
-            setattr(parent,attr, parent_data[attr])
-        
+            setattr(parent, attr, parent_data[attr])
+
         db.session.add(parent)
         db.session.commit()
 
@@ -644,13 +661,14 @@ class ParentbyId(Resource):
             parent_schema.dump(parent), 202
         )
 
-    def delete(self,id):
+    def delete(self, id):
         parent = Parent.query.filter_by(id=id).first()
 
         db.session.delete(parent)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Contents(Resource):
     def get(self):
@@ -659,13 +677,13 @@ class Contents(Resource):
         return make_response(
             contents_schema.dump(contents), 200
         )
-    
+
     def post(self):
         content_data = request.get_json()
         new_content = Content(
-            content_name = content_data['content_name'],
-            description = content_data['description'],
-            content_type = content_data['content_type'],
+            content_name=content_data['content_name'],
+            description=content_data['description'],
+            content_type=content_data['content_type'],
         )
         db.session.add(new_content)
         db.session.commit()
@@ -673,22 +691,23 @@ class Contents(Resource):
         return make_response(
             content_schema.dump(new_content), 201
         )
-    
+
+
 class ContentbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         content = Content.query.filter_by(id=id).first()
 
         return make_response(
             content_schema.dump(content), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         content_data = request.get_json()
         content = Content.query.filter_by(id=id).first()
 
         for attr in content_data:
             setattr(content, attr, content_data[attr])
-        
+
         db.session.add(content)
         db.session.commit()
 
@@ -696,13 +715,14 @@ class ContentbyId(Resource):
             content_schema.dump(content), 202
         )
 
-    def delete(self,id):
+    def delete(self, id):
         content = Content.query.filter_by(id=id).first()
 
         db.session.delete(content)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Courses(Resource):
     def get(self):
@@ -711,19 +731,22 @@ class Courses(Resource):
         return make_response(
             courses_schema.dump(course), 200
         )
-    
+
     def post(self):
         course_data = request.get_json()
         new_course = Course(
-            course_name = course_data['course_name'],
-            description = course_data['description'],
-            student_id = course_data['student_id'],
-            teacher_id = course_data['teacher_id'],
+            course_name=course_data['course_name'],
+            description=course_data['description'],
+            # student_id = course_data['student_id'],
+            # teacher_id = course_data['teacher_id'],
             daysOfWeek=course_data['daysOfWeek'],
-            startTime=datetime.strptime(course_data['startTime'],"%H:%M").time(),
-            endTime=datetime.strptime(course_data['endTime'],"%H:%M").time(),
-            startRecur=course_data['startRecur'],
-            endRecur=course_data['endRecur'],
+            startTime=datetime.strptime(
+                course_data['startTime'], "%H:%M").time(),
+            endTime=datetime.strptime(course_data['endTime'], "%H:%M").time(),
+            startRecur=datetime.strptime(
+                course_data['startRecur'], "%Y-%m-%d").date(),
+            endRecur=datetime.strptime(
+                course_data['endRecur'], "%Y-%m-%d").date(),
         )
         db.session.add(new_course)
         db.session.commit()
@@ -733,20 +756,30 @@ class Courses(Resource):
         )
 
 class CoursebyId(Resource):
-    def get(self,id):
+    def get(self, id):
         course = Course.query.filter_by(id=id).first()
 
         return make_response(
             course_schema.dump(course), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         course_data = request.get_json()
         course = Course.query.filter_by(id=id).first()
 
+        if not course:
+            return make_response({"message": "Course not found"}, 404)
+
         for attr in course_data:
-            setattr(course, attr, course_data[attr])
-        
+            if attr in ['startTime', 'endTime']:
+                setattr(course, attr, datetime.strptime(
+                    course_data[attr], "%H:%M").time())
+            elif attr in ['startRecur', 'endRecur']:
+                setattr(course, attr, datetime.strptime(
+                    course_data[attr], "%Y-%m-%d").date())
+            else:
+                setattr(course, attr, course_data[attr])
+
         db.session.add(course)
         db.session.commit()
 
@@ -754,13 +787,15 @@ class CoursebyId(Resource):
             course_schema.dump(course), 202
         )
 
-    def delete(self,id):
+
+    def delete(self, id):
         course = Course.query.filter_by(id=id).first()
 
         db.session.delete(course)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Report_Cards(Resource):
     def get(self):
@@ -769,15 +804,15 @@ class Report_Cards(Resource):
         return make_response(
             report_cards_schema.dump(report_card), 200
         )
-    
+
     def post(self):
         reportcard_data = request.get_json()
         new_report = Report_Card(
-            topic = reportcard_data['topiic'],
-            grade = reportcard_data['grade'],
-            teacher_remarks = reportcard_data['teacher_remarks'],
-            student_id = reportcard_data['student_id'],
-            course_id = reportcard_data['course_id'],
+            topic=reportcard_data['topic'],
+            grade=reportcard_data['grade'],
+            teacher_remarks=reportcard_data['teacher_remarks'],
+            student_id=reportcard_data['student_id'],
+            course_id=reportcard_data['course_id'],
         )
         db.session.add(new_report)
         db.session.commit()
@@ -787,34 +822,35 @@ class Report_Cards(Resource):
         )
     
 class Report_CardbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         report_card = Report_Card.query.filter_by(id=id).first()
 
         return make_response(
             report_card_schema.dump(report_card), 200
         )
-        
-    def patch(self,id):
-        report_card = request.get_json()
-        content = Report_Card.query.filter_by(id=id).first()
 
-        for attr in report_card:
-            setattr(content, attr, report_card[attr])
-        
-        db.session.add(content)
+    def patch(self, id):
+        report_card_data = request.get_json()
+        report_card = Report_Card.query.filter_by(id=id).first()
+
+        for attr in report_card_data:
+            setattr(report_card, attr, report_card_data[attr])
+
+        db.session.add(report_card)
         db.session.commit()
 
         return make_response(
-            content_schema.dump(content), 202
+            report_card_schema.dump(report_card), 202
         )
 
-    def delete(self,id):
-        content = Report_Card.query.filter_by(id=id).first()
+    def delete(self, id):
+        report_card = Report_Card.query.filter_by(id=id).first()
 
-        db.session.delete(content)
+        db.session.delete(report_card)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Submitted_Assignments(Resource):
     def get(self):
@@ -823,17 +859,17 @@ class Submitted_Assignments(Resource):
         return make_response(
             submitted_assignments_schema.dump(assignments), 200
         )
-    
+
     def post(self):
         assignment_data = request.get_json()
         new_assignment = Content(
-            assignment_name = assignment_data['assignment_name'],
-            grade = assignment_data['grade'],
-            content = assignment_data['content'],
-            assignment_file = assignment_data['assignment_file'],
-            remarks = assignment_data['remarks'],
-            course_id = assignment_data['course_id'],
-            student_id = assignment_data['student_id'],
+            assignment_name=assignment_data['assignment_name'],
+            grade=assignment_data['grade'],
+            content=assignment_data['content'],
+            assignment_file=assignment_data['assignment_file'],
+            remarks=assignment_data['remarks'],
+            course_id=assignment_data['course_id'],
+            student_id=assignment_data['student_id'],
         )
         db.session.add(new_assignment)
         db.session.commit()
@@ -843,20 +879,20 @@ class Submitted_Assignments(Resource):
         )
    
 class Submitted_AssignmentbyId(Resource):
-    def get(self,id):
+    def get(self, id):
         assignment = Submitted_Assignment.query.filter_by(id=id).first()
 
         return make_response(
             submitted_assignment_schema.dump(assignment), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         assignment_data = request.get_json()
         assignment = Submitted_Assignment.query.filter_by(id=id).first()
 
         for attr in assignment_data:
             setattr(assignment, attr, assignment_data[attr])
-        
+
         db.session.add(assignment)
         db.session.commit()
 
@@ -864,13 +900,14 @@ class Submitted_AssignmentbyId(Resource):
             submitted_assignment_schema.dump(assignment), 202
         )
 
-    def delete(self,id):
+    def delete(self, id):
         assignment = Submitted_Assignment.query.filter_by(id=id).first()
 
         db.session.delete(assignment)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Events(Resource):
     def get(self):
@@ -879,15 +916,15 @@ class Events(Resource):
 
     def post(self):
         data = request.get_json()
-        
+
         course = Course.query.get(data['course_id'])
         title = ''
-        
+
         if course:
             title = f"{course.course_name} "
         else:
             title = "Unknown Course"
-            
+
         custom_title = data.get('title')
         event_title = custom_title if custom_title else title
 
@@ -899,8 +936,9 @@ class Events(Resource):
             daysOfWeek=data['daysOfWeek'],
             startTime=datetime.strptime(data['startTime'], "%H:%M").time(),
             endTime=datetime.strptime(data['endTime'], "%H:%M").time(),
-            startRecur=datetime.strptime(data['startRecur'],"%Y-%m-%d").date(),
-            endRecur=datetime.strptime(data['endRecur'],"%Y-%m-%d").date(),
+            startRecur=datetime.strptime(
+                data['startRecur'], "%Y-%m-%d").date(),
+            endRecur=datetime.strptime(data['endRecur'], "%Y-%m-%d").date(),
             title=event_title,
             course_id=data['course_id'],
             student_id=data['student_id'],
@@ -911,7 +949,8 @@ class Events(Resource):
 
         events = Event.query.all()
 
-        return make_response(event_schema.dump(events), 200)
+        return make_response(event_schema.dump(new_event), 200)
+
 
 class EventbyId(Resource):
     def get(self, id):
@@ -926,8 +965,13 @@ class EventbyId(Resource):
             return make_response({"message": "Event not found"}, 404)
 
         for attr in data:
-            if attr in ['start', 'end', 'startTime', 'endTime', 'startRecur', 'endRecur']:
-                setattr(event, attr, datetime.strptime(data[attr], "%H:%M").time())
+            if attr in ['startTime', 'endTime']:
+                setattr(event, attr, datetime.strptime(
+                    data[attr], "%H:%M").time())
+                
+            elif attr in ['startRecur','endRecur','end','start']:
+                setattr(event, attr, datetime.strptime(
+                    data[attr], "%Y-%m-%d").date())
             else:
                 setattr(event, attr, data[attr])
 
@@ -935,7 +979,7 @@ class EventbyId(Resource):
         if 'course_id' in data:
             course = Course.query.get(data['course_id'])
             if course:
-                event.title = f"{course.course_name}" 
+                event.title = f"{course.course_name}"
             else:
                 event.title = "Unknown Course"
 
@@ -959,15 +1003,15 @@ class Saved_Contents(Resource):
         return make_response(
             saved_contents_schema.dump(saved_Contents), 200
         )
-    
+
     def post(self):
         saved_Content = request.get_json()
         new_content = Saved_Content(
-            content_name = saved_Content['content_name'],
-            content_type = saved_Content['content_type'],
-            course_id = saved_Content['course_id'],
-            student_id = saved_Content['student_id'],
-            teacher_id = saved_Content['teacher_id'],
+            content_name=saved_Content['content_name'],
+            content_type=saved_Content['content_type'],
+            course_id=saved_Content['course_id'],
+            student_id=saved_Content['student_id'],
+            teacher_id=saved_Content['teacher_id'],
         )
         db.session.add(new_content)
         db.session.commit()
@@ -977,13 +1021,14 @@ class Saved_Contents(Resource):
         )
     
 class SavedContentById(Resource):
-    def delete(self,id):
+    def delete(self, id):
         saved_content = Saved_Content.query.filter_by(id=id).first()
 
         db.session.delete(saved_content)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 class Comments(Resource):
     def get(self):
@@ -992,16 +1037,16 @@ class Comments(Resource):
         return make_response(
             comments_schema.dump(comments), 200
         )
-    
+
     def post(self):
         comment_data = request.get_json()
         new_comment = Comment(
-            title = comment_data['title'],
-            subject = comment_data['subject'],
-            content = comment_data['content'],
-            parent_id = comment_data['parent_id'],
-            student_id = comment_data['student_id'],
-            teacher_id = comment_data['teacher_id'],
+            title=comment_data['title'],
+            subject=comment_data['subject'],
+            content=comment_data['content'],
+            parent_id=comment_data['parent_id'],
+            student_id=comment_data['student_id'],
+            teacher_id=comment_data['teacher_id'],
         )
         db.session.add(new_comment)
         db.session.commit()
@@ -1009,22 +1054,23 @@ class Comments(Resource):
         return make_response(
             comment_schema.dump(new_comment), 201
         )
-    
+
+
 class CommentById(Resource):
-    def get(self,id):
+    def get(self, id):
         comment = Comment.query.filter_by(id=id).first()
 
         return make_response(
             comment.dump(comment), 200
         )
-        
-    def patch(self,id):
+
+    def patch(self, id):
         comment_data = request.get_json()
         comment = Comment.query.filter_by(id=id).first()
 
         for attr in comment_data:
             setattr(comment, attr, comment_data[attr])
-        
+
         db.session.add(comment)
         db.session.commit()
 
@@ -1032,13 +1078,14 @@ class CommentById(Resource):
             comment_schema.dump(comment), 202
         )
 
-    def delete(self,id):
+    def delete(self, id):
         comment = Comment.query.filter_by(id=id).first()
 
         db.session.delete(comment)
         db.session.commit()
 
-        return "record successfully deleted" , 202
+        return "record successfully deleted", 202
+
 
 api.add_resource(Users, '/users')
 api.add_resource(StudentbyId, '/students/<int:id>')
@@ -1066,4 +1113,3 @@ api.add_resource(Comments, '/comments')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-
