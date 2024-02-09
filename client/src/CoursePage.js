@@ -17,7 +17,7 @@ function CoursePage({ coursesList }) {
         <div className='course-container'>
             <div>
             <div className="course-units">
-              <table>
+              <table className='course-table'>
                 <tr>
                   <th><h1 className="course-page-header">{course.course_name}</h1>
                   <p className="course-page-content">{course.description}</p></th>
