@@ -58,9 +58,10 @@ class Student(db.Model):
     parent_id = db.Column(db.Integer, db.ForeignKey('parents.id'))
 
     user = db.relationship('User', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    event = db.relationship('Event', back_populates='student', cascade="save-update , merge, delete, delete-orphan")
     parent = db.relationship('Parent', back_populates='child', cascade="save-update , merge, delete")
     assignments = db.relationship('Submitted_Assignment', backref='student', cascade="save-update , merge, delete, delete-orphan")
-    report_card = db.relationship('Report_Card', backref='student', cascade="save-update , merge, delete, delete-orphan")
+    report_card = db.relationship('Report_Card', back_populates='student', cascade="save-update , merge, delete, delete-orphan")
     courses = db.relationship('Course', secondary=course_student, back_populates='students', cascade="save-update , merge, delete")
     docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
     saved_items = db.relationship('Saved_Content', cascade="save-update , merge, delete, delete-orphan")
@@ -119,6 +120,7 @@ class Teacher(db.Model):
 
     docs = db.relationship('Content', cascade="save-update , merge, delete, delete-orphan")
     user = db.relationship('User', backref='teacher', cascade="save-update , merge, delete, delete-orphan")
+    event = db.relationship('Event', back_populates='teacher', cascade="save-update , merge, delete, delete-orphan")
     courses = db.relationship('Course', secondary=course_teacher, back_populates='teachers', cascade="save-update , merge, delete")
     saved_items = db.relationship('Saved_Content', cascade="save-update , merge, delete, delete-orphan")
 
@@ -268,7 +270,7 @@ class Saved_Content(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
 
     def __repr__(self):
-        return '<Saved_COntent %r >' % (self.content_name)
+        return '<Saved_Content %r >' % (self.content_name)
 
 class Report_Card(db.Model):
     __tablename__ = 'report_cards'
@@ -283,6 +285,9 @@ class Report_Card(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+    student = db.relationship('Student', back_populates='report_card', cascade="save-update , merge, delete")
+
 
 
 class Assignment(db.Model):
@@ -342,10 +347,9 @@ class Event(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
     teacher_id = db.Column(db.Integer, db.ForeignKey('teachers.id'))
     
-    
-    student = db.relationship('Student')
+    student = db.relationship('Student', back_populates='event', cascade="save-update , merge, delete")
+    teacher = db.relationship('Teacher', back_populates='event', cascade="save-update , merge, delete")
     course = db.relationship('Course')
-    teacher = db.relationship('Teacher')
     
 class Comment(db.Model):
     __tablename__ = 'comments'
