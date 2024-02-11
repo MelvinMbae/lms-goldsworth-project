@@ -12,7 +12,7 @@ import './styles/Courses.css'
 import './styles/CourseForm.css';
 import './styles/About.css';
 import './styles/CreateEvent.css'
-import App from './App';
+import UploadContent from './UploadContent';
 import { BrowserRouter } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -23,7 +23,7 @@ root.render(
 
     <React.StrictMode>
       <BrowserRouter>
-        <App />
+        <UploadContent />
       </BrowserRouter>
     </React.StrictMode>
 

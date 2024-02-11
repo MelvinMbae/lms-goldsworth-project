@@ -1,0 +1,33 @@
+.upload-container {
+    margin: 0 auto; /* Center align the container */
+    max-width: 500px; /* Set maximum width */
+    padding: 20px;
+  }
+  
+  .upload-container h2 {
+    text-align: center;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  input[type="file"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
