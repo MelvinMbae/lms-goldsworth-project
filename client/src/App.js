@@ -9,27 +9,26 @@ import Assignments from './Assignments';
 import Calendar from './Calendar';
 import Classes from './Classes';
 import CourseForm from './CourseForm';
-import CoursePage from './CoursePage';
-import CoursesPage from './CoursesPage';
+import CoursePage from './pages/Courses/CoursePage';
+import CoursesPage from './pages/Courses/CoursesPage';
 import CreateEvent from './CreateEvent';
 import Navbar from './Navbar';
-import ParentDash from './ParentDash';
+import ParentDash from './pages/Dashboards/ParentDash';
 import ReportCard from './ReportCard';
-import StudentDash from './StudentDash';
-import TeacherDash from './TeacherDash';
+import StudentDash from './pages/Dashboards/StudentDash';
+import TeacherDash from './pages/Dashboards/TeacherDash';
 import TeacherHome from './TeacherHome';
 import StudentEnrollment from './components/StudentEnrollment';
 import ChatBox from './components/chatBox';
-import About from './pages/About';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import UserAuth from './pages/UserAuth';
+import About from './pages/About/About';
+import Dashboard from './pages/Dashboards/Dashboard';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import UserAuth from './utils/UserAuth';
 import { appContext } from './utils/appContext';
 import StudentList from './StudentList';
 import IndividualStudent from './IndividualStudent';
 import SavedDocs from './SavedDocs';
-import SubmittedAssignments from './AssignmentList';
 
 
 function App() {
@@ -39,10 +38,12 @@ function App() {
   const [coursesList, setCoursesList] = useState([]);
   const [courseListDictionary, setCourseListDictionary] = useState({});
   const [assignments, setAssignments] = useState([])
+  const [assignmentList, setAssignmentList] = useState(assignments)
   const [eventsList, setEventsList] = useState([])
   const [eventsDictionary, setEventsDictionary] = useState({})
   const [students, setStudents] = useState([]);
   const [ savedDocs , setSaved ] = useState([])
+  const [ submitted , setSubmitted ] = useState([])
 
   useEffect(() => {
     fetch("/assignments").then((response) => {
@@ -50,6 +51,18 @@ function App() {
         response.json()
           .then((assignment) => {
             setAssignments(assignment)
+            setAssignmentList(assignment)
+          })
+      }
+    })
+  }, [])
+
+  useEffect(() => {
+    fetch("/submitted-assignments").then((response) => {
+      if (response.ok) {
+        response.json()
+          .then((submitted) => {
+            setSubmitted(submitted)
           })
       }
     })
@@ -124,10 +137,10 @@ function App() {
     }
   }
 
-  function handleSaved(id){
-    const saved = assignments.filter((assignment)=>assignment.id === parseInt(id))[0]
-    setSaved({...savedDocs, saved})
-  }
+  // function handleSaved(id){
+  //   const saved = assignments.filter((assignment)=>assignment.id === parseInt(id))[0]
+  //   setSaved({...savedDocs, saved})
+  // }
 
   useEffect(() => {
     fetch('/students')
@@ -152,7 +165,7 @@ function App() {
 
   return (
 
-      <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList , assignments }}>
+      <appContext.Provider value={{user , students , session , setSession , setUser , courses, coursesList , assignments, submitted }}>
         <div className=''>
           <Navbar />
           <ToastContainer />
@@ -169,11 +182,10 @@ function App() {
                 <Route path="/create-event" element={<CreateEvent user={user} setEvents={setEventsList}/>} />
                 <Route path='/active-courses' element={<ActiveCourse />} />
                 <Route path='/classes' element={<Classes />} />
-                <Route path='/assignments' element={<Assignments handleSaved={handleSaved} session={session} assignments={assignments}/>}></Route>
-                <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignments}/>} />
+                <Route path='/assignments' element={<Assignments assignmentList={assignmentList} setAssignmentList={setAssignmentList}/>}></Route>
+                <Route path='/assignments/:assignmentID' element={<Assignment assignments={assignmentList}/>} />
                 <Route path='/forums' element={<ChatBox />} />
                 <Route path='/enrollment' element={<StudentEnrollment />} />
-                <Route path='/grading' element={<SubmittedAssignments />} />
                 <Route path='/new' element={<AssignmentForm/>} />
                 <Route path='/new-course' element={<CourseForm/>} />
                 <Route path='/reportcard' element={<ReportCard />} />

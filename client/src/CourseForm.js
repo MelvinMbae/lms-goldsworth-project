@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 
 function CourseForm() {
@@ -54,7 +53,7 @@ function handleSubmit(e){
     )
 }
   return (
-    <form id='course-form' className="contents course-dialogue" onSubmit={handleSubmit}>
+    <form id='course-form' className="course-dialogue" onSubmit={handleSubmit}>
         <div className="form-item">
             <label htmlFor="course_name"> Course name: </label>
             <input
@@ -66,7 +65,7 @@ function handleSubmit(e){
             />
         </div>
         <div className="form-item">
-            <label htmlFor="description"> Description: </label>
+            <label htmlFor="description" id='description'> Description: </label>
             <input
                 type="text"
                 id="description"
@@ -95,7 +94,7 @@ function handleSubmit(e){
                     <option value={courseData.daysOfWeek} >Friday</option>
                 </select>
         </div>
-        <div className="form-item">
+        <div className="dates">
             <label htmlFor="startRecur"> Course Start Date: </label>
             <input
                 type="date"
@@ -104,18 +103,17 @@ function handleSubmit(e){
                 value={courseData.startRecur}
                 onChange={handleChange}
             />
-        </div>
-        <div className="form-item">
             <label htmlFor="endRecur"> Course End Date: </label>
             <input
-                type="date"
+                type="dates"
                 id="endRecur"
                 value={courseData.endRecur}
                 autoComplete="off"
                 onChange={handleChange}
             />
+
         </div>
-        <div className="form-item">
+        <div className="times">
             <label htmlFor="startTime"> Course Start Time: </label>
             <input
                 type="time"
@@ -124,8 +122,6 @@ function handleSubmit(e){
                 value={courseData.startTime}
                 onChange={handleChange}
             />
-        </div>
-        <div className="form-item">
             <label htmlFor="endTime"> Course End Time: </label>
             <input
                 type="time"
@@ -135,7 +131,8 @@ function handleSubmit(e){
                 onChange={handleChange}
             />
         </div>
-        <button className="btn" type="submit">Add Course</button>
+        <div><button className="course-form-btn" type="submit">Add Course</button></div>
+        
     </form>
   )
 }

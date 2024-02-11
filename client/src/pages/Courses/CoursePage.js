@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useParams } from "react-router-dom";
-import './styles/Courses.css';
 
 function CoursePage({ coursesList }) {
     const { courseID } = useParams()
-    const course = coursesList.filter((course)=> course.id == parseInt(courseID))[0]
+    const course = coursesList.filter((course)=> course.id === parseInt(courseID))[0]
     let course_content = course.content
     const [isExpanded, setIsExpanded] = useState(false);
     console.log(course_content )
@@ -17,7 +16,7 @@ function CoursePage({ coursesList }) {
         <div className='course-container'>
             <div>
             <div className="course-units">
-              <table>
+              <table className='course-table'>
                 <tr>
                   <th><h1 className="course-page-header">{course.course_name}</h1>
                   <p className="course-page-content">{course.description}</p></th>
